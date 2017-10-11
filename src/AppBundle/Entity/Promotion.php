@@ -1,0 +1,198 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Promotion
+ *
+ * @ORM\Table(name="promotions")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PromotionRepository")
+ */
+class Promotion
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pdf", type="blob")
+     */
+    private $pdf;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="start", type="date")
+     */
+    private $start;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="finish", type="date")
+     */
+    private $finish;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="display_start", type="date")
+     */
+    private $displayStart;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="display_finish", type="date")
+     */
+    private $displayFinish;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPdf()
+    {
+        return $this->pdf;
+    }
+
+    /**
+     * @param string $pdf
+     */
+    public function setPdf($pdf)
+    {
+        $this->pdf = $pdf;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * @param \DateTime $start
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getFinish()
+    {
+        return $this->finish;
+    }
+
+    /**
+     * @param \DateTime $finish
+     */
+    public function setFinish($finish)
+    {
+        $this->finish = $finish;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDisplayStart()
+    {
+        return $this->displayStart;
+    }
+
+    /**
+     * @param \DateTime $displayStart
+     */
+    public function setDisplayStart($displayStart)
+    {
+        $this->displayStart = $displayStart;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDisplayFinish()
+    {
+        return $this->displayFinish;
+    }
+
+    /**
+     * @param \DateTime $displayFinish
+     */
+    public function setDisplayFinish($displayFinish)
+    {
+        $this->displayFinish = $displayFinish;
+    }
+
+}
+
