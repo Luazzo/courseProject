@@ -15,50 +15,43 @@ use AppBundle\Entity\User;
  */
 class Member extends User
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="newsletter", type="boolean")
      */
-    private $newsletter;
+    protected $newsletter;
 
     /**
      * @var Image
      * @ORM\OneToOne(targetEntity="Image")
      */
-    private $image;
+    protected $image;
 
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Abuse", mappedBy="member")
      */
-    private $abuses;
+    protected $abuses;
+
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="member")
      */
-    private $comments;
+    protected $comments;
 
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Favorite", mappedBy="member")
      */
-    private $favorites;
+    protected $favorites;
 
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Rating", mappedBy="member")
      */
-    private $ratings;
+    protected $ratings;
 
     /**
      * Constructor

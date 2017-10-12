@@ -32,92 +32,92 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=255)
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=true)
      */
-    private $password;
+    protected $password;
 
     /**
      * @var string
      *
      * @ORM\Column(name="address_number", type="string", length=255, nullable=true)
      */
-    private $addressNumber;
+    protected $addressNumber;
 
     /**
      * @var string
      *
      * @ORM\Column(name="address_street", type="string", length=255, nullable=true)
      */
-    private $addressStreet;
+    protected $addressStreet;
 
     /**
      * @ORM\ManyToOne(targetEntity="Town", inversedBy="users")
      */
-    private $town;
+    protected $town;
 
     /**
      * @ORM\ManyToOne(targetEntity="Locality", inversedBy="users")
      */
-    private $locality;
+    protected $locality;
 
     /**
      * @ORM\ManyToOne(targetEntity="Zip", inversedBy="users")
      */
-    private $zip;
+    protected $zip;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="registration", type="date")
      */
-    private $registration;
+    protected $registration;
 
     /**
      * @var int
      *
      * @ORM\Column(name="attempts", type="integer")
      */
-    private $attempts;
+    protected $attempts;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="enable", type="boolean")
      */
-    private $enable;
+    protected $enable;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="confirm_reg", type="boolean")
      */
-    private $confirmReg;
+    protected $confirmReg;
 
     /**
      * @var ArrayCollection

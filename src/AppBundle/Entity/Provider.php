@@ -14,88 +14,83 @@ use AppBundle\Entity\User;
  */
 class Provider extends User
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="company", type="string", length=255)
      */
-    private $company;
+    protected $company;
 
     /**
      * @var string
      *
      * @ORM\Column(name="site", type="string", length=255)
      */
-    private $site;
+    protected $site;
 
     /**
      * @var string
      *
      * @ORM\Column(name="email_company", type="string", length=255)
      */
-    private $emailCompany;
+    protected $emailCompany;
 
     /**
      * @var string
      *
      * @ORM\Column(name="tel_company", type="string", length=255)
      */
-    private $telCompany;
+    protected $telCompany;
 
     /**
      * @var string
      *
      * @ORM\Column(name="tva", type="string", length=255)
      */
-    private $tva;
+    protected $tva;
 
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Promotion", mappedBy="provider")
      */
-    private $promotions;
+    protected $promotions;
+
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Course", mappedBy="provider")
      */
-    private $courses;
+    protected $courses;
+
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="provider")
      */
-    private $comments;
+    protected $comments;
+
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Image", mappedBy="provider")
      */
-    private $images;
+    protected $images;
 
     /**
      * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="Category", mappedBy="providers")
      */
-    private $categories;
+    protected $categories;
 
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Favorite", mappedBy="provider")
      */
-    private $favorites;
+    protected $favorites;
 
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Rating", mappedBy="provider")
      */
-    private $ratings;
+    protected $ratings;
 
     /**
      * Constructor
