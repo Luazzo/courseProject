@@ -56,6 +56,26 @@ class Image
      */
     private $description;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="images")
+     */
+    private  $course;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Promotion", inversedBy="images")
+     */
+    private  $promotion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Provider", inversedBy="images")
+     */
+    private  $provider;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="images")
+     */
+    private  $category;
+
 
     /**
      * Get id
@@ -65,6 +85,70 @@ class Image
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCourse()
+    {
+        return $this->course;
+    }
+
+    /**
+     * @param mixed $course
+     */
+    public function setCourse($course)
+    {
+        $this->course = $course;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPromotion()
+    {
+        return $this->promotion;
+    }
+
+    /**
+     * @param mixed $promotion
+     */
+    public function setPromotion($promotion)
+    {
+        $this->promotion = $promotion;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProvider()
+    {
+        return $this->provider;
+    }
+
+    /**
+     * @param mixed $provider
+     */
+    public function setProvider($provider)
+    {
+        $this->provider = $provider;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
     }
 
     /**

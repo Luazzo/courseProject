@@ -13,6 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
 class Abuse
 {
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->date=new DateTime();
+    }
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -24,9 +32,9 @@ class Abuse
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="string", length=255)
+     * @ORM\Column(name="description", type="string", length=255)
      */
-    private $comment;
+    private $description;
 
     /**
      * @var \DateTime
@@ -34,6 +42,16 @@ class Abuse
      * @ORM\Column(name="date", type="date")
      */
     private $date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Member", inversedBy="abuses")
+     */
+    private  $member;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Comment", inversedBy="abuses")
+     */
+    private  $comment;
 
 
     /**
@@ -47,28 +65,38 @@ class Abuse
     }
 
     /**
-     * Set comment
-     *
-     * @param string $comment
-     *
-     * @return Abuse
-     */
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-
-        return $this;
-    }
-
-    /**
-     * Get comment
-     *
-     * @return string
+     * @return mixed
      */
     public function getComment()
     {
         return $this->comment;
     }
+
+    /**
+     * @param mixed $comment
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMember()
+    {
+        return $this->member;
+    }
+
+    /**
+     * @param mixed $member
+     */
+    public function setMember($member)
+    {
+        $this->member = $member;
+    }
+
+
 
     /**
      * Set date
@@ -82,6 +110,22 @@ class Abuse
         $this->date = $date;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
     /**

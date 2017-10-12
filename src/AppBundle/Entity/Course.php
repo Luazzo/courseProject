@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Course
  *
@@ -78,6 +78,35 @@ class Course
      */
     private $displayFinish;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Provider", inversedBy="courses")
+     */
+    private  $provider;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="category", inversedBy="courses")
+     */
+    private  $category;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="course")
+     */
+    private $images;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images=new ArrayCollection();
+        $this->displayFinish=new DateTime();
+        $this->displayStart=new DateTime();
+        $this->finish=new DateTime();
+        $this->start=new DateTime();
+    }
+
+
 
     /**
      * Get id
@@ -88,6 +117,75 @@ class Course
     {
         return $this->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProvider()
+    {
+        return $this->provider;
+    }
+
+    /**
+     * @param mixed $provider
+     */
+    public function setProvider($provider)
+    {
+        $this->provider = $provider;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * @param ArrayCollection $images
+     */
+    public function setImages($images)
+    {
+        $this->images = $images;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function addImage($image)
+    {
+        $this->images->add($image);
+        // uncomment if you want to update other side
+        //$image->setCourse($this);
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function removeImage($image)
+    {
+        $this->images->removeElement($image);
+        // uncomment if you want to update other side
+        //$image->setCourse(null);
+    }
+
 
     /**
      * @return string

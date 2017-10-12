@@ -3,15 +3,28 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
  *
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository") *
+ * @ORM\InheritanceType
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="user_type", type="string")
+ * @ORM\DiscriminatorMap({"admin"="User","provider" = "Provider", "member" = "Member"})
  */
 class User
 {
+    const TYPE_USER = "admin";
+    const TYPE_PROVIDER = "provider";
+    const TYPE_VISITOR = "member";
+
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_PROVIDER = 'ROLE_PROVIDER';
+    const ROLE_MEMBER = 'ROLE_MEMBER';
+
     /**
      * @var int
      *
@@ -20,6 +33,20 @@ class User
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="firstName", type="string", length=255)
+     */
+    private $firstName;
 
     /**
      * @var string
@@ -50,18 +77,26 @@ class User
     private $addressStreet;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Town", inversedBy="users")
+     */
+    private $town;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Locality", inversedBy="users")
+     */
+    private $locality;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Zip", inversedBy="users")
+     */
+    private $zip;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="registration", type="date")
      */
     private $registration;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="user_type", type="string", length=255, nullable=true)
-     */
-    private $userType;
 
     /**
      * @var int
@@ -84,6 +119,22 @@ class User
      */
     private $confirmReg;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Block",mappedBy="user")
+     */
+    protected $blocks;
+
+    /**
+     * Constructor
+     */
+    public function __construct(){
+        parent:: __construct();
+        $this->blocks=new ArrayCollection();
+        $this->registration=new \DateTime();
+        $this->addRole('role_admin');
+    }
+
 
     /**
      * Get id
@@ -93,6 +144,123 @@ class User
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTown()
+    {
+        return $this->town;
+    }
+
+    /**
+     * @param mixed $town
+     */
+    public function setTown($town)
+    {
+        $this->town = $town;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocality()
+    {
+        return $this->locality;
+    }
+
+    /**
+     * @param mixed $locality
+     */
+    public function setLocality($locality)
+    {
+        $this->locality = $locality;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZip()
+    {
+        return $this->zip;
+    }
+
+    /**
+     * @param mixed $zip
+     */
+    public function setZip($zip)
+    {
+        $this->zip = $zip;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getBlocks()
+    {
+        return $this->blocks;
+    }
+
+    /**
+     * @param ArrayCollection $blocks
+     */
+    public function setBlocks($blocks)
+    {
+        $this->blocks = $blocks;
+    }
+
+    /**
+     * @param mixed $block
+     */
+    public function addBlock($block)
+    {
+        $this->blocks->add($block);
+        // uncomment if you want to update other side
+        //$block->setUser($this);
+    }
+
+    /**
+     * @param mixed $block
+     */
+    public function removeBlock($block)
+    {
+        $this->blocks->removeElement($block);
+        // uncomment if you want to update other side
+        //$block->setUser(null);
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
     }
 
     /**

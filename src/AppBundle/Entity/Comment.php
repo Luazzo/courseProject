@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Comment
  *
@@ -49,6 +49,31 @@ class Comment
      */
     private $date;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Abuse", mappedBy="comment")
+     */
+    private $abuses;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Provider", inversedBy="comments")
+     */
+    private  $provider;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Member", inversedBy="comments")
+     */
+    private  $member;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->abuses=new ArrayCollection();
+        $this->date=new DateTime();
+    }
+
 
     /**
      * Get id
@@ -58,6 +83,75 @@ class Comment
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAbuses()
+    {
+        return $this->abuses;
+    }
+
+    /**
+     * @param ArrayCollection $abuses
+     */
+    public function setAbuses($abuses)
+    {
+        $this->abuses = $abuses;
+    }
+
+    /**
+     * @param mixed $abuse
+     */
+    public function addAbuse($abuse)
+    {
+        $this->abuses->add($abuse);
+        // uncomment if you want to update other side
+        //$abuse->setComment($this);
+    }
+
+    /**
+     * @param mixed $abuse
+     */
+    public function removeAbuse($abuse)
+    {
+        $this->abuses->removeElement($abuse);
+        // uncomment if you want to update other side
+        //$abuse->setComment(null);
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getProvider()
+    {
+        return $this->provider;
+    }
+
+    /**
+     * @param mixed $provider
+     */
+    public function setProvider($provider)
+    {
+        $this->provider = $provider;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMember()
+    {
+        return $this->member;
+    }
+
+    /**
+     * @param mixed $member
+     */
+    public function setMember($member)
+    {
+        $this->member = $member;
     }
 
     /**

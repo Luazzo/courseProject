@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Favorite
+ * Rating
  *
- * @ORM\Table(name="favorites")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\FavoriteRepository")
+ * @ORM\Table(name="ratings")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RatingRepository")
  */
-class Favorite
+class Rating
 {
     /**
      * @var int
@@ -22,6 +22,13 @@ class Favorite
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="note", type="string", length=255)
+     */
+    private $rate;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date")
@@ -29,12 +36,12 @@ class Favorite
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Provider", inversedBy="favorites")
+     * @ORM\ManyToOne(targetEntity="Provider", inversedBy="ratings")
      */
     private  $provider;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Member", inversedBy="favorites")
+     * @ORM\ManyToOne(targetEntity="Member", inversedBy="ratings")
      */
     private  $member;
 
@@ -47,6 +54,7 @@ class Favorite
     }
 
 
+
     /**
      * Get id
      *
@@ -55,6 +63,38 @@ class Favorite
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRate()
+    {
+        return $this->rate;
+    }
+
+    /**
+     * @param string $rate
+     */
+    public function setRate($rate)
+    {
+        $this->rate = $rate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 
     /**
@@ -87,22 +127,6 @@ class Favorite
     public function setMember($member)
     {
         $this->member = $member;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param \DateTime $date
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
     }
 
 }
