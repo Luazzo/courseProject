@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
  * Rating
@@ -26,7 +27,7 @@ class Rating
      *
      * @ORM\Column(name="note", type="string", length=255)
      */
-    private $rate;
+    private $note;
 
     /**
      * @var \DateTime
@@ -65,20 +66,21 @@ class Rating
         return $this->id;
     }
 
+
     /**
      * @return string
      */
-    public function getRate()
+    public function getNote()
     {
-        return $this->rate;
+        return $this->note;
     }
 
     /**
-     * @param string $rate
+     * @param string $note
      */
-    public function setRate($rate)
+    public function setNote($note)
     {
-        $this->rate = $rate;
+        $this->note = $note;
     }
 
     /**

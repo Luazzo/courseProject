@@ -106,6 +106,33 @@ class Category
     }
 
     /**
+     * Add providers
+     *
+     * @param \AppBundle\Entity\Provider $providers
+     * @return Category
+     */
+    public function addProvider($providers)
+    {
+        if (!$this->providers->contains($providers))
+        {
+            $this->providers[] = $providers;
+            $providers->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $provider
+     */
+    public function removeProvider($provider)
+    {
+        $this->providers->removeElement($provider);
+        // uncomment if you want to update other side
+        //$provider->setCategory(null);
+    }
+
+    /**
      * @return ArrayCollection
      */
     public function getProviders()
@@ -121,25 +148,18 @@ class Category
         $this->providers = $providers;
     }
 
-    /**
-     * @param mixed $provider
-     */
-    public function addProvider($provider)
-    {
-        $this->providers->add($provider);
-        // uncomment if you want to update other side
-        //$provider->setCategory($this);
-    }
 
     /**
-     * @param mixed $provider
+     * Get blogs
+     *
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function removeProvider($provider)
+    public function getBlogs()
     {
-        $this->providers->removeElement($provider);
-        // uncomment if you want to update other side
-        //$provider->setCategory(null);
+        return $this->blogs;
     }
+
+
 
     /**
      * @return ArrayCollection

@@ -38,9 +38,9 @@ class Block
     /**
      * @var integer
      *
-     * @ORM\Column(name="order", type="integer")
+     * @ORM\Column(name="ordre", type="integer")
      */
-    private $order;
+    private $ordre;
 
     /**
      * @ORM\ManyToOne(targetEntity="User",inversedBy="blocks")
@@ -58,21 +58,6 @@ class Block
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
-    /**
-     * @param int $order
-     */
-    public function setOrder($order)
-    {
-        $this->order = $order;
-    }
 
     /**
      * @return mixed
@@ -121,6 +106,23 @@ class Block
     {
         $this->description = $description;
     }
+
+    /**
+     * @return int
+     */
+    public function getOrdre()
+    {
+        return $this->ordre;
+    }
+
+    /**
+     * @param int $ordre
+     */
+    public function setOrdre($ordre)
+    {
+        $this->ordre = $ordre;
+    }
+
 
 }
 

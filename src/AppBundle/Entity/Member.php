@@ -58,12 +58,10 @@ class Member extends User
      */
     public function __construct(){
         parent:: __construct();
-        $this->user_type=User::TYPE_MEMBER;
         $this->abuses=new ArrayCollection();
         $this->comments=new ArrayCollection();
         $this->ratings=new ArrayCollection();
         $this->favorites=new ArrayCollection();
-        $this->addRole('role_member');
     }
 
     /**

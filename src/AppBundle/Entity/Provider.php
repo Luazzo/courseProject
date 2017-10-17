@@ -97,7 +97,6 @@ class Provider extends User
      */
     public function __construct(){
         parent:: __construct();
-        $this->user_type=User::TYPE_PROVIDER;
         $this->promotions=new ArrayCollection();
         $this->courses=new ArrayCollection();
         $this->comments=new ArrayCollection();
@@ -105,7 +104,6 @@ class Provider extends User
         $this->categories=new ArrayCollection();
         $this->favorites=new ArrayCollection();
         $this->ratings=new ArrayCollection();
-        $this->addRole('role_provider');
     }
 
 
@@ -292,24 +290,22 @@ class Provider extends User
         return $this->categories;
     }
 
-    /**
-     * @param ArrayCollection $categories
-     */
-    public function setCategories($categories)
-    {
-        $this->categories = $categories;
-    }
 
     /**
-     * @param mixed $category
+     * Add categories
+     *
+     * @param \AppBundle\Entity\Category $categories
+     * @return Provider
      */
-    public function addCategory($category)
+    public function addCategory($categories)
     {
-        $this->categories->add($category);
-        // uncomment if you want to update other side
-        //$category->setProvider($this);
+        if (!$this->categories->contains($categories))
+        {
+            $this->categories[] = $categories;
+            $categories->addProvider($this);
+        }
+        return $this;
     }
-
     /**
      * @param mixed $category
      */
@@ -474,6 +470,7 @@ class Provider extends User
     {
         $this->tva = $tva;
     }
+
 
 }
 

@@ -1,0 +1,168 @@
+
+
+AppBundle\Entity\Newsletter:
+    newsletter_{1..15}:
+        title: '<name()>'
+        pdf: '<imageUrl()>'
+        date: <dateTime('now')>
+
+
+AppBundle\Entity\Town:
+    town_{1..11}:
+        town: '<fr_BE:city()>'
+
+
+AppBundle\Entity\Locality:
+    locality_{1..11}:
+        locality: '<fr_BE:province()>'
+        town: '@town_*'
+
+
+AppBundle\Entity\Zip:
+     zip_{1..11}:
+         zip: <fr_BE:postcode()>
+         locality: '@locality_*'
+         town: '@town_*'
+
+
+AppBundle\Entity\User:
+    user_1:
+        name: Tsimpilova
+        firstname: Irina
+        email: i.tsimpilova@gmail.com
+        password: irina
+        address_number: 45
+        address_street: rue Lambert Dewonck
+        registration: <dateTime('now')>
+        attempts: 0
+        enable: true
+        confirm_reg: true
+        user_type: 'admin'
+        role: 'ROLE_ADMIN'
+        town: '@town_*'
+        locality: '@locality_*'
+        zip: '@zip_*'
+
+
+
+AppBundle\Entity\Member:
+    member_{1..11}:
+        name: <fr_BE:lastName()>
+        firstname: <fr_BE:firstname()>
+        email: '<email()>'
+        password: '<password()>'
+        address_number: '<buildingNumber()>'
+        address_street: '<buildingNumber()>'
+        registration: <dateTime('now')>
+        attempts: 0
+        enable: true
+        confirm_reg: true
+        role: 'ROLE_MEMBER'
+        town: '@town_*'
+        locality: '@locality_*'
+        zip: '@zip_*'
+        newsletter: '1'
+
+
+AppBundle\Entity\Provider:
+    provider_{1..11}:
+        name: <fr_BE:lastName()>
+        firstname: <fr_BE:firstname()>
+        email: '<email()>'
+        password: '<password()>'
+        address_number: '<buildingNumber()>'
+        address_street: '<buildingNumber()>'
+        registration: <dateTime('now')>
+        attempts: 0
+        enable: true
+        confirm_reg: true
+        role: 'ROLE_PROVIDER'
+        town: '@town_*'
+        locality: '@locality_*'
+        zip: '@zip_*'
+        company: <fr_BE:company()>
+        site: <fr_BE:domainName()>
+        email_company: '<email()>'
+        tel_company: <phoneNumber()>
+        tva: <fr_FR:siret()>
+
+AppBundle\Entity\Comment:
+    comment_{1..11}:
+        rating: <randomNumber(5)>
+        title: <title()>
+        comment: <paragraph(1, true)>
+        date : <dateTime('now')>
+        member: '@member_*'
+        provider: '@provider_*'
+
+AppBundle\Entity\Abuse:
+    abuse_{1..5}:
+        description: <paragraph(1, true)>
+        date: <dateTime('now')>
+        member: '@member_*'
+        comment: '@comment_*'
+
+AppBundle\Entity\Block:
+    block_{1..22}:
+        user: '@user_*'
+        name: <title()>
+        description: <paragraph(1, true)>
+        ordre: <randomNumber(1)>
+
+AppBundle\Entity\Category:
+    category_{1..10}:
+        name: <title()>
+        description: <paragraph(1, true)>
+        forward: '0'
+        valid: '1'
+        providers: ['@provider_*']
+
+
+AppBundle\Entity\Course:
+    course_{1..24}:
+        name: <title()>
+        description: <paragraph(1, true)>
+        price: <randomNumber(2)>
+        info: <text(200)>
+        start: <dateTime('now')>
+        finish: <dateTime('now')>
+        display_start: <dateTime('now')>
+        display_finish: <dateTime('now')>
+
+AppBundle\Entity\Favorite:
+    favorite_{1..10}:
+        member: '@member_*'
+        provider: '@provider_*'
+        date: <dateTime('now')>
+
+AppBundle\Entity\Image:
+    image_{1..20}:
+        course: '@course_*'
+        promotion: '@promotion_*'
+        provider: '@provider_*'
+        category: '@category_*'
+        path: <imageUrl(640, 800, 'cats')>
+        position: <randomNumber(5)>
+        type: <word()>
+        visible: '1'
+        description: <sentence(4, true)>
+
+AppBundle\Entity\Promotion:
+    promotion_{1..24}:
+        name: <title()>
+        description: <paragraph(1, true)>
+        provider: '@provider_*'
+        category: '@category_*'
+        pdf: <imageUrl(640, 800, 'cats')>
+        start: <dateTime('now')>
+        finish: <dateTime('now')>
+        display_start: <dateTime('now')>
+        display_finish: <dateTime('now')>
+
+AppBundle\Entity\Rating:
+    rating_{1..11}:
+        provider: '@provider_*'
+        member: '@member_*'
+        note: <randomNumber(5)>
+        date: <dateTime('now')>
+

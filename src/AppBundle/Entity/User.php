@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class User
 {
-    const TYPE_USER = "admin";
+    const TYPE_ADMIN = "admin";
     const TYPE_PROVIDER = "provider";
     const TYPE_VISITOR = "member";
 
@@ -47,6 +47,13 @@ class User
      * @ORM\Column(name="firstName", type="string", length=255)
      */
     protected $firstName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="role", type="string", length=255)
+     */
+    protected $role;
 
     /**
      * @var string
@@ -129,11 +136,12 @@ class User
      * Constructor
      */
     public function __construct(){
-        parent:: __construct();
+        $this->user_type=User::TYPE_ADMIN;
         $this->blocks=new ArrayCollection();
         $this->registration=new \DateTime();
-        $this->addRole('role_admin');
+        $this->role=User::ROLE_ADMIN;
     }
+
 
 
     /**
@@ -144,6 +152,22 @@ class User
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
     }
 
     /**
