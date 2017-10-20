@@ -104,14 +104,18 @@ AppBundle\Entity\Abuse:
 
 AppBundle\Entity\Block:
     block_{1..22}:
-        user: '@user_*'
         name: <title()>
         description: <paragraph(1, true)>
-        ordre: <randomNumber(1)>
+
+AppBundle\Entity\OrdreBlock:
+    ordreblock_{1..40}:
+        user: '@user_*'
+        block: '@block_*'
+        ordre: <biasedNumberBetween(1,4)>
 
 AppBundle\Entity\Category:
     category_{1..10}:
-        name: <title()>
+        name: <word()>
         description: <paragraph(1, true)>
         forward: '0'
         valid: '1'

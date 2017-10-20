@@ -128,18 +128,18 @@ class User
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Block",mappedBy="user")
+     * @ORM\OneToMany(targetEntity="OrdreBlock", mappedBy="user")
      */
-    protected $blocks;
+    protected $ordreblocks;
 
     /**
      * Constructor
      */
     public function __construct(){
-        $this->user_type=User::TYPE_ADMIN;
-        $this->blocks=new ArrayCollection();
+        /*$this->user_type=User::TYPE_ADMIN;*/
+        $this->ordreblocks=new ArrayCollection();
         $this->registration=new \DateTime();
-        $this->role=User::ROLE_ADMIN;
+       /* $this->role=User::ROLE_ADMIN;*/
     }
 
 

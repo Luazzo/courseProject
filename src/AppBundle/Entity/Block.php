@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Block
  *
@@ -36,16 +36,17 @@ class Block
     private $description;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="ordre", type="integer")
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="OrdreBlock", mappedBy="block")
      */
-    private $ordre;
+    private $ordreblocks;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User",inversedBy="blocks")
+     * Constructor
      */
-    private $user;
+    public function __construct(){
+        $this->ordreblocks=new ArrayCollection();
+    }
 
 
     /**
@@ -56,23 +57,6 @@ class Block
     public function getId()
     {
         return $this->id;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param mixed $user
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
     }
 
     /**
@@ -108,19 +92,39 @@ class Block
     }
 
     /**
-     * @return int
+     * @return ArrayCollection
      */
-    public function getOrdre()
+    public function getOrdreblocks()
     {
-        return $this->ordre;
+        return $this->ordreblocks;
     }
 
     /**
-     * @param int $ordre
+     * @param ArrayCollection $ordreblocks
      */
-    public function setOrdre($ordre)
+    public function setOrdreblocks($ordreblocks)
     {
-        $this->ordre = $ordre;
+        $this->ordreblocks = $ordreblocks;
+    }
+
+    /**
+     * @param mixed $ordreblock
+     */
+    public function addOrdreblock($ordreblock)
+    {
+        $this->ordreblocks->add($ordreblock);
+        // uncomment if you want to update other side
+        //$ordreblock->setBlock($this);
+    }
+
+    /**
+     * @param mixed $ordreblock
+     */
+    public function removeOrdreblock($ordreblock)
+    {
+        $this->ordreblocks->removeElement($ordreblock);
+        // uncomment if you want to update other side
+        //$ordreblock->setBlock(null);
     }
 
 
