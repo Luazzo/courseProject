@@ -92,6 +92,7 @@ class Provider extends User
      */
     protected $ratings;
 
+
     /**
      * Constructor
      */
@@ -469,6 +470,22 @@ class Provider extends User
     public function setTva($tva)
     {
         $this->tva = $tva;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMediumRating()
+    {
+        return $this->mediumRating;
+    }
+
+    /**
+     * @param mixed $mediumRating
+     */
+    public function setMediumRating($mediumRating)
+    {
+        $this->mediumRating = $mediumRating;
     }
 
 

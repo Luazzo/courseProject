@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class CourseRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function coursesIndex($max_results)
+    {
+        $query = $this->createQueryBuilder('c')
+            ->leftJoin("c.category", "cat")
+            ->leftJoin("c.provider", "p")
+            ->setMaxResults($max_results);
+
+        return $query->getQuery()->getResult();
+
+    }
 }

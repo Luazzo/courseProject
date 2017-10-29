@@ -13,9 +13,18 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('Annuaire/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em-> getRepository("AppBundle:Category")->findAll();
+        $courses = $em-> getRepository("AppBundle:Course")->coursesIndex(3);
+        $promotions = $em-> getRepository("AppBundle:Promotion")->findAll();
+        $comments = $em-> getRepository("AppBundle:Comment")->newComments(6);
+
+        return $this->render("Annuaire/index.html.twig",array("comments"=>$comments, "categories"=>$categories, "courses"=>$courses,"promotions"=>$promotions ));
+
     }
+
+
+
+
+
 }

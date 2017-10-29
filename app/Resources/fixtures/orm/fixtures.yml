@@ -88,8 +88,8 @@ AppBundle\Entity\Provider:
 
 AppBundle\Entity\Comment:
     comment_{1..11}:
-        rating: <randomNumber(5)>
-        title: <title()>
+        rating: <biasedNumberBetween(0,10)>
+        title: <word()>
         comment: <paragraph(1, true)>
         date : <dateTime('now')>
         member: '@member_*'
@@ -104,7 +104,7 @@ AppBundle\Entity\Abuse:
 
 AppBundle\Entity\Block:
     block_{1..22}:
-        name: <title()>
+        name: <words(2, true)>
         description: <paragraph(1, true)>
 
 AppBundle\Entity\OrdreBlock:
@@ -124,14 +124,16 @@ AppBundle\Entity\Category:
 
 AppBundle\Entity\Course:
     course_{1..24}:
-        name: <title()>
+        name: <word()>
         description: <paragraph(1, true)>
-        price: <randomNumber(2)>
+        price: <biasedNumberBetween(0,5)>
         info: <text(200)>
         start: <dateTime('now')>
         finish: <dateTime('now')>
         display_start: <dateTime('now')>
         display_finish: <dateTime('now')>
+        provider: '@provider_*'
+        category: '@category_*'
 
 AppBundle\Entity\Favorite:
     favorite_{1..10}:
@@ -146,14 +148,14 @@ AppBundle\Entity\Image:
         provider: '@provider_*'
         category: '@category_*'
         path: <imageUrl(640, 800, 'cats')>
-        position: <randomNumber(5)>
+        position: <biasedNumberBetween(0,5)>
         type: <word()>
         visible: '1'
         description: <sentence(4, true)>
 
 AppBundle\Entity\Promotion:
     promotion_{1..24}:
-        name: <title()>
+        name: <words(2, true)>
         description: <paragraph(1, true)>
         provider: '@provider_*'
         category: '@category_*'
@@ -167,6 +169,7 @@ AppBundle\Entity\Rating:
     rating_{1..11}:
         provider: '@provider_*'
         member: '@member_*'
-        note: <randomNumber(5)>
+        note: <biasedNumberBetween(0,10)>
         date: <dateTime('now')>
+
 

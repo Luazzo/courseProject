@@ -6408,6 +6408,9 @@ button.close {
 .mt0 {
   margin-top: 0px !important; }
 
+.mb20 {
+  margin-bottom: 20px; }
+
 .mb30 {
   margin-bottom: 30px; }
 
@@ -8836,7 +8839,7 @@ h2.widgettitle {
 [ 21. Pricing ]
 */
 .pricing {
-  background-color: #fff;
+  /*background-color: #fff;*/
   border: 1px solid #e9e9e9;
   color: #363636;
   padding: 25px;
@@ -8854,6 +8857,9 @@ h2.widgettitle {
 
 .pricing-subtitle {
   color: #b6b7b8; }
+
+.pricing-subtitle-white {
+  color: #fff; }
 
 .pricing-price {
   font-size: 40px;
@@ -8879,7 +8885,7 @@ h2.widgettitle {
   .pricing-list strong, .pricing-list span {
     display: block; }
   .pricing-list span {
-    color: #b6b7b8;
+    color: white; /*#b6b7b8;*/
     font-size: 13px;
     margin-bottom: 5px; }
   .pricing-list strong {
@@ -9027,6 +9033,15 @@ h2.widgettitle {
   float: left;
   font-size: 13px;
   margin: 0px 0px 20px 0px;
+  padding: 3px 15px; }
+
+.post-label-float-none {
+  background-color: #c6af5c;
+  color: #fff;
+  display: inline-block;
+  float: none;
+  font-size: 13px;
+  margin: 0px 0px 15px 0px;
   padding: 3px 15px; }
 
 .post-date {

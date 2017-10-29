@@ -1,0 +1,23 @@
+<div class="testimonial">
+    <div class="testimonial-image">
+        <img src="/img/tmp/agent-4.jpg" alt="">
+    </div><!-- /.testimonial-image -->
+
+    <div class="testimonial-inner">
+        <div class="testimonial-title">
+            <h2>{{ comment.title }}</h2>
+
+            <div class="testimonial-rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div><!-- /.testimonial-rating -->
+        </div><!-- /.testimonial-title -->
+
+        {{ comment.comment }}
+
+        <div class="testimonial-sign">-{{ comment.member.firstName }} {{ comment.member.name }} </div><!-- /.testimonial-sign -->
+    </div><!-- /.testimonial-inner -->
+</div><!-- /.testimonial -->

@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Providers list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Site</th>
+                <th>Emailcompany</th>
+                <th>Telcompany</th>
+                <th>Tva</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Firstname</th>
+                <th>Role</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Addressnumber</th>
+                <th>Addressstreet</th>
+                <th>Registration</th>
+                <th>Attempts</th>
+                <th>Enable</th>
+                <th>Confirmreg</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for provider in providers %}
+            <tr>
+                <td><a href="{{ path('provider_show', { 'id': provider.id }) }}">{{ provider.company }}</a></td>
+                <td>{{ provider.site }}</td>
+                <td>{{ provider.emailCompany }}</td>
+                <td>{{ provider.telCompany }}</td>
+                <td>{{ provider.tva }}</td>
+                <td>{{ provider.id }}</td>
+                <td>{{ provider.name }}</td>
+                <td>{{ provider.firstName }}</td>
+                <td>{{ provider.role }}</td>
+                <td>{{ provider.email }}</td>
+                <td>{{ provider.password }}</td>
+                <td>{{ provider.addressNumber }}</td>
+                <td>{{ provider.addressStreet }}</td>
+                <td>{% if provider.registration %}{{ provider.registration|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ provider.attempts }}</td>
+                <td>{% if provider.enable %}Yes{% else %}No{% endif %}</td>
+                <td>{% if provider.confirmReg %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('provider_show', { 'id': provider.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('provider_edit', { 'id': provider.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('provider_new') }}">Create a new provider</a>
+        </li>
+    </ul>
+{% endblock %}

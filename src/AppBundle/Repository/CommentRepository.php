@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class CommentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function newComments($max_results)
+    {
+        $query = $this->createQueryBuilder('c')
+            ->leftJoin("c.provider", "p")
+            ->leftJoin("c.member", "m")
+            ->orderBy("c.date", "DESC")
+            ->setMaxResults($max_results);
+
+        return $query->getQuery()->getResult();
+
+    }
 }

@@ -1,0 +1,121 @@
+
+
+
+
+
+
+
+
+_________________________________________________________________________
+
+<div class="row">
+    <div class="events">
+
+        {% if courses|length == 1 %}
+            <div class="row">
+                <div class="col-sm-6 mb30">
+                    {% include "Partials/event.html.twig" %}
+                </div><!-- /.col-* -->
+            </div><!-- /.row -->
+
+        {% else %}
+            {% for course in courses | slice (0,4) %}
+                {% if loop.index is odd %}
+                    <div class="row">
+                {% endif %}
+
+                <div class="col-sm-6 mb30">
+                    {% include "Partials/event.html.twig" %}
+                </div><!-- /.col-* -->
+
+                {% if loop.index is even or loop.last %}
+                    </div><!-- /.row -->
+                {% endif %}
+
+            {% endfor %}
+
+        {% endif %}
+
+    </div><!-- /.events -->
+
+
+</div><!-- /.col-* -->
+
+
+
+_______________________________________________________________________
+
+->select("p.name AND p.firstName as m.fullname", "m.name AND m.firstName as m.fullname")
+
+
+
+
+{% include "Partials/event.html.twig" %}
+{% if course.index is odd %}
+
+
+
+    {% if comments|length == 1 %}
+        <div class="row">
+            <div class="col-sm-6">
+                {% include "Comment/testimonial.html.twig" %}
+            </div><!-- /.col-* -->
+        </div><!-- /.row -->
+
+    {% else %}
+        {% for comment in comments | slice (0,6) %}
+            {% if loop.index is odd %}
+                <div class="row">
+            {% endif %}
+
+            <div class="col-sm-6 ">
+            </div><!-- /.col-* -->
+
+            {% if loop.index is even or loop.last %}
+                </div><!-- /.row -->
+            {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+
+{% endif %}
+______________________________________________________________________________________
+{% elseif loop.last %}
+    <div class="col-sm-4">
+        {% include "Partials/card-tall.html.twig" %}
+    </div><!-- /.col-* -->
+{% endif %}
+
+{% if providers[i] == length %}
+
+{% for p in providers if (providers.key < length)| slice (0,4) %} <!---->
+
+    {% if loop.first %}
+        <div class="col-sm-8">
+        <div class="row">
+            <div class="col-sm-12">
+                {% include "Partials/card.html.twig" %}
+            </div><!-- /.col-* -->
+        </div><!-- /.row -->
+
+    {% else %}
+        <div class="col-sm-6">
+            {% include "Partials/card.html.twig" %}
+        </div><!-- /.col-* -->
+    {% endif %}
+
+    </div><!-- /.row -->
+
+
+{% endfor %}
+
+    {% include "Partials/card-tall.html.twig" %}
+    {% include "Partials/card-content.html.twig" with {'p': providers, 'provider' : providers[i]} %}
+
+    {{ dump(i) }}
+    {{ dump(length) }}
+
+    {{ dump(providers) }}
+    {% if providers[i] == length %}

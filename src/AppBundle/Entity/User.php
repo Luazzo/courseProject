@@ -142,6 +142,10 @@ class User
        /* $this->role=User::ROLE_ADMIN;*/
     }
 
+    public function __toString(){
+        return $this->name.' '.$this->firstName;
+    }
+
 
 
     /**
