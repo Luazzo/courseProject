@@ -51,6 +51,13 @@ class Provider extends User
     protected $tva;
 
     /**
+     * @var text
+     *
+     * @ORM\Column(name="presentation", type="text")
+     */
+    protected $presentation;
+
+    /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Promotion", mappedBy="provider")
      */
@@ -117,6 +124,22 @@ class Provider extends User
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return text
+     */
+    public function getPresentation()
+    {
+        return $this->presentation;
+    }
+
+    /**
+     * @param text $presentation
+     */
+    public function setPresentation($presentation)
+    {
+        $this->presentation = $presentation;
     }
 
     /**

@@ -65,9 +65,18 @@ class ProviderController extends Controller
      */
     public function showAction(Provider $provider)
     {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $rating = $em->getRepository('AppBundle:Rating')->findRating($provider);
+
+        $hearts = $em->getRepository('AppBundle:Favorite')->findHearts($provider);
+
         $deleteForm = $this->createDeleteForm($provider);
 
         return $this->render('provider/show.html.twig', array(
+            'rating' => $rating,
+            'hearts' => $hearts,
             'provider' => $provider,
             'delete_form' => $deleteForm->createView(),
         ));

@@ -5,7 +5,16 @@
 
     <div class="testimonial-inner">
         <div class="testimonial-title">
-            <h2>{{ comment.title }}</h2>
+
+            <h2 class="mt0">
+                {{ comment.title }}
+                <span class="separator pl20 pr20">&#8226;</span>
+                <i class="fa fa-flag" title="Report" data-toggle="tooltip" data-placement="top">
+                </i>
+            </h2>
+            <p class="pl20 mb0 pr20 fnt8 float-left">{{ comment.date|date('d-m-Y') }}</p>
+
+
 
             <div class="testimonial-rating">
                 <i class="fa fa-star"></i>
@@ -16,7 +25,7 @@
             </div><!-- /.testimonial-rating -->
         </div><!-- /.testimonial-title -->
 
-        {{ comment.comment }}
+        <p>{{ comment.comment }}</p>
 
         <div class="testimonial-sign">-{{ comment.member.firstName }} {{ comment.member.name }} </div><!-- /.testimonial-sign -->
     </div><!-- /.testimonial-inner -->

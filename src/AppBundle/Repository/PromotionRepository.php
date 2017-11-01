@@ -11,6 +11,7 @@ namespace AppBundle\Repository;
 class PromotionRepository extends \Doctrine\ORM\EntityRepository
 {
 
+
     public function findLastPromos($id, $max_results){
 
         $query = $this->createQueryBuilder('p')

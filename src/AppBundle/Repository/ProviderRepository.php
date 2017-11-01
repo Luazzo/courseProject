@@ -20,8 +20,6 @@ class ProviderRepository extends \Doctrine\ORM\EntityRepository
             ->groupBy("p")
             ->setMaxResults($max_results);
 
-
-
         return $query->getQuery()->getResult();
 
     }

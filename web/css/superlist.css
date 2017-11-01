@@ -1493,6 +1493,22 @@ blockquote.pull-right {
   blockquote.pull-right .small:after {
     content: '\00A0 \2014'; }
 
+.pr20{
+  padding-right:20px;
+}
+.float-left{
+  float: left;
+}
+.pt20{
+  padding-top:20px;
+}
+.pl20{
+  padding-left:20px;
+}
+.fnt8{
+  font-size: 8pt;
+}
+
 address {
   margin-bottom: 20px;
   font-style: normal;

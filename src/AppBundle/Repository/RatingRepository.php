@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class RatingRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findRating($provider){
+        $query = $this->createQueryBuilder('r')
+            ->select("avg(r.note) as note_avg")
+            ->where("r.provider = :provider")
+            ->setParameter("provider", $provider);
+
+        return $query->getQuery()->getResult();
+
+    }
 }

@@ -10,4 +10,12 @@ namespace AppBundle\Repository;
  */
 class FavoriteRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findHearts($provider){
+        $query = $this->createQueryBuilder('f')
+            ->select("f")
+            ->where("f.provider = :provider")
+            ->setParameter("provider", $provider);
+
+        return $query->getQuery()->getResult();
+    }
 }

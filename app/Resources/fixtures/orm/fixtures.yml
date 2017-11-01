@@ -71,7 +71,7 @@ AppBundle\Entity\Provider:
         email: '<email()>'
         password: '<password()>'
         address_number: '<buildingNumber()>'
-        address_street: '<buildingNumber()>'
+        address_street: '<words(2, true)>'
         registration: <dateTime('now')>
         attempts: 0
         enable: true
@@ -83,8 +83,9 @@ AppBundle\Entity\Provider:
         company: <fr_BE:company()>
         site: <fr_BE:domainName()>
         email_company: '<email()>'
-        tel_company: <phoneNumber()>
+        tel_company: <e164PhoneNumber()>
         tva: <fr_FR:siret()>
+        presentation: <paragraphs(1, false)>
 
 AppBundle\Entity\Comment:
     comment_{1..11}:
