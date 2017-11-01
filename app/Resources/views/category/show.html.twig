@@ -1,0 +1,146 @@
+{% extends 'Annuaire/layout-annuaire.html.twig' %}
+
+{% block title %}Category{% endblock %}
+
+{% block header_bottom %}
+    {% include "Partials/header.html.twig" %}
+{% endblock %}
+
+{% block main %}
+    <div class="main">
+        <div class="main-inner">
+            <div class="container">
+                <div class="row">
+
+
+
+                    <div class="col-sm-8 col-lg-9">
+                        <div class="content">
+                            <div class="page-title">
+                                <h1>{{ category.name }}</h1>
+                            </div><!-- /.page-title -->
+
+                            <div class="posts post-detail">
+
+                                <img src="/img/tmp/blog-1.jpg" alt="A Clockwork Origin">
+
+
+
+                                <div class="post-content">
+                                    <p class='drop-cap'>{{ category.description }}</p>
+                                </div><!-- /.post-content -->
+
+                                <div class="post-meta-tags clearfix">
+                                    Tags:
+                                    <ul>
+                                        <li class="tag"><a href="#">Coffee</a></li>
+                                        <li class="tag"><a href="#">Breakfast</a></li>
+                                        <li class="tag"><a href="#">Wine</a></li>
+                                        <li class="tag"><a href="#">Healthy Food</a></li>
+                                        <li class="tag"><a href="#">Raw Food</a></li>
+                                    </ul>
+                                </div><!-- /.post-meta -->
+
+                            </div><!-- /.post -->
+
+                        </div><!-- /.content -->
+                    </div><!-- /.col-* -->
+
+                    <div class="col-sm-4 col-lg-3">
+                        <div class="sidebar">
+                            <div class="widget">
+                                <h2 class="widgettitle">Recent Promotions</h2>
+
+                                {#{% if promotions is iterable  %} -  NE MARCHE PAS #}
+                                {% if promotions|length == 0 %}
+                                    <div class="cards-small">
+                                        <h3>No Promotions in this category</h3>
+                                    </div><!-- /.cards-small -->
+                                {% else %}
+                                    {% for promotion in promotions  %}
+                                        {% include "promotion/cards-small.html.twig" %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div><!-- /.widget -->
+
+
+
+                            <div class="widget">
+                                <h2 class="widgettitle">Recent Courses</h2>
+
+                                {#{% if promotions is iterable  %} -  NE MARCHE PAS #}
+                                {% if courses|length == 0 %}
+                                    <div class="cards-small">
+                                        <h3>No Courses in this category</h3>
+                                    </div><!-- /.cards-small -->
+                                {% else %}
+                                    {% for course in courses  %}
+                                        {% include "course/cards-small-course.html.twig" %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div><!-- /.widget -->
+
+
+
+                            <div class="widget">
+                                <h2 class="widgettitle">Filter</h2>
+
+                                <div class="background-white p20">
+                                    <form method="post" action="?">
+                                        <div class="form-group">
+                                            <label for="">Keyword</label>
+                                            <input type="text" class="form-control" name="" id="">
+                                        </div><!-- /.form-group -->
+
+                                        <div class="form-group">
+                                            <label for="">Category</label>
+
+                                            <select class="form-control" title="Select Category">
+                                                <option>Automotive</option>
+                                                <option>Real Estate</option>
+                                            </select>
+                                        </div><!-- /.form-group -->
+
+                                        <div class="form-group">
+                                            <label for="">Location</label>
+                                            <select class="form-control" title="Select Location">
+                                                <option>New York</option>
+                                                <option>San Francisco</option>
+                                            </select>
+                                        </div><!-- /.form-group -->
+
+                                        <div class="form-group">
+                                            <label for="">Starting Price</label>
+                                            <input type="text" class="form-control" name="" id="">
+                                        </div><!-- /.form-group -->
+
+                                        <button class="btn btn-primary btn-block" type="submit">Search</button>
+                                    </form>
+                                </div>
+                            </div><!-- /.widget -->
+
+
+                            <div class="widget">
+                                <h2 class="widgettitle">Categories</h2>
+
+                                <ul class="menu">
+
+
+                                        {% for category in categories %}
+                                            <li><a href="{{ path('category_show', {'id': category.id  }) }}">{{ category.name }}</a></li>
+                                        {% endfor %}
+
+
+                                </ul><!-- /.menu -->
+                            </div><!-- /.wifget -->
+
+
+
+                        </div><!-- /.sidebar -->
+                    </div><!-- /.col-* -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /.main-inner -->
+    </div><!-- /.main -->
+{% endblock %}
+

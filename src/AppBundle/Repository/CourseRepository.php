@@ -18,6 +18,19 @@ class CourseRepository extends \Doctrine\ORM\EntityRepository
             ->setMaxResults($max_results);
 
         return $query->getQuery()->getResult();
-
     }
+
+    public function findLastCourses($category, $max_results)
+    {
+        $query = $this->createQueryBuilder('c')
+            ->leftJoin("c.provider", "pr")
+            ->where("c.category = :id")
+            ->orderBy("c.start", "DESC")
+            ->setParameter('id', $category)
+            ->setMaxResults($max_results);
+
+        return $query->getQuery()->getResult();
+    }
+
+
 }

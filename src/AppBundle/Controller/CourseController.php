@@ -14,6 +14,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  */
 class CourseController extends Controller
 {
+
+
     /**
      * Lists all course entities.
      *

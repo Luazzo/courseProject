@@ -10,4 +10,17 @@ namespace AppBundle\Repository;
  */
 class PromotionRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findLastPromos($id, $max_results){
+
+        $query = $this->createQueryBuilder('p')
+            ->leftJoin("p.provider", "pr")
+            ->where("p.category = :id")
+            ->orderBy("p.start", "DESC")
+            ->setParameter('id',$id)
+            ->setMaxResults($max_results);
+
+        return $query->getQuery()->getResult();
+
+    }
 }

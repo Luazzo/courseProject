@@ -1,12 +1,12 @@
 <div class="card-simple" data-background-image="/img/tmp/product-*.jpg">
     <div class="card-simple-background">
         <div class="card-simple-content">
-            <h2><a href="listing-detail.html">{{ category.name }}</a></h2>
+            <h2><a href="{{ path('category_show', {'id': category.id  }) }}">{{ category.name }}</a></h2>
 
 
             <div class="card-simple-actions">
                 <a href="#" class="fa fa-bookmark-o"></a>
-                <a href="listing-detail.html" class="fa fa-search"></a>
+                <a href="/category/{{ category.name }}" class="fa fa-search"></a>
                 <a href="#" class="fa fa-heart-o"></a>
             </div><!-- /.card-simple-actions -->
         </div><!-- /.card-simple-content -->

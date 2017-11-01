@@ -90,6 +90,14 @@ class Promotion
     private $images;
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->start;
+    }
+
+    /**
      * Constructor
      */
     public function __construct()
