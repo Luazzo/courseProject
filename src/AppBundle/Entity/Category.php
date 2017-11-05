@@ -122,6 +122,7 @@ class Category
         return $this;
     }
 
+
     /**
      * @param mixed $provider
      */

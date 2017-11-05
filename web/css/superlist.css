@@ -1163,6 +1163,12 @@ hr {
   border: 0;
   border-top: 1px solid #eeeeee; }
 
+.hr-mt10-mb10 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 0;
+  border-top: 1px solid #eeeeee; }
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -6549,12 +6555,16 @@ button.close {
   border-bottom: 1px solid #e9e9e9;
   margin: 0px 0px 30px 0px;
   padding: 0px 0px 20px 0px; }
-  .page-title h1 {
+  .page-title, .page-title-mb0 h1 {
     color: #363636;
     font-size: 36px;
     font-weight: 300;
     margin: 0px;
     padding: 0px; }
+.page-title-mb0 {
+  border-bottom: 1px solid #e9e9e9;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 20px 0px; }
 
 @media (max-width: 767px) {
   .box {
@@ -7618,6 +7628,14 @@ h2.widgettitle {
   color: rgba(54, 54, 54, 0.6);
   font-weight: 300;
   line-height: 60px;
+  margin: 0px 0px 30px 0px;
+  padding: 0px; }
+
+h2.widgettitle-30lineheight {
+  border-bottom: 1px solid #e9e9e9;
+  color: rgba(54, 54, 54, 0.6);
+  font-weight: 300;
+  line-height: 30px;
   margin: 0px 0px 30px 0px;
   padding: 0px; }
 

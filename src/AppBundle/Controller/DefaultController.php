@@ -18,9 +18,30 @@ class DefaultController extends Controller
         $courses = $em-> getRepository("AppBundle:Course")->coursesIndex(3);
         $promotions = $em-> getRepository("AppBundle:Promotion")->findAll();
         $comments = $em-> getRepository("AppBundle:Comment")->newComments(6);
+        $towns = $em-> getRepository("AppBundle:Town")->findAll();
 
-        return $this->render("Annuaire/index.html.twig",array("comments"=>$comments, "categories"=>$categories, "courses"=>$courses,"promotions"=>$promotions ));
+        return $this->render("Annuaire/index.html.twig",array(
+            "towns" => $towns,
+            "comments"=>$comments,
+            "categories"=>$categories,
+            "courses"=>$courses,
+            "promotions"=>$promotions
+        ));
+    }
 
+
+
+
+    public  function searchFormAction(){
+        $form = $this->createForm('AppBundle\Form\SearchType',null,array(
+            'action' => $this->generateUrl('search_providers'),
+            'method' => 'GET'
+        ));
+
+
+        return $this->render('Partials/search-form-test.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
 

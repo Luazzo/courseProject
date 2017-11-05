@@ -30,9 +30,9 @@ class OrdreBlock
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="ordreblocks")
+     * @ORM\ManyToOne(targetEntity="Member", inversedBy="ordreblocks")
      */
-    private $user;
+    private $member;
 
     /**
      * @ORM\ManyToOne(targetEntity="Block", inversedBy="ordreblocks")
@@ -52,18 +52,19 @@ class OrdreBlock
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getMember()
     {
-        return $this->user;
+        return $this->member;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $member
      */
-    public function setUser($user)
+    public function setMember($member)
     {
-        $this->user = $user;
+        $this->member = $member;
     }
+
 
     /**
      * @return mixed

@@ -104,6 +104,23 @@
                                 </ul>
                             </div><!-- /.detail-gallery -->
 
+
+                            <div class="posts post-detail">
+                                <div class="post-meta-tags clearfix">
+                                    Provider's Categories:
+                                        {% if (provider.categories | length) > 0 %}
+                                            <ul>
+                                                {% for cat in provider.categories %}
+                                                    <li class="tag"><a href="{{ path('category_show', {'id': cat.id  }) }}">{{ cat.name }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            No categories
+                                        {% endif %}
+                                </div><!-- /.post-meta -->
+                            </div><!-- /.post -->
+
+
                             <h2>We Are Here</h2>
                             <div class="background-white p20">
 

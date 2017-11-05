@@ -16,45 +16,81 @@
 
                     <div class="col-sm-8 col-lg-9">
                         <div class="content">
+
                             <div class="page-title">
                                 <h1>{{ category.name }}</h1>
                             </div><!-- /.page-title -->
-
-                            <div class="posts post-detail">
-
+                            <div class="posts post-detail mb50">
                                 <img src="/img/tmp/blog-1.jpg" alt="A Clockwork Origin">
-
-
-
                                 <div class="post-content">
                                     <p class='drop-cap'>{{ category.description }}</p>
                                 </div><!-- /.post-content -->
-
-                                <div class="post-meta-tags clearfix">
-                                    Tags:
-                                    <ul>
-                                        <li class="tag"><a href="#">Coffee</a></li>
-                                        <li class="tag"><a href="#">Breakfast</a></li>
-                                        <li class="tag"><a href="#">Wine</a></li>
-                                        <li class="tag"><a href="#">Healthy Food</a></li>
-                                        <li class="tag"><a href="#">Raw Food</a></li>
-                                    </ul>
-                                </div><!-- /.post-meta -->
-
                             </div><!-- /.post -->
+
+
+                            <div class="page-title">
+                                <h2>Providers of this Category</h2><!-- /.page-title -->
+                            </div><!-- /.page-title -->
+                            <div class="cards-simple-wrapper">
+                                <div class="row">
+                                    {% if category.providers|length > 0 %}
+
+                                        {% for provider in category.providers %}
+                                            <div class="col-sm-6 col-lg-4">
+                                                <div class="card-simple" data-background-image="/img/tmp/product-1.jpg">
+                                                    <div class="card-simple-background">
+                                                        <div class="card-simple-content">
+                                                            <h2><a href="{{ path('provider_show', { 'id': provider.id }) }}">{{ provider.company }}</a></h2>
+                                                            <div class="card-simple-rating">
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                            </div><!-- /.card-rating -->
+
+                                                            <div class="card-simple-actions">
+                                                                <a href="#" class="fa fa-star-o"></a>
+                                                                <a href="listing-detail.html" class="fa fa-search"></a>
+                                                                <a href="#" class="fa fa-heart-o"></a>
+                                                            </div><!-- /.card-simple-actions -->
+                                                        </div><!-- /.card-simple-content -->
+
+                                                        <div class="card-simple-label">Vacation</div>
+
+                                                        <div class="card-simple-price">$100 / night</div>
+
+                                                    </div><!-- /.card-simple-background -->
+                                                </div><!-- /.card-simple -->
+                                            </div><!-- /.col-* -->
+                                        {% endfor %}
+
+                                    {% else %}
+                                        No Providers in this Category
+                                    {% endif %}
+
+                                </div><!-- /.row -->
+                            </div><!-- /.cards-simple-wrapper -->
+
+
+                            <div class="pager">
+                                {{ knp_pagination_render(providers) }}
+                            </div><!-- /.pagination -->
 
                         </div><!-- /.content -->
                     </div><!-- /.col-* -->
 
+
+
                     <div class="col-sm-4 col-lg-3">
                         <div class="sidebar">
                             <div class="widget">
-                                <h2 class="widgettitle">Recent Promotions</h2>
+                                <h2 class="widgettitle-30lineheight">Recent Promotions  of this Category</h2>
 
                                 {#{% if promotions is iterable  %} -  NE MARCHE PAS #}
                                 {% if promotions|length == 0 %}
                                     <div class="cards-small">
-                                        <h3>No Promotions in this category</h3>
+                                        <h5>No Promotions in this category</h5>
                                     </div><!-- /.cards-small -->
                                 {% else %}
                                     {% for promotion in promotions  %}
@@ -66,12 +102,12 @@
 
 
                             <div class="widget">
-                                <h2 class="widgettitle">Recent Courses</h2>
+                                <h2 class="widgettitle-30lineheight">Recent Courses of this Category</h2>
 
                                 {#{% if promotions is iterable  %} -  NE MARCHE PAS #}
                                 {% if courses|length == 0 %}
                                     <div class="cards-small">
-                                        <h3>No Courses in this category</h3>
+                                        <h5>No Courses in this category</h5>
                                     </div><!-- /.cards-small -->
                                 {% else %}
                                     {% for course in courses  %}
@@ -82,57 +118,9 @@
 
 
 
-                            <div class="widget">
-                                <h2 class="widgettitle">Filter</h2>
+                            {% include "Partials/filter.html.twig" %}
 
-                                <div class="background-white p20">
-                                    <form method="post" action="?">
-                                        <div class="form-group">
-                                            <label for="">Keyword</label>
-                                            <input type="text" class="form-control" name="" id="">
-                                        </div><!-- /.form-group -->
-
-                                        <div class="form-group">
-                                            <label for="">Category</label>
-
-                                            <select class="form-control" title="Select Category">
-                                                <option>Automotive</option>
-                                                <option>Real Estate</option>
-                                            </select>
-                                        </div><!-- /.form-group -->
-
-                                        <div class="form-group">
-                                            <label for="">Location</label>
-                                            <select class="form-control" title="Select Location">
-                                                <option>New York</option>
-                                                <option>San Francisco</option>
-                                            </select>
-                                        </div><!-- /.form-group -->
-
-                                        <div class="form-group">
-                                            <label for="">Starting Price</label>
-                                            <input type="text" class="form-control" name="" id="">
-                                        </div><!-- /.form-group -->
-
-                                        <button class="btn btn-primary btn-block" type="submit">Search</button>
-                                    </form>
-                                </div>
-                            </div><!-- /.widget -->
-
-
-                            <div class="widget">
-                                <h2 class="widgettitle">Categories</h2>
-
-                                <ul class="menu">
-
-
-                                        {% for category in categories %}
-                                            <li><a href="{{ path('category_show', {'id': category.id  }) }}">{{ category.name }}</a></li>
-                                        {% endfor %}
-
-
-                                </ul><!-- /.menu -->
-                            </div><!-- /.wifget -->
+                            {% include "category/categories-menu.html.twig"%}
 
 
 

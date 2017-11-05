@@ -18,16 +18,28 @@ class CategoryController extends Controller
     /**
      * Lists all category entities.
      *
-     * @Route("/", name="category_index")
+     * @Route("/", name="categories")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $categories = $em->getRepository('AppBundle:Category')->findAll();
+        $promotions = $em->getRepository('AppBundle:Promotion')->findAll();
+
+        $courses = $em->getRepository('AppBundle:Course')->findAll();
+
+        $listCategories = $em->getRepository('AppBundle:Category')->findAll();
+
+        $categories  = $this->get('knp_paginator')->paginate(
+            $listCategories,
+            $request->query->get('page', 1)/*le numéro de la page à afficher*/,
+                                                    3/*nbre d'éléments par page*/
+        );
 
         return $this->render('category/index.html.twig', array(
+            'courses' => $courses,
+            'promotions' => $promotions,
             'categories' => $categories,
         ));
     }
@@ -64,7 +76,7 @@ class CategoryController extends Controller
      * @Route("/{id}", name="category_show")
      * @Method("GET")
      */
-    public function showAction(Category $category)
+    public function showAction( Request $request, Category $category)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -74,9 +86,18 @@ class CategoryController extends Controller
 
         $allCategories = $em->getRepository('AppBundle:Category')->findAll();
 
+        $listProviders = $em->getRepository('AppBundle:Category')->providersOfCategory($category);
+        $providers  = $this->get('knp_paginator')->paginate(
+            $listProviders,
+            $request->query->get('page', 1)/*le numéro de la page à afficher*/,
+                                                    3/*nbre d'éléments par page*/
+        );
+
+
         $deleteForm = $this->createDeleteForm($category);
 
         return $this->render('category/show.html.twig', array(
+            'providers' => $providers,
             'courses' => $courses,
             'categories' => $allCategories,
             'promotions' => $promotions,

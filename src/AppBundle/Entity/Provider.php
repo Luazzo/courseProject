@@ -330,6 +330,7 @@ class Provider extends User
         }
         return $this;
     }
+
     /**
      * @param mixed $category
      */

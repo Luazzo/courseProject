@@ -52,7 +52,7 @@ AppBundle\Entity\Member:
         email: '<email()>'
         password: '<password()>'
         address_number: '<buildingNumber()>'
-        address_street: '<buildingNumber()>'
+        address_street: '<words(2, true)>'
         registration: <dateTime('now')>
         attempts: 0
         enable: true
@@ -104,13 +104,13 @@ AppBundle\Entity\Abuse:
         comment: '@comment_*'
 
 AppBundle\Entity\Block:
-    block_{1..22}:
+    block_{1..5}:
         name: <words(2, true)>
         description: <paragraph(1, true)>
 
 AppBundle\Entity\OrdreBlock:
     ordreblock_{1..40}:
-        user: '@user_*'
+        member: '@member_*'
         block: '@block_*'
         ordre: <biasedNumberBetween(1,4)>
 
@@ -127,7 +127,7 @@ AppBundle\Entity\Course:
     course_{1..24}:
         name: <word()>
         description: <paragraph(1, true)>
-        price: <biasedNumberBetween(0,5)>
+        price: <biasedNumberBetween(0,100)>
         info: <text(200)>
         start: <dateTime('now')>
         finish: <dateTime('now')>

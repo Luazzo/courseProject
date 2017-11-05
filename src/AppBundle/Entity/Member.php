@@ -54,6 +54,12 @@ class Member extends User
     protected $ratings;
 
     /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="OrdreBlock", mappedBy="member")
+     */
+    protected $ordreblocks;
+
+    /**
      * Constructor
      */
     public function __construct(){
@@ -62,6 +68,7 @@ class Member extends User
         $this->comments=new ArrayCollection();
         $this->ratings=new ArrayCollection();
         $this->favorites=new ArrayCollection();
+        $this->ordreblocks=new ArrayCollection();
     }
 
     /**
@@ -72,6 +79,22 @@ class Member extends User
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getOrdreblocks()
+    {
+        return $this->ordreblocks;
+    }
+
+    /**
+     * @param ArrayCollection $ordreblocks
+     */
+    public function setOrdreblocks($ordreblocks)
+    {
+        $this->ordreblocks = $ordreblocks;
     }
 
     /**

@@ -24,46 +24,23 @@
                             </div><!-- /.container -->
                         </div><!-- /.hero-image-content -->
 
+
+                        {# {% include "Partials/form-search-vertical.html.twig" %}  #}
                         <div class="hero-image-form-wrapper">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-sm-4 col-sm-offset-8 col-lg-4 col-lg-offset-7">
-                                        <form method="get" action="?">
-                                            <h2>Start Searching</h2>
 
-                                            <div class="hero-image-keyword form-group">
-                                                <input type="text" class="form-control" placeholder="Keyword">
-                                            </div><!-- /.form-group -->
 
-                                            <div class="hero-image-location form-group">
-                                                <select class="form-control" title="Location">
-                                                    <option>Bronx</option>
-                                                    <option>Brooklyn</option>
-                                                    <option>Manhattan</option>
-                                                    <option>Staten Island</option>
-                                                    <option>Queens</option>
-                                                </select>
-                                            </div><!-- /.form-group -->
+                        {{ render(controller("AppBundle:Default:searchForm")) }}
 
-                                            <div class="hero-image-category form-group">
-                                                <select class="form-control" title="Category">
-                                                    <option value="">Automotive</option>
-                                                    <option value="">Jobs</option>
-                                                    <option value="">Nightlife</option>
-                                                    <option value="">Services</option>
-                                                </select>
-                                            </div><!-- /.form-group -->
-
-                                            <div class="hero-image-price form-group">
-                                                <input type="text" class="form-control" placeholder="Min. Price">
-                                            </div><!-- /.form-group -->
-
-                                            <button type="submit" class="btn btn-primary btn-block">Search</button>
-                                        </form>
                                     </div><!-- /.col-* -->
                                 </div><!-- /.row -->
                             </div><!-- /.container -->
                         </div><!-- /.hero-image-form-wrapper -->
+
+
+
                     </div><!-- /.hero-image-inner -->
                 </div><!-- /.hero-image -->
 
@@ -72,7 +49,7 @@
             <div class="container">
 
                 <div class="page-header">
-                    <h1>Nos Catégories</h1>
+                    <h1><a href="{{ path("categories") }}">Nos Catégories</a></h1>
                     <p>List of most recent interesting places and events in our directory submitted <br>by our users. Check whats going on in the city now.</p>
                 </div><!-- /.page-header -->
 

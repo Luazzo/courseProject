@@ -14,6 +14,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  */
 class ProviderController extends Controller
 {
+
+    /**
+     * List of found Providers
+     * @Route("/", name="search_providers")
+     */
+    public function getProvidersAction(){
+
+    }
+
     /**
      * Lists all provider entities.
      *

@@ -127,19 +127,10 @@ class User
     protected $confirmReg;
 
     /**
-     * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="OrdreBlock", mappedBy="user")
-     */
-    protected $ordreblocks;
-
-    /**
      * Constructor
      */
     public function __construct(){
-        /*$this->user_type=User::TYPE_ADMIN;*/
-        $this->ordreblocks=new ArrayCollection();
         $this->registration=new \DateTime();
-       /* $this->role=User::ROLE_ADMIN;*/
     }
 
     public function __toString(){
@@ -220,42 +211,6 @@ class User
     public function setZip($zip)
     {
         $this->zip = $zip;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getBlocks()
-    {
-        return $this->blocks;
-    }
-
-    /**
-     * @param ArrayCollection $blocks
-     */
-    public function setBlocks($blocks)
-    {
-        $this->blocks = $blocks;
-    }
-
-    /**
-     * @param mixed $block
-     */
-    public function addBlock($block)
-    {
-        $this->blocks->add($block);
-        // uncomment if you want to update other side
-        //$block->setUser($this);
-    }
-
-    /**
-     * @param mixed $block
-     */
-    public function removeBlock($block)
-    {
-        $this->blocks->removeElement($block);
-        // uncomment if you want to update other side
-        //$block->setUser(null);
     }
 
 

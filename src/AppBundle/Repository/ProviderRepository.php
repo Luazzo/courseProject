@@ -21,6 +21,7 @@ class ProviderRepository extends \Doctrine\ORM\EntityRepository
             ->setMaxResults($max_results);
 
         return $query->getQuery()->getResult();
-
     }
+
+
 }
