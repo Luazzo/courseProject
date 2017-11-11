@@ -170,7 +170,7 @@ AppBundle\Entity\Rating:
     rating_{1..11}:
         provider: '@provider_*'
         member: '@member_*'
-        note: <biasedNumberBetween(0,10)>
+        note: <biasedNumberBetween(1,10)>
         date: <dateTime('now')>
 
 

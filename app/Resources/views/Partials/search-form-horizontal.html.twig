@@ -1,0 +1,34 @@
+
+{{ form_start(form,{ 'attr':{"class":"filter"} }) }}
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+            <div class="form-group">
+                {{ form_widget(form.keyword,{ 'attr':{"class":"form-control", "placeholder":"Keyword" } }) }}
+            </div><!-- /.form-group -->
+        </div><!-- /.col-* -->
+
+        <div class="col-sm-12 col-md-4">
+            <div class="form-group">
+                {{ form_widget(form.locality,{ 'attr':{"class":"form-control"} } ) }}
+            </div><!-- /.form-group -->
+        </div><!-- /.col-* -->
+
+        <div class="col-sm-12 col-md-4">
+            <div class="form-group">
+                {{ form_widget(form.category,{ 'attr':{"class":"form-control"} } ) }}
+            </div><!-- /.form-group -->
+        </div><!-- /.col-* -->
+    </div><!-- /.row -->
+
+    <hr>
+
+    <div class="row">
+        <div class="col-sm-8">
+        </div><!-- /.col-* -->
+
+        <div class="col-sm-4">
+            <button type="submit" class="btn btn-primary">Redefine Search Result</button>
+
+        </div><!-- /.col-* -->
+    </div><!-- /.row -->
+{{ form_end(form) }}

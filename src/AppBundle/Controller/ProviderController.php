@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Provider;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Provider controller.
@@ -15,13 +16,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 class ProviderController extends Controller
 {
 
-    /**
-     * List of found Providers
-     * @Route("/", name="search_providers")
-     */
-    public function getProvidersAction(){
-
-    }
 
     /**
      * Lists all provider entities.
@@ -153,15 +147,15 @@ class ProviderController extends Controller
     }
 
 
-    public function getBestProvidersAction($max)
+    public function getBestProvidersAction(Request $request,$max)
     {
         $repository = $this
             ->getDoctrine()
             ->getManager()
-            ->getRepository('AppBundle:Provider')
-        ;
+            ->getRepository('AppBundle:Provider');
 
         $bestProviders = $repository->bestProviders($max);
+
 
         return $this->render("provider/card-wrapper.html.twig",array("providers"=>$bestProviders ));
 

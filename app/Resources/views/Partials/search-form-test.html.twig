@@ -8,16 +8,15 @@
 
                     <div class="hero-image-keyword form-group">
                         {{ form_widget(form.keyword,{ 'attr':{"class":"form-control", "placeholder":"Keyword" } }) }}
-                        {{ form_errors(form.keyword) }}
                     </div><!-- /.form-group -->
 
                     <div class="hero-image-location form-group">
-                        {{ form_widget(form.localities,{ 'attr':{"class":"form-control"} } ) }}
+                        {{ form_widget(form.locality,{ 'attr':{"class":"form-control"} } ) }}
 
                     </div><!-- /.form-group -->
 
                     <div id="category" class="hero-image-category form-group">
-                        {{ form_widget(form.categories,{ 'attr':{"class":"form-control"} } ) }}
+                        {{ form_widget(form.category,{ 'attr':{"class":"form-control"} } ) }}
                     </div><!-- /.form-group -->
 
                     <button type="submit" class="btn btn-primary btn-block">Search</button>

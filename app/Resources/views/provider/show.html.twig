@@ -178,7 +178,8 @@
                                 {% if provider.comments|length == 1 %}
 
                                     <div class="col-sm-12">
-                                        {% include "Comment/testimonial.html.twig" %}
+                                        {{ include("Comment/testimonial.html.twig", {comment:provider.comments.first})   }}
+
                                     </div><!-- /.col-* -->
 
                                 {% else %}
@@ -186,7 +187,7 @@
                                     <div class="col-sm-12">
                                         {% for comment in provider.comments %}
                                             {% if loop.index is odd %}
-                                                {% include "Comment/testimonial.html.twig" %}
+                                                {{ include ("Comment/testimonial.html.twig", {comment:comment})  }}
                                             {% endif %}
                                         {% endfor %}
                                     </div><!-- /.col-* -->
@@ -213,7 +214,7 @@
                                         {% else %}
                                             {{ rating.0.note_avg }} / 10
                                         {% endif %}
-                                    </strong>from <a href="#reviews">316 reviews</a>
+                                    </strong>from <a href="#reviews">{{ rating.0.nmb_note }} votes</a>
                                 </div>
 
                                 <div class="detail-actions row">

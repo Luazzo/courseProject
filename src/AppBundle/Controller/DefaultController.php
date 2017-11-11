@@ -29,7 +29,16 @@ class DefaultController extends Controller
         ));
     }
 
+    public  function searchFormHorizontalAction(){
+        $form = $this->createForm('AppBundle\Form\SearchType',null,array(
+            'action' => $this->generateUrl('search_providers'),
+            'method' => 'GET'
+        ));
 
+        return $this->render(':Partials:search-form-horizontal.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
 
 
     public  function searchFormAction(){
@@ -37,7 +46,6 @@ class DefaultController extends Controller
             'action' => $this->generateUrl('search_providers'),
             'method' => 'GET'
         ));
-
 
         return $this->render('Partials/search-form-test.html.twig', array(
             'form' => $form->createView()

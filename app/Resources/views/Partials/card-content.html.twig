@@ -3,7 +3,7 @@
     <h2><a href="{{ path('provider_show', {'id': p.provider.id }) }}">{{ p.provider.company }}</a></h2>
 
     <div class="card-meta">
-        <i class="">Rate : {{ p.note_avg }}</i>
+        <i class="">Rate : {{ p.note_avg }}/{{ p.nmb_note }}</i>
     </div><!-- /.card-meta -->
 
     <div class="card-rating">

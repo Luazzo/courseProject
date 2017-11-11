@@ -8578,7 +8578,7 @@ h2.widgettitle-30lineheight {
   transition: all ease 0.35s;
   width: 100%;
   z-index: 2; }
-  .card-simple-content h2 {
+  .card-simple-content h2, h5 {
     color: #fff;
     display: block;
     font-size: 20px;

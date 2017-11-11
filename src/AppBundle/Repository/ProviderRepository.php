@@ -11,17 +11,140 @@ namespace AppBundle\Repository;
 class ProviderRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function bestProviders($max_results)
+    public function providersOfCategory($category)
     {
         $query = $this->createQueryBuilder('p')
-            ->innerJoin("p.ratings", "r")
-            ->select("p as provider","avg(r.note) as note_avg")
-            ->orderBy("note_avg", "DESC")
-            ->groupBy("p")
-            ->setMaxResults($max_results);
+            ->select("p as provider","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+            ->where('c = :category')
+            ->leftJoin("p.categories", "c") /**IF INNERJOIN : result just with rating; LEFTJOIN : return ALL PROVIDERS*/
+            ->leftJoin("p.ratings", "r")
+            ->setParameter('category', $category)
+            ->orderBy("note_avg",  "DESC")
+            ->addOrderBy("nmb_note", "DESC")
+            ->groupBy("p");
 
         return $query->getQuery()->getResult();
     }
+
+    public function bestProviders($max_results)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->leftJoin("p.ratings", "r") /**IF INNERJOIN : result just with rating; LEFTJOIN : return ALL PROVIDERS*/
+            ->select("p as provider","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+            ->orderBy("note_avg",  "DESC")
+            ->addOrderBy("nmb_note", "DESC")
+            ->groupBy("p");
+
+        if( is_integer($max_results)){
+            $query->setMaxResults($max_results); /** LIMIT OF ROWS; IF NOT INTEGER  -  RETURN ALL PROVIDERS */
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function findWithKeyword($keyword)
+    {
+        $qb = $this->createQueryBuilder('provider');
+
+        $qb ->select("provider as p","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+            ->where($qb->expr()->like('provider.company', $qb->expr()->literal("%$keyword%")))
+            ->leftJoin("provider.ratings", "r")
+            ->orderBy("note_avg", "DESC")
+            ->addOrderBy("nmb_note", "DESC")
+            ->groupBy("p");
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findWithLocality($locality)
+    {
+        $qb = $this->createQueryBuilder('provider');
+
+        $qb ->select("provider as p","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+            ->where('l = :locality')
+            ->leftJoin("provider.locality", "l")
+            ->leftJoin("provider.ratings", "r")
+            ->setParameter('locality', $locality)
+            ->orderBy("note_avg", "DESC")
+            ->addOrderBy("nmb_note", "DESC")
+            ->groupBy("p");
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findWithCategory($category)
+    {
+        $qb = $this->createQueryBuilder('provider');
+
+        $qb ->select("provider as p","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+            ->where('c = :category')
+            ->leftJoin("provider.categories", "c")
+            ->leftJoin("provider.ratings", "r")
+            ->setParameter('category', $category)
+            ->orderBy("note_avg", "DESC")
+            ->addOrderBy("nmb_note", "DESC")
+            ->groupBy("p");
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findWithLocalityCategory($locality,$category)
+    {
+        $qb = $this->createQueryBuilder('provider');
+
+        $qb ->select("provider as p","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+            ->where('l = :locality')
+            ->andWhere('c = :category')
+            ->leftJoin("provider.locality", "l")
+            ->leftJoin("provider.categories", "c")
+            ->leftJoin("provider.ratings", "r")
+            ->setParameter('locality', $locality)
+            ->setParameter('category', $category)
+            ->orderBy("note_avg", "DESC")
+            ->addOrderBy("nmb_note", "DESC")
+            ->groupBy("p");
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findWithKeywordLocality($keyword,$locality)
+    {
+        $qb = $this->createQueryBuilder('provider');
+
+        $qb ->select("provider as p","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+            ->where($qb->expr()->like('provider.company', $qb->expr()->literal("%$keyword%")))
+            ->andWhere('l = :locality')
+            ->leftJoin("provider.locality", "l")
+            ->leftJoin("provider.ratings", "r")
+            ->setParameter('locality', $locality)
+            ->orderBy("note_avg", "DESC")
+            ->addOrderBy("nmb_note", "DESC")
+            ->groupBy("p");
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findWithKeywordLocalityCategory($keyword,$locality,$category)
+    {
+        $qb = $this->createQueryBuilder('provider');
+
+        $qb ->select("provider as p","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+            ->where($qb->expr()->like('provider.company', $qb->expr()->literal("%$keyword%")))
+            ->andWhere('l = :locality')
+            ->andWhere('c = :category')
+            ->leftJoin("provider.locality", "l")
+            ->leftJoin("provider.categories", "c")
+            ->leftJoin("provider.ratings", "r")
+            ->setParameter('locality', $locality)
+            ->setParameter('category', $category)
+            ->orderBy("note_avg", "DESC")
+            ->addOrderBy("nmb_note", "DESC")
+            ->groupBy("p");
+
+        return $qb->getQuery()->getResult();
+    }
+
+
 
 
 }

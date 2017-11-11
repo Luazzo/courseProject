@@ -12,7 +12,7 @@ class RatingRepository extends \Doctrine\ORM\EntityRepository
 {
     public function findRating($provider){
         $query = $this->createQueryBuilder('r')
-            ->select("avg(r.note) as note_avg")
+            ->select("avg(r.note) as note_avg", "count(r.note) as nmb_note")
             ->where("r.provider = :provider")
             ->setParameter("provider", $provider);
 

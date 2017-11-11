@@ -30,17 +30,34 @@
 
                             <div class="page-title">
                                 <h2>Providers of this Category</h2><!-- /.page-title -->
+
+
                             </div><!-- /.page-title -->
                             <div class="cards-simple-wrapper">
-                                <div class="row">
-                                    {% if category.providers|length > 0 %}
 
-                                        {% for provider in category.providers %}
+                                <div class="row">
+
+                                    {% if providers|length > 0 %}
+
+                                        {% for p in providers %}
                                             <div class="col-sm-6 col-lg-4">
-                                                <div class="card-simple" data-background-image="/img/tmp/product-1.jpg">
-                                                    <div class="card-simple-background">
-                                                        <div class="card-simple-content">
-                                                            <h2><a href="{{ path('provider_show', { 'id': provider.id }) }}">{{ provider.company }}</a></h2>
+                                                <div class="card" data-background-image="/img/tmp/product-1.jpg">
+                                                    <div class="card-background">
+                                                        <div class="card-content">
+                                                            <h2>
+                                                                <a href="{{ path('provider_show', { 'id': p.provider.id }) }}">{{ p.provider.company }}</a>
+
+                                                            </h2>
+
+                                                            <div class="card-meta">
+                                                                {% if p.note_avg != null %}
+                                                                    <i class="">Rate : {{ p.note_avg }}/{{ p.nmb_note }}</i>
+                                                                {% else %}
+                                                                    <i class="">No rated</i>
+                                                                {% endif %}
+                                                            </div><!-- /.card-meta -->
+
+
                                                             <div class="card-simple-rating">
                                                                 <i class="fa fa-star"></i>
                                                                 <i class="fa fa-star"></i>
@@ -73,7 +90,7 @@
                             </div><!-- /.cards-simple-wrapper -->
 
 
-                            <div class="pager">
+                            <div class="paginer">
                                 {{ knp_pagination_render(providers) }}
                             </div><!-- /.pagination -->
 

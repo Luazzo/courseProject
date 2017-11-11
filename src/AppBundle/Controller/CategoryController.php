@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use  Knp\Component\Pager\Paginator;
 
 /**
  * Category controller.
@@ -36,6 +38,7 @@ class CategoryController extends Controller
             $request->query->get('page', 1)/*le numéro de la page à afficher*/,
                                                     3/*nbre d'éléments par page*/
         );
+        unset($_GET);
 
         return $this->render('category/index.html.twig', array(
             'courses' => $courses,
@@ -86,12 +89,13 @@ class CategoryController extends Controller
 
         $allCategories = $em->getRepository('AppBundle:Category')->findAll();
 
-        $listProviders = $em->getRepository('AppBundle:Category')->providersOfCategory($category);
+        $listProviders = $em->getRepository('AppBundle:Provider')->providersOfCategory($category);
+
         $providers  = $this->get('knp_paginator')->paginate(
             $listProviders,
-            $request->query->get('page', 1)/*le numéro de la page à afficher*/,
-                                                    3/*nbre d'éléments par page*/
-        );
+            $request->query->get('page', 1), 6);
+
+        unset($_GET);
 
 
         $deleteForm = $this->createDeleteForm($category);
