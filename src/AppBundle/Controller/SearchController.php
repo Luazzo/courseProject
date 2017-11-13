@@ -21,18 +21,20 @@ class SearchController extends Controller
      */
     public function getProvidersAction(Request $request){
 
-        $em = $this->getDoctrine()->getManager();
-
         $data = $request -> query -> get('appbundle_search');
 
-        $providers=$this->get('AppBundle\Services\Search')->providersSearch($data['keyword'],$data['category'],$data['locality']);
+        $listProviders=$this->get('AppBundle\Services\Search')->providersSearch($data['keyword'],$data['category'],$data['locality']);
 
-        $paginate  = $this->get('knp_paginator')->paginate(
-            $providers,
-            $request->query->get('page', 1), 3);
+        $providers  = $this->get('knp_paginator')->paginate(
+            $listProviders,
+            $request->query->get('page', 1),
+            3);
 
+        //dump($paginate); die();
 
-        return $this->render('/provider/index.html.twig', array('providers' => $providers, 'paginate' => $paginate));
+        return $this->render('/provider/index.html.twig', array(
+            'providers' => $providers
+        ));
 
     }
 }

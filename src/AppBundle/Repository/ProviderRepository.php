@@ -44,11 +44,11 @@ class ProviderRepository extends \Doctrine\ORM\EntityRepository
 
     public function findWithKeyword($keyword)
     {
-        $qb = $this->createQueryBuilder('provider');
+        $qb = $this->createQueryBuilder('p');
 
-        $qb ->select("provider as p","avg(r.note) as note_avg", "count(r.note) as nmb_note")
-            ->where($qb->expr()->like('provider.company', $qb->expr()->literal("%$keyword%")))
-            ->leftJoin("provider.ratings", "r")
+        $qb ->select("p as provider","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+            ->where($qb->expr()->like('p.company', $qb->expr()->literal("%$keyword%")))
+            ->leftJoin("p.ratings", "r")
             ->orderBy("note_avg", "DESC")
             ->addOrderBy("nmb_note", "DESC")
             ->groupBy("p");
@@ -58,12 +58,12 @@ class ProviderRepository extends \Doctrine\ORM\EntityRepository
 
     public function findWithLocality($locality)
     {
-        $qb = $this->createQueryBuilder('provider');
+        $qb = $this->createQueryBuilder('p');
 
-        $qb ->select("provider as p","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+        $qb ->select("p as provider","avg(r.note) as note_avg", "count(r.note) as nmb_note")
             ->where('l = :locality')
-            ->leftJoin("provider.locality", "l")
-            ->leftJoin("provider.ratings", "r")
+            ->leftJoin("p.locality", "l")
+            ->leftJoin("p.ratings", "r")
             ->setParameter('locality', $locality)
             ->orderBy("note_avg", "DESC")
             ->addOrderBy("nmb_note", "DESC")
@@ -74,12 +74,12 @@ class ProviderRepository extends \Doctrine\ORM\EntityRepository
 
     public function findWithCategory($category)
     {
-        $qb = $this->createQueryBuilder('provider');
+        $qb = $this->createQueryBuilder('p');
 
-        $qb ->select("provider as p","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+        $qb ->select("p as provider","avg(r.note) as note_avg", "count(r.note) as nmb_note")
             ->where('c = :category')
-            ->leftJoin("provider.categories", "c")
-            ->leftJoin("provider.ratings", "r")
+            ->leftJoin("p.categories", "c")
+            ->leftJoin("p.ratings", "r")
             ->setParameter('category', $category)
             ->orderBy("note_avg", "DESC")
             ->addOrderBy("nmb_note", "DESC")
@@ -90,14 +90,15 @@ class ProviderRepository extends \Doctrine\ORM\EntityRepository
 
     public function findWithLocalityCategory($locality,$category)
     {
-        $qb = $this->createQueryBuilder('provider');
+        $qb = $this->createQueryBuilder('p');
 
-        $qb ->select("provider as p","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+        $qb ->select("p as provider","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+            ->innerJoin("p.locality", "l") /// INNERJOIN retourne tous les enregistrements comportant une concordance
+            ->innerJoin("p.categories", "c")
+            ->leftJoin("p.ratings", "r")    ///LEFTJOIN retourne tous les items de la colonne de gauche peu importe les concordances
+
             ->where('l = :locality')
-            ->andWhere('c = :category')
-            ->leftJoin("provider.locality", "l")
-            ->leftJoin("provider.categories", "c")
-            ->leftJoin("provider.ratings", "r")
+            ->andWhere(':category IN p.categories')
             ->setParameter('locality', $locality)
             ->setParameter('category', $category)
             ->orderBy("note_avg", "DESC")

@@ -4,9 +4,11 @@
 
 
 
+query = $em->createQuery('SELECT u FROM Users u WHERE u.id IN (:id)');
+$query->setParameter('id', array(1, 9));
+$users = $query->getResult();
 
-
-
+__________________________________________________
 
 <div class="card-row">
     <div class="card-row-inner">
