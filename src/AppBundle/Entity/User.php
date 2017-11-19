@@ -3,23 +3,25 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
  *
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository") *
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\InheritanceType
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="user_type", type="string")
  * @ORM\DiscriminatorMap({"admin"="User","provider" = "Provider", "member" = "Member"})
  */
-class User
+class User implements UserInterface, \Serializable
 {
     const TYPE_ADMIN = "admin";
     const TYPE_PROVIDER = "provider";
-    const TYPE_VISITOR = "member";
+    const TYPE_MEMBER = "member";
 
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_PROVIDER = 'ROLE_PROVIDER';
@@ -37,14 +39,21 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="username", type="string", length=255)
+     */
+    private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     protected $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=255)
+     * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
      */
     protected $firstName;
 
@@ -54,6 +63,9 @@ class User
      * @ORM\Column(name="role", type="string", length=255)
      */
     protected $role;
+
+
+    protected $userType;
 
     /**
      * @var string
@@ -68,6 +80,9 @@ class User
      * @ORM\Column(name="password", type="string", length=255, nullable=true)
      */
     protected $password;
+
+
+    private $plainPassword;
 
     /**
      * @var string
@@ -110,21 +125,30 @@ class User
      *
      * @ORM\Column(name="attempts", type="integer")
      */
-    protected $attempts;
+    protected $attempts = "0";
 
     /**
      * @var bool
      *
      * @ORM\Column(name="enable", type="boolean")
      */
-    protected $enable;
+    protected $enable = false;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="confirm_reg", type="boolean")
      */
-    protected $confirmReg;
+    protected $confirmReg = false;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="token", type="string", nullable=true)
+     */
+    protected $token;
+
+
 
     /**
      * Constructor
@@ -213,6 +237,21 @@ class User
         $this->zip = $zip;
     }
 
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
 
     /**
      * @return string
@@ -276,6 +315,22 @@ class User
     public function setPassword($password)
     {
         $this->password = $password;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
     }
 
     /**
@@ -389,6 +444,48 @@ class User
     {
         $this->confirmReg = $confirmReg;
     }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    public function serialize()
+    {
+        // TODO: Implement serialize() method.
+    }
+
+    public function unserialize($serialized)
+    {
+        // TODO: Implement unserialize() method.
+    }
+
+    public function getRoles()
+    {
+        // TODO: Implement getRoles() method.
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
 
 }
 

@@ -147,7 +147,7 @@ class ProviderController extends Controller
     }
 
 
-    public function getBestProvidersAction(Request $request,$max)
+    public function getBestProvidersAction($max)
     {
         $repository = $this
             ->getDoctrine()

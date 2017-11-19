@@ -17,12 +17,12 @@
                     {% for p in providers if i < length %} <!---->
                         {% if loop.first %}
                             <div class="col-sm-12">
-                                {% include "Partials/card.html.twig" %}
+                                {% include "provider/card.html.twig" %}
                             </div><!-- /.col-* -->
 
                         {% else %}
                             <div class="col-sm-6">
-                                {% include "Partials/card.html.twig" %}
+                                {% include "provider/card.html.twig" %}
                             </div><!-- /.col-* -->
                         {% endif %}
 
@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             {% if i == length %}
-                                {% include "Partials/card-tall.html.twig" with {'p': providers[i]} %}
+                                {% include "provider/card-tall.html.twig" with {'p': providers[i]} %}
                             {% endif %}
                         </div><!-- /.col-* -->
                     </div><!-- /.row -->

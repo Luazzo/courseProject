@@ -1,0 +1,65 @@
+
+{% extends 'Annuaire/layout-annuaire.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block header_bottom %}
+    {% include "Annuaire/header.html.twig" %}
+{% endblock %}
+
+{% block main %}
+    <div class="main">
+    <div class="main-inner">
+        <div class="container">
+            <div class="content">
+
+
+
+
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-4">
+                        <div class="page-title">
+                            <h1>Register</h1>
+                        </div><!-- /.page-title -->
+
+                        {% include ':Partials:flash-messages.html.twig' %}
+
+                        {{ form_start(form) }}
+                            <div class="form-group">
+                                {{ form_label(form.username) }}
+                                {{ form_widget(form.username,{ 'attr':{"class":"form-control" } }) }}
+                            </div><!-- /.form-group -->
+
+                            <div class="form-group">
+                                {{ form_label(form.email) }}
+                                {{ form_widget(form.email,{ 'attr':{"class":"form-control" } }) }}
+                            </div><!-- /.form-group -->
+
+                            <div class="form-group">
+                                {{ form_label(form.plainPassword.first) }}
+                                {{ form_widget(form.plainPassword.first,{ 'attr':{"class":"form-control" } }) }}
+                            </div><!-- /.form-group -->
+
+                            <div class="form-group">
+                                {{ form_label(form.plainPassword.second) }}
+                                {{ form_widget(form.plainPassword.second,{ 'attr':{"class":"form-control" } }) }}
+                            </div><!-- /.form-group -->
+
+                            <div class="form-group">
+                                {{ form_widget(form.role) }}
+                            </div><!-- /.form-group -->
+
+                            <button type="submit">Register!</button>
+
+                        {{ form_end(form) }}
+
+
+                    </div><!-- /.col-sm-4 -->
+                </div><!-- /.row -->
+
+            </div><!-- /.content -->
+        </div><!-- /.container -->
+    </div><!-- /.main-inner -->
+</div><!-- /.main -->
+{% endblock %}
+

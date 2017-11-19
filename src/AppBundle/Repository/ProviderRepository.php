@@ -30,7 +30,7 @@ class ProviderRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->createQueryBuilder('p')
             ->leftJoin("p.ratings", "r") /**IF INNERJOIN : result just with rating; LEFTJOIN : return ALL PROVIDERS*/
-            ->select("p as provider","avg(r.note) as note_avg", "count(r.note) as nmb_note")
+            ->select("p as provider","avg(r.note) as note_avg", "count(r.note) as nmb_note") /*round(avg(r.note), 2) - ne marche pas.  Fait en twig*/
             ->orderBy("note_avg",  "DESC")
             ->addOrderBy("nmb_note", "DESC")
             ->groupBy("p");
@@ -90,23 +90,39 @@ class ProviderRepository extends \Doctrine\ORM\EntityRepository
 
     public function findWithLocalityCategory($locality,$category)
     {
-        $qb = $this->createQueryBuilder('p');
-
-        $qb ->select("p as provider","avg(r.note) as note_avg", "count(r.note) as nmb_note")
-            ->innerJoin("p.locality", "l") /// INNERJOIN retourne tous les enregistrements comportant une concordance
-            ->innerJoin("p.categories", "c")
+        $qb = $this->createQueryBuilder('p')
+            ->select("p as provider", "avg(r.note) as note_avg", "count(r.note) as nmb_note")
             ->leftJoin("p.ratings", "r")    ///LEFTJOIN retourne tous les items de la colonne de gauche peu importe les concordances
+           /* ->leftJoin("p.locality", "l") /// INNERJOIN retourne tous les enregistrements comportant une concordance
+            ->leftJoin("p.categories", "cs")
+            ->addSelect('cs');
 
-            ->where('l = :locality')
-            ->andWhere(':category IN p.categories')
-            ->setParameter('locality', $locality)
+       // $qb = $qb->add('where', $qb->expr()->in(':c', 'cs'))*/
+            ->where('p.locality = :locality')
+            ->innerJoin('p.categories','c')
+            ->andWhere('c = :category')
+            ->addSelect("c")
             ->setParameter('category', $category)
+            ->setParameter('locality', $locality)
+
             ->orderBy("note_avg", "DESC")
             ->addOrderBy("nmb_note", "DESC")
             ->groupBy("p");
 
-        return $qb->getQuery()->getResult();
+            $query = $this->addJoins($qb);
+
+        return $query->getQuery()->getResult();
     }
+    /*
+            $qb = $this->createQueryBuilder('p');
+            $qb->Where('p.city = :city')
+            ->setParameter('city', $city)
+            ->join('p.serviceCategories', 'c', 'WITH', 'c = :category')
+            ->addSelect('c')
+            ->setParameter('category',$category);
+            $query = $this->addJoins($qb);
+            return $query->getQuery()->getResult();*/
+
 
     public function findWithKeywordLocality($keyword,$locality)
     {

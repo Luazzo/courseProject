@@ -3,7 +3,7 @@
 {% block title %}Categories{% endblock %}
 
 {% block header_bottom %}
-    {% include "Partials/header.html.twig" %}
+    {% include "Annuaire/header.html.twig" %}
 {% endblock %}
 
 {% block main %}
@@ -41,7 +41,6 @@
                                     </div><!-- /.post -->
                                 {% endfor %}
                             </div><!-- /.posts -->
-                            {{ dump(categories) }}
 
 
                             <div class="navigation">
@@ -71,7 +70,7 @@
                             </div><!-- /.widget -->
 
 
-                            {% include "Partials/filter.html.twig" %}
+                            {% include ":search:filter.html.twig" %}
 
 
                             <div class="widget">

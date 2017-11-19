@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
+
     /**
      * @Route("/", name="homepage")
      */
@@ -29,6 +30,7 @@ class DefaultController extends Controller
         ));
     }
 
+
     public  function searchFormHorizontalAction(){
         $form = $this->createForm('AppBundle\Form\SearchType',null,array(
             'action' => $this->generateUrl('search_providers'),
@@ -47,7 +49,7 @@ class DefaultController extends Controller
             'method' => 'GET'
         ));
 
-        return $this->render('Partials/search-form-test.html.twig', array(
+        return $this->render('search/search-form-test.html.twig', array(
             'form' => $form->createView()
         ));
     }

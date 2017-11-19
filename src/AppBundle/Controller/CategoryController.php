@@ -93,7 +93,7 @@ class CategoryController extends Controller
 
         $providers  = $this->get('knp_paginator')->paginate(
             $listProviders,
-            $request->query->get('page', 1), 6);
+            $request->query->get('page', 1), 3);
 
         unset($_GET);
 

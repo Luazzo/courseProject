@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block header_bottom %}
-    {% include "Partials/header-transparent.html.twig" %}
+    {% include "Annuaire/header.html.twig" %}
 {% endblock %}
 
 {% block main %}
@@ -56,7 +56,7 @@
                     <div class="row">
                         {% for category in categories | slice (0,8) %}
                             <div class="col-sm-6 col-md-3">
-                                {% include "Partials/card-simple.html.twig" %}
+                                {% include "category/card-simple.html.twig" %}
                             </div><!-- /.col-* -->
                         {% endfor %}
 
@@ -76,7 +76,7 @@
                         <div class="col-sm-6">
                             <div class="posts">
                                 {% for promotion in promotions | slice (0,4) %}
-                                    {% include "Partials/post.html.twig" %}
+                                    {% include "promotion/post.html.twig" %}
                                 {% endfor %}
                             </div><!-- /.posts -->
 
@@ -85,7 +85,7 @@
                         <div class="col-sm-6">
                             <div class="posts">
                                 {% for promotion in promotions | slice (4,4) %}
-                                    {% include "Partials/post.html.twig" %}
+                                    {% include "promotion/post.html.twig" %}
                                 {% endfor %}
                             </div><!-- /.posts -->
 
