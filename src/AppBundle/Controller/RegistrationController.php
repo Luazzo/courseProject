@@ -3,60 +3,125 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Member;
 use AppBundle\Entity\Provider;
-use AppBundle\Form\UserType;
-use AppBundle\Entity\User;
+use AppBundle\Entity\UserTemp;
+use AppBundle\Form\UserTempType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
 
-class RegistrationController extends Controller
+class RegistrationTempController extends Controller
 {
 
+    public function tokenCheckAction($token)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('AppBundle:User')->verifToken($token);
+        dump($user);die();
+
+        if($user)
+        {
+            $user->setToken("null");
+            $user->setEnable(1);
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('login');
+        }
+
+
+        return $user;
+    }
+
+
+
+
     /**
-     * @Route("/confirmation_message", name="demande_confirmation")
+     * @Route("/register_confirm/{token}", name="register_confirm")
+     * @Method("GET")
+     */
+    public function registerConfirmAction($token)
+    {
+        dump("confirmé"); die();
+
+        if($token !== null)
+        {
+            $user = $this -> tokenCheckAction($token);
+
+            if($user !== null)
+            {
+                $this->enableUserAction($token);
+            }
+
+            return $this->redirectToRoute('login', array('user' => $user));
+        }
+    }
+
+
+    /**
+     * @Route("/confirmation_request", name="demande_confirmation")
      */
     public function demandeConfirmationAction()
     {
-
         return $this->render('register/demande-confirmation.html.twig', array());
-
     }
 
-    /**
-     * @Route("/login", name="login")
-     */
-    public function loginAction()
+
+    public function genToken($length)
     {
-
-        return $this->render('register/login.html.twig', array());
-
+        $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+        return substr(str_shuffle(str_repeat($alphabet, $length)),0, $length);
     }
 
 
 
     /**
+     * @param Request $request
      * @Route("/register", name="register")
-     * @Method({"GET", "POST"})
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \LogicException
      */
-    public function registerAction(Request $request, UserInterface $passwordEncoder)
+    public function registerAction(Request $request)
     {
 
-        // 1) build the form
-        $user = new User();
-        $form = $this->createForm('AppBundle\Form\UserType', $user);
+        $user = new UserTemp();
 
-        // 2) handle the submit (will only happen on POST)
+        $form = $this->createForm('AppBundle\Form\UserTempType', $user);
+
+        if ($this->handleFormRegister($request, $form, $user)==true){ //without $user password not generated correctly
+            return $this->redirectToRoute('demande_confirmation');
+        }
+
+        return $this->render(
+            'register/register.html.twig',
+            array('form' => $form->createView())
+        );
+    }
+
+
+    /**
+     * @param Request $request
+     * @Route("/handleFormRegister", name="handleFormRegister")
+     * @return \Symfony\Component\HttpFoundation\Response | \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Method("POST")
+     * @throws \LogicException
+     * @throws \InvalidArgumentException
+     */
+    public function handleFormRegister(Request $request, $form, $user)
+    {
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $role = $form["role"]->getData();
-            if($role == 'ROLE_PROVIDER'){
+            if ($role == 'ROLE_PROVIDER') {
                 $userReg = new Provider();
-            }elseif ($role == 'ROLE_MEMBER'){
+            } elseif ($role == 'ROLE_MEMBER') {
                 $userReg = new Member();
             }
 
@@ -68,38 +133,27 @@ class RegistrationController extends Controller
             $usermail = $form["email"]->getData();
             $userReg->setEmail($usermail);
 
-            //$password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-
-            // 3) Encode the password (you could also do this via Doctrine listener):
             $password = $this
                 ->get('security.password_encoder')
                 ->encodePassword(
-                    $userReg,
-                    $userReg->getPlainPassword()
+                    $user,
+                    $user->getPlainPassword()
                 );
             $userReg->setPassword($password);
 
+            $token = $this->genToken(60);
 
-            //dump($userType); // montre le type qu'il faut
+            $userReg->setToken($token);       //$token = bin2hex(random_bytes(16)); - PHP7
 
-            //$user->setUserType($userType);
-
-            // 4) save the User!
             $em = $this->getDoctrine()->getManager();
             $em->persist($userReg);
             $em->flush();
 
-            // ... do any other work - like sending them an email, etc
-            // maybe set a "flash" success message for the user
-            //$this->addFlash('success', 'You are now successfuly registered!');
+            $this->get('AppBundle\Services\SendMail')->sendConfirmation($usermail, $username, $token);
 
-
-            return $this->redirectToRoute('demande_confirmation');
+            return true; //Without TRUE - function registerAction return render('register/register.html.twig')
+                                //  and not gotoRoute "demande_confirmation"
         }
-
-        return $this->render(
-            'register/register.html.twig',
-            array('form' => $form->createView())
-        );
     }
+
 }
