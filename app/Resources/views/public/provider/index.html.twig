@@ -1,0 +1,181 @@
+{% extends 'Annuaire/layout-annuaire.html.twig' %}
+
+{% block title %}Provider{% endblock %}
+
+{% block header_bottom %}
+    {% include "Annuaire/header.html.twig" %}
+{% endblock %}
+
+{% block main %}
+
+    <div class="main">
+        <div class="main-inner">
+            <div class="container">
+                <div class="row">
+                    <h1>Found Providers list</h1>
+
+                    <div class="col-sm-8 col-lg-9">
+                        <div class="content">
+
+                            {{ render(controller("AppBundle:Default:searchFormHorizontal")) }}
+
+
+                            <div class="cards-row">
+
+                                {% if providers|length > 0 %}
+                                    {% for provider in providers %}
+                                        <div class="card-row">
+                                            <div class="card-row-inner">
+                                                <div class="card-row-image" data-background-image="/img/tmp/product-1.jpg">
+                                                    {#<div class="card-row-label"><a href="listing-detail.html">Vacation</a></div> /.card-row-label #}
+
+                                                    {# <div class="card-row-price">$100 / night</div> #}
+
+                                                </div>{# /.card-row-image #}
+
+                                                <div class="card-row-body">
+                                                    <h2 class="card-row-title"><a href="listing-detail.html">{{ provider.provider.company }}</a></h2>
+                                                    <div class="card-row-content"><p>{{ provider.provider.presentation }}</p></div>{# /.card-row-content #}
+                                                </div>{# /.card-row-body #}
+
+                                                <div class="card-row-properties">
+                                                    <dl>
+                                                        <dd>Location</dd><dt>{{ provider.provider.town.town }}</dt>
+
+                                                        <dd>Email</dd><dt>{{ provider.provider.emailCompany }}</dt>
+
+                                                        <dd>Telephone</dd><dt>{{ provider.provider.telCompany }}</dt>
+
+                                                        <dd>
+                                                            Rating
+                                                        </dd>
+                                                        <dt>
+                                                            {% if provider.note_avg != null %}
+                                                                {# |round(1, 'floor') decimales arondis#}
+                                                                {{ provider.note_avg | round(1, 'floor')}} / {{ provider.nmb_note }} votes
+                                                            {% else %}
+                                                                No rated
+                                                            {% endif %}
+                                                            <div class="card-row-rating">
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                            </div>{# /.card-row-rating #}
+                                                        </dt>
+                                                    </dl>
+
+                                                </div>{# /.card-row-properties #}
+
+
+                                            </div>{# /.card-row-inner #}
+                                        </div>{# /.card-row #}
+                                    {% endfor %}
+
+                                {% else %}
+                                    No found Providers
+                                {% endif %}
+
+
+
+
+                            </div>{# /.cards-row #}
+
+                            <div class="paginer">
+                                {{ knp_pagination_render(providers) }}
+                            </div>{# /.pagination #}
+
+
+                        </div>{# /.content #}
+                    </div>{# /.col-* #}
+
+                    <div class="col-sm-4 col-lg-3">
+                        <div class="sidebar">
+                            <div class="widget">
+                                <h2 class="widgettitle">Recent Listings</h2>
+
+                                <div class="cards-small">
+                                    <div class="card-small">
+                                        <div class="card-small-image">
+                                            <a href="listing-detail.html">
+                                                <img src="/img/tmp/product-2.jpg" alt="Tasty Brazil Coffee">
+                                            </a>
+                                        </div>{# /.card-small-image #}
+
+                                        <div class="card-small-content">
+                                            <h3><a href="listing-detail.html">Tasty Brazil Coffee</a></h3>
+                                            <h4><a href="listing-detail.html">New York / Village</a></h4>
+
+                                            <div class="card-small-price">$180 / person</div>
+                                        </div>{# /.card-small-content #}
+                                    </div>{# /.card-small #}
+                                </div>{# /.cards-small #}
+
+
+
+                                <div class="cards-small">
+                                    <div class="card-small">
+                                        <div class="card-small-image">
+                                            <a href="listing-detail.html">
+                                                <img src="/img/tmp/product-3.jpg" alt="Healthy Breakfast">
+                                            </a>
+                                        </div>{# /.card-small-image #}
+
+                                        <div class="card-small-content">
+                                            <h3><a href="listing-detail.html">Healthy Breakfast</a></h3>
+                                            <h4><a href="listing-detail.html">New York / Village</a></h4>
+
+                                            <div class="card-small-price">$180 / person</div>
+                                        </div>{# /.card-small-content #}
+                                    </div>{# /.card-small #}
+                                </div>{# /.cards-small #}
+
+
+
+                                <div class="cards-small">
+                                    <div class="card-small">
+                                        <div class="card-small-image">
+                                            <a href="listing-detail.html">
+                                                <img src="/img/tmp/product-4.jpg" alt="Coffee &amp; Newspaper">
+                                            </a>
+                                        </div>{# /.card-small-image #}
+
+                                        <div class="card-small-content">
+                                            <h3><a href="listing-detail.html">Coffee &amp; Newspaper</a></h3>
+                                            <h4><a href="listing-detail.html">New York / Village</a></h4>
+
+                                            <div class="card-small-price">$180 / person</div>
+                                        </div>{# /.card-small-content #}
+                                    </div>{# /.card-small #}
+                                </div>{# /.cards-small #}
+
+                            </div>{# /.widget #}
+
+
+
+
+
+                            <div class="widget">
+                                <h2 class="widgettitle">Categories</h2>
+
+                                <ul class="menu">
+                                    <li><a href="#">Automotive</a></li>
+                                    <li><a href="#">Jobs</a></li>
+                                    <li><a href="#">Nightlife</a></li>
+                                    <li><a href="#">Services</a></li>
+                                    <li><a href="#">Transportation</a></li>
+                                    <li><a href="#">Real Estate</a></li>
+                                    <li><a href="#">Restaurants</a></li>
+                                </ul>{# /.menu #}
+                            </div>{# /.wifget #}
+
+
+
+                        </div>{# /.sidebar #}
+                    </div>{# /.col-* #}
+                </div>{# /.row #}
+            </div>{# /.container #}
+        </div>{# /.main-inner #}
+    </div>{# /.main #}
+{% endblock %}

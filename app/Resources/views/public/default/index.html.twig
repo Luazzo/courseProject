@@ -1,0 +1,244 @@
+{% extends 'Annuaire/layout-annuaire.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block header_bottom %}
+    {% include "Annuaire/header.html.twig" %}
+{% endblock %}
+
+{% block content %}
+            <div class="mt-150">
+                <div class="hero-image">
+                    <div class="hero-image-inner" style="background-image: url('/img/tmp/slider-large-3.jpg');">
+                        <div class="hero-image-content">
+                            <div class="container">
+                                <h1>Directory Template</h1>
+
+                                <p>Create your own directory website by using Superlist template <br> incorporating all features of modern directory website.</p>
+
+                                <a href="listing-row.html" class="btn btn-primary btn-lg">View Listings</a>
+                                <a href="listing-submit.html" class="btn btn-secondary btn-lg">Submit</a>
+                            </div>{# /.container #}
+                        </div>{# /.hero-image-content #}
+
+                        <div class="hero-image-form-wrapper">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-4 col-sm-offset-8 col-lg-4 col-lg-offset-7">
+
+                        {{ render(controller("AppBundle:Default:searchForm")) }}
+
+                                    </div>{# /.col-* #}
+                                </div>{# /.row #}
+                            </div>{# /.container #}
+                        </div>{# /.hero-image-form-wrapper #}
+
+
+
+                    </div>{# /.hero-image-inner #}
+                </div>{# /.hero-image #}
+
+            </div>
+
+            <div class="container">
+
+                <div class="page-header">
+                    <h1><a href="{{ path("categories") }}">Nos Catégories</a></h1>
+                    <p>List of most recent interesting places and events in our directory submitted <br>by our users. Check whats going on in the city now.</p>
+                </div>{# /.page-header #}
+
+                <div class="cards-simple-wrapper">
+
+                    <div class="row">
+                        {% for category in categories | slice (0,8) %}
+                            <div class="col-sm-6 col-md-3">
+                                {% include "category/card-simple.html.twig" %}
+                            </div>{# /.col-* #}
+                        {% endfor %}
+
+
+
+                    </div>{# /.row #}
+                </div>{# /.cards-simple-wrapper #}
+
+
+                <div class="block background-white fullwidth mt80">
+                    <div class="page-header">
+                        <h1>Nos Promotions</h1>
+                        <p>List of most recent interesting places and events in our directory submitted <br>by our users. Check whats going on in the city now.</p>
+                    </div>{# /.page-header #}
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="posts">
+                                {% for promotion in promotions | slice (0,4) %}
+                                    {% include "promotion/post.html.twig" %}
+                                {% endfor %}
+                            </div>{# /.posts #}
+
+                        </div>{# /.col-* #}
+
+                        <div class="col-sm-6">
+                            <div class="posts">
+                                {% for promotion in promotions | slice (4,4) %}
+                                    {% include "promotion/post.html.twig" %}
+                                {% endfor %}
+                            </div>{# /.posts#}
+
+                        </div>{# /.col-* #}
+                    </div>{# /.row #}
+                </div>{# /.block #}
+
+                <div class="block background-black-light fullwidth">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="box">
+                                <div class="box-icon">
+                                    <i class="fa fa-life-ring"></i>
+                                </div>{# /.box-icon #}
+
+                                <div class="box-content">
+                                    <h2>E-mail Support</h2>
+                                    <p>We are always here to answer all your questions. Feel free to contact us.</p>
+
+                                    <a href="#">Read More <i class="fa fa-chevron-right"></i></a>
+                                </div>{# /.box-content #}
+                            </div>
+                        </div>{# /.col-sm-4 #}
+
+                        <div class="col-sm-4">
+                            <div class="box">
+                                <div class="box-icon">
+                                    <i class="fa fa-flask"></i>
+                                </div>{# /.box-icon #}
+
+                                <div class="box-content">
+                                    <h2>Always Improving</h2>
+                                    <p>Our dedicated team of developers are implementing awesome features.</p>
+
+                                    <a href="#">Read More <i class="fa fa-chevron-right"></i></a>
+                                </div>{# /.box-content #}
+                            </div>
+                        </div>{# /.col-sm-4 #}
+
+                        <div class="col-sm-4">
+                            <div class="box">
+                                <div class="box-icon">
+                                    <i class="fa fa-thumbs-o-up"></i>
+                                </div>{# /.box-icon #}
+
+                                <div class="box-content">
+                                    <h2>Best Quality</h2>
+                                    <p>We list only verifiend places and events to provide best content.</p>
+
+                                    <a href="#">Read More <i class="fa fa-chevron-right"></i></a>
+                                </div>{# /.box-content #}
+                            </div>
+                        </div>{# /.col-sm-4 #}
+                    </div>{# /.row #}
+
+                </div>{# /.block #}
+
+                <div class="block background-white fullwidth">
+                    <div class="page-header">
+                        <h1>Nos Providers</h1>
+                        <p>Check out the best places &amp; events in the city. Each one is worth<br> of visiting. Experience which you never forget.</p>
+                    </div>{# /.page-header #}
+
+
+
+
+                </div>
+
+
+
+                <div class="block background-transparent-image fullwidth ">
+                    <div class="page-header">
+                        <h1>Testimonials</h1>
+                        <p>Read what our customers says about our directory services and products. Do you want to<br> read more? Check out another <a href="#">interesting testimonials</a>.</p>
+                    </div>{# /.page-header #}
+
+                    <div class="row">
+
+                            {% if comments|length == 1 %}
+
+                                <div class="col-sm-6">
+                                        {% include "Comment/testimonial.html.twig" %}
+                                </div>{# /.col-* #}
+
+                            {% else %}
+
+                                <div class="col-sm-6">
+                                    {% for comment in comments | slice (0,6) %}
+                                        {% if loop.index is odd %}
+                                            {% include "Comment/testimonial.html.twig" %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>{# /.col-* #}
+
+                                <div class="col-sm-6">
+                                    {% for comment in comments | slice (0,6) %}
+                                        {% if loop.index is even %}
+                                            {% include "Comment/testimonial.html.twig" %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>{# /.col-* #}
+
+                            {% endif %}
+
+                    </div>{# /.row #}
+                </div>
+
+
+                <div class="block background-white fullwidth mt0">
+                    <div class="page-header">
+                        <h1>Nos Stages</h1>
+                        <p>List of most recent interesting places and events in our directory submitted <br>by our users.
+                            Check whats going on in the city now.</p>
+                    </div>{# /.page-header #}
+
+
+                    <div class="pricings">
+                        <div class="row">
+
+                                {% for course in courses | slice (0,3) %}
+
+                                    <div class="col-sm-4">
+                                        {% include "course/pircing.html.twig" %}
+                                    </div>{# /.col-* #}
+
+                                {% endfor %}
+
+                        </div>{# /.row #}
+                    </div>{# /.pricings #}
+
+                </div>{# /.row #}
+
+
+
+                <div class="block background-secondary fullwidth mt80 mb-80 pt60 pb60">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="contact-info-wrapper">
+                                <h2>Do You Have Any Questions?</h2>
+
+                                <div class="contact-info">
+                <span class="contact-info-item">
+                    <i class="fa fa-at"></i>
+                    <span>support@sitename.com</span>
+                </span>{# /.contact-info-item #}
+
+                                    <span class="contact-info-item">
+                    <i class="fa fa-phone"></i>
+                    <span>+123-456-789</span>
+                </span>{# /.contact-info-item #}
+                                </div>{# /.contact-info#}
+                            </div>{# /.contact-info-wrapper #}
+                        </div>{# /.col-* #}
+                    </div>{# /.row #}
+
+                </div>
+            </div>{# /.container #}
+
+{% endblock %}
+

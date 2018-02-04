@@ -1,0 +1,40 @@
+<div class="hero-image-form-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-8 col-lg-4 col-lg-offset-7">
+
+
+
+
+                <form method="get" action="?">
+                    <h2>Start Searching Providers</h2>
+
+                    <div class="hero-image-keyword form-group">
+                        <input id="keyword" type="text" class="form-control" placeholder="Keyword">
+                    </div>{# /.form-group #}
+
+                    <div class="hero-image-location form-group">
+                        <select id="location" class="form-control" title="Location">
+                            {% for locality in localities %}
+                                <option>{{ locality.locality }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>{# /.form-group #}
+
+                    <div id="category" class="hero-image-category form-group">
+                        <select class="form-control" title="Category">
+                            {% for category in categories %}
+                                <option>{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>{# /.form-group #}
+
+                    <button type="submit" class="btn btn-primary btn-block">Search</button>
+                </form>
+
+
+
+            </div>{# /.col-* #}
+        </div>{# /.row #}
+    </div>{# /.container #}
+</div>{# /.hero-image-form-wrapper #}

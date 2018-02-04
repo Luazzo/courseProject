@@ -1,0 +1,28 @@
+
+{% extends 'Annuaire/layout-annuaire.html.twig' %}
+
+{% block title %}Registration confirm{% endblock %}
+
+{% block header_bottom %}
+    {% include "Annuaire/header.html.twig" %}
+{% endblock %}
+
+{% block main %}
+    <div class="main">
+        <div class="main-inner">
+            <div class="container">
+                <div class="content">
+
+
+
+                    <div class="row">
+
+                        <h1>Congratulations <b class="persianGreen">{{ user.0.username }}</b>! Your registration is confirm!</h1>
+                    </div>{# /.row #}
+
+                </div>{# /.content #}
+            </div>{# /.container #}
+        </div>{# /.main-inner #}
+    </div>{# /.main #}
+{% endblock %}
+

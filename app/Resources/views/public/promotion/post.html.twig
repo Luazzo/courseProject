@@ -1,0 +1,13 @@
+<div class="post">
+    <div class="post-image">
+        <img src="/img/tmp/product-6.jpg" alt="">
+        <a class="read-more" href="blog-detail-right-sidebar.html">View</a>
+    </div>{# /.post-image #}
+
+    <div class="post-content">
+        <div class="post-label">Promo {{ promotion.id }}</div>{# /.post-label #}
+        <div class="post-date">{{ promotion.start|date('Y-m-d')}}</div>{# /.post-date #}
+        <h2>{{ promotion.name }}</h2>
+        <p>{{ promotion.description }}</p>
+    </div>{# /.post-content #}
+</div>{# /.post #}
