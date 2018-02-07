@@ -28,7 +28,7 @@ class DefaultController extends Controller
         $comments = $em-> getRepository("AppBundle:Comment")->newComments(6);
         $towns = $em-> getRepository("AppBundle:Town")->findAll();
 
-        return $this->render("public/default/index.html.twig",array(
+        return $this->render(":public/default:index.html.twig",array(
             "towns" => $towns,
             "comments"=>$comments,
             "categories"=>$categories,
@@ -44,7 +44,7 @@ class DefaultController extends Controller
             'method' => 'GET'
         ));
 
-        return $this->render(':Partials:search-form-horizontal.html.twig', array(
+        return $this->render(':public/search:search-form-horizontal.html.twig', array(
             'form' => $form->createView()
         ));
     }

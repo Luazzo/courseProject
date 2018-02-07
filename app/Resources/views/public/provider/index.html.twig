@@ -17,7 +17,7 @@
                     <div class="col-sm-8 col-lg-9">
                         <div class="content">
 
-                            {{ render(controller("AppBundle:Default:searchFormHorizontal")) }}
+                            {{ render(controller("AppBundle:Front/Default:searchFormHorizontal")) }}
 
 
                             <div class="cards-row">
@@ -34,13 +34,13 @@
                                                 </div>{# /.card-row-image #}
 
                                                 <div class="card-row-body">
-                                                    <h2 class="card-row-title"><a href="listing-detail.html">{{ provider.provider.company }}</a></h2>
+                                                    <h2 class="card-row-title"><a href="{{ path('provider_show', {'slug': provider.provider.slug}) }}">{{ provider.provider.company }}</a></h2>
                                                     <div class="card-row-content"><p>{{ provider.provider.presentation }}</p></div>{# /.card-row-content #}
                                                 </div>{# /.card-row-body #}
 
                                                 <div class="card-row-properties">
                                                     <dl>
-                                                        <dd>Location</dd><dt>{{ provider.provider.town.town }}</dt>
+                                                        <dd>Location</dd><dt>{{ provider.provider.locality.locality }}</dt>
 
                                                         <dd>Email</dd><dt>{{ provider.provider.emailCompany }}</dt>
 

@@ -6668,6 +6668,10 @@ button.close {
   color: #fff;
   background: rgba(0, 159, 139, 0.7); }
 
+.persianGreen{
+  color: rgba(0, 159, 139, 0.7);
+}
+
 mark {
   border-radius: 4px;
   background-color: #009f8b;

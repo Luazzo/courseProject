@@ -1,6 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends 'Annuaire/layout-annuaire.html.twig' %}
 
-{% block body %}
+{% block title %}Provider{% endblock %}
+
+{% block header_bottom %}
+{% include "Annuaire/header.html.twig" %}
+{% endblock %}
+
+{% block main %}
     <h1>Courses list</h1>
 
     <table>
@@ -21,7 +27,7 @@
         <tbody>
         {% for course in courses %}
             <tr>
-                <td><a href="{{ path('course_show', { 'id': course.id }) }}">{{ course.id }}</a></td>
+                <td><a href="{{ path('course_show', { 'slug': course.slug }) }}">{{ course.slug }}</a></td>
                 <td>{{ course.name }}</td>
                 <td>{{ course.description }}</td>
                 <td>{{ course.price }}</td>
@@ -33,10 +39,10 @@
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('course_show', { 'id': course.id }) }}">show</a>
+                            <a href="{{ path('course_show', { 'slug': course.slug }) }}">show</a>
                         </li>
                         <li>
-                            <a href="{{ path('course_edit', { 'id': course.id }) }}">edit</a>
+                            <a href="{{ path('course_edit', { 'slug': course.slug }) }}">edit</a>
                         </li>
                     </ul>
                 </td>

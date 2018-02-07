@@ -9,12 +9,12 @@ AppBundle\Entity\Newsletter:
 
 AppBundle\Entity\Town:
     town_{1..11}:
-        town: '<fr_BE:city()>'
+        town: '<fr_BE:province()>'
 
 
 AppBundle\Entity\Locality:
     locality_{1..11}:
-        locality: '<fr_BE:province()>'
+        locality: '<fr_BE:city()>'
         town: '@town_*'
 
 
@@ -38,8 +38,6 @@ AppBundle\Entity\User:
         attempts: 0
         enable: true
         confirm_reg: true
-        user_type: 'admin'
-        role: 'ROLE_ADMIN'
         town: '@town_*'
         locality: '@locality_*'
         zip: '@zip_*'
@@ -59,7 +57,6 @@ AppBundle\Entity\Member:
         attempts: 0
         enable: true
         confirm_reg: true
-        role: 'ROLE_MEMBER'
         town: '@town_*'
         locality: '@locality_*'
         zip: '@zip_*'
@@ -79,7 +76,6 @@ AppBundle\Entity\Provider:
         attempts: 0
         enable: true
         confirm_reg: true
-        role: 'ROLE_PROVIDER'
         town: '@town_*'
         locality: '@locality_*'
         zip: '@zip_*'

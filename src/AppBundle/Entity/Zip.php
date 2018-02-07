@@ -54,7 +54,7 @@ class Zip
 
     public function __toString()
     {
-        return $this->postcode;
+        return $this->zip;
     }
 
 

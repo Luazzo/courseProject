@@ -1,6 +1,6 @@
 
 <div class="card-content">
-    <h2><a href="{{ path('provider_show', {'id': p.provider.id }) }}">{{ p.provider.company }}</a></h2>
+    <h2><a href="{{ path('provider_show', {'slug': p.provider.slug }) }}">{{ p.provider.company }}</a></h2>
 
     <div class="card-meta">
         <i class="">Rate : {{ p.note_avg|round(1, 'floor') }}/{{ p.nmb_note }}</i>

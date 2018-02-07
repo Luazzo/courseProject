@@ -1,67 +1,53 @@
-# To get started with security, check out the documentation:
-# https://symfony.com/doc/current/security.html
 security:
-
-# Ajout d'un encoder pour notre entité USer
-    encoders:
-        Symfony\Component\Security\Core\User\UserInterface:
-            algorithm: sha512
-        AppBundle\Entity\User:
-            algorithm: sha512
-            cost: 12
-
-    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
-            memory:
-                users:
-                    ##member:  { password: memberpass, roles: [ 'ROLE_MEMBER' ] }
-                    #provider:  { password: providerpass, roles: [ 'ROLE_PROVIDER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+            memory: ~
+        our_db_provider:
+            entity:
+               class: AppBundle:User
+               property: username
 
+
+    role_hierarchy:
+        ROLE_MEMBER:      ROLE_USER
+        ROLE_PROVIDER:    ROLE_USER
+        ROLE_ADMIN:       [ROLE_USER, ROLE_PROVIDER, ROLE_MEMBER]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        login:
-            pattern: ^/login$
-            security: false
-
-        main_login:
-            # Cette expression régulière permet de prendre /login (mais pas /login_check !)
-            pattern:   ^/login$
-            anonymous: true # On autorise alors les anonymes sur ce pare-feu
-
         main:
-            pattern: ^/
-            anonymous: true
-            #entity: { class: AppBundle\Entity\User, property: username }
-
-            provider:  in_memory #main
-
+            pattern:    ^/
+            http_basic: ~
+            provider: our_db_provider
+            anonymous: ~
             form_login:
                 login_path: login
-                check_path: login_check
-
+                check_path: login
+                csrf_token_generator: security.csrf.token_manager
             logout:
-                path: /logout
-                target: /platform
-
-           # remember_me:
-            #   key: "%secret%"
-              #  lifetime: 2232000
+                path:   /logout
+                target: /
+                invalidate_session: false
 
 
-    role_hierarchy:
-        ROLE_ADMIN:       [ROLE_MEMBER, ROLE_PROVIDER]
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    encoders:
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+        AppBundle\Entity\User: bcrypt
+        AppBundle\Entity\UserTemp: bcrypt
 
     access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/providers, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/promotions, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/courses, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/categories, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/profile, roles: IS_AUTHENTICATED_FULLY }

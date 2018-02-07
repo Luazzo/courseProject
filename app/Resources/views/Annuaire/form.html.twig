@@ -1,0 +1,11 @@
+{% extends 'Annuaire/layout-annuaire.html.twig' %}
+{% block title %}Form{% endblock %}
+
+{% block header_bottom %}
+    {% include "Annuaire/header.html.twig" %}
+{% endblock %}
+
+{% block content %}
+    {{ form(form) }}
+    <button type="submit">Register!</button>
+{% endblock %}

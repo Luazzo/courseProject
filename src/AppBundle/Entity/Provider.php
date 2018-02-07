@@ -5,7 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\User;
-
+use Faker\Provider\DateTime;
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Provider
  *
@@ -21,6 +22,12 @@ class Provider extends User
      * @ORM\Column(name="company", type="string", length=255)
      */
     protected $company;
+
+    /**
+     * @Gedmo\Slug(fields={"company"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
     /**
      * @var string
@@ -112,6 +119,8 @@ class Provider extends User
         $this->categories=new ArrayCollection();
         $this->favorites=new ArrayCollection();
         $this->ratings=new ArrayCollection();
+        $this->registration=new \DateTime('now');
+        $this->addRole(User::ROLE_PROVIDER);
     }
 
 
@@ -125,6 +134,20 @@ class Provider extends User
     {
         return $this->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public  function getSlug(){
+        return $this->slug;
+    }/**
+     * @param mixed $slug
+     */
+    public  function setSlug($slug):void {
+        $this->slug = $slug;
+    }
+
+
 
     /**
      * @return text

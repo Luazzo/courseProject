@@ -24,7 +24,6 @@ class ProviderType extends AbstractType
         ->add('email')
         ->add('addressNumber')
         ->add('addressStreet')
-        ->add('categories')
         ->add('town')
         ->add('locality')
         ->add('zip')

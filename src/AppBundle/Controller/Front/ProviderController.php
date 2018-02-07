@@ -27,7 +27,7 @@ class ProviderController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $providers = $em->getRepository('AppBundle:Provider')->findAll();
+        $providers = $em->getRepository('AppBundle:Provider')->bestProviders(5);
 
         return $this->render('public/provider/index.html.twig', array(
             'providers' => $providers,
@@ -63,13 +63,14 @@ class ProviderController extends Controller
     /**
      * Finds and displays a provider entity.
      *
-     * @Route("/{id}", name="provider_show")
+     * @Route("/{slug}", name="provider_show")
      * @Method("GET")
      */
-    public function showAction(Provider $provider)
+    public function showAction($slug)
     {
         $em = $this->getDoctrine()->getManager();
 
+        $provider = $em->getRepository('AppBundle:Provider')->findOneBySlug($slug);
 
         $rating = $em->getRepository('AppBundle:Rating')->findRating($provider);
 
@@ -88,7 +89,7 @@ class ProviderController extends Controller
     /**
      * Displays a form to edit an existing provider entity.
      *
-     * @Route("/{id}/edit", name="provider_edit")
+     * @Route("/{slug}/edit", name="provider_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Provider $provider)
@@ -113,11 +114,15 @@ class ProviderController extends Controller
     /**
      * Deletes a provider entity.
      *
-     * @Route("/{id}", name="provider_delete")
+     * @Route("/{slug}", name="provider_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Provider $provider)
+    public function deleteAction(Request $request, $slug)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $provider = $em->getRepository('AppBundle:Provider')->findOneBySlug($slug);
+
         $form = $this->createDeleteForm($provider);
         $form->handleRequest($request);
 
@@ -140,7 +145,7 @@ class ProviderController extends Controller
     private function createDeleteForm(Provider $provider)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('provider_delete', array('id' => $provider->getId())))
+            ->setAction($this->generateUrl('provider_delete', array('slug' => $provider->getSlug())))
             ->setMethod('DELETE')
             ->getForm()
         ;

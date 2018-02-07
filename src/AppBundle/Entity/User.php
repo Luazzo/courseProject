@@ -4,20 +4,21 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 /**
  * User
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- * @ORM\InheritanceType
- * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="user_type", type="string")
  * @ORM\DiscriminatorMap({"admin"="User","provider" = "Provider", "member" = "Member"})
+ * @UniqueEntity("username",message="This username is already in use on that host.")
+ * @UniqueEntity("email",message="This email is already in use on that host.")
  */
-class User implements UserInterface, \Serializable
+class User implements AdvancedUserInterface, \Serializable
 {
     const TYPE_ADMIN = "admin";
     const TYPE_PROVIDER = "provider";
@@ -40,44 +41,46 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $username;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255)
      */
     protected $name;
+
 
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
+     * @ORM\Column(name="firstName", type="string", length=255)
      */
     protected $firstName;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="role", type="string", length=255)
+     * @ORM\Column(name="role", type="array")
      */
-    protected $role;
+    protected $roles;
 
-
-    protected $userType;
 
     /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     protected $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=255, nullable=true)
+     * @ORM\Column(name="password", type="string", length=255)
      */
     protected $password;
 
@@ -87,14 +90,14 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="address_number", type="string", length=255, nullable=true)
+     * @ORM\Column(name="address_number", type="string", length=255)
      */
     protected $addressNumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="address_street", type="string", length=255, nullable=true)
+     * @ORM\Column(name="address_street", type="string", length=255)
      */
     protected $addressStreet;
 
@@ -140,13 +143,12 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="confirm_reg", type="boolean")
      */
     protected $confirmReg = false;
-
     /**
      * @var string
      *
-     * @ORM\Column(name="token", type="string", nullable=true)
+     * @ORM\Column(name="salt", type="string", length=255)
      */
-    protected $token;
+    protected $salt;
 
 
 
@@ -155,6 +157,8 @@ class User implements UserInterface, \Serializable
      */
     public function __construct(){
         $this->registration=new \DateTime();
+        $this->enable=true;
+        $this->salt = "MONSALTPARDEFAUT";
     }
 
     public function __toString(){
@@ -174,19 +178,20 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return string
+     * @param mixed $role
      */
-    public function getRole()
+    public function addRole($role)
     {
-        return $this->role;
+        $this->roles[] = $role;
     }
-
     /**
-     * @param string $role
+     * @param mixed $role
      */
-    public function setRole($role)
+    public function removeRole($role)
     {
-        $this->role = $role;
+        if ($key = array_search($role, $this->roles, true) !== false) {
+            array_splice($this->roles, $key, 1);
+        }
     }
 
     /**
@@ -382,22 +387,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return string
-     */
-    public function getUserType()
-    {
-        return $this->userType;
-    }
-
-    /**
-     * @param string $userType
-     */
-    public function setUserType($userType)
-    {
-        $this->userType = $userType;
-    }
-
-    /**
      * @return int
      */
     public function getAttempts()
@@ -429,6 +418,8 @@ class User implements UserInterface, \Serializable
         $this->enable = $enable;
     }
 
+
+
     /**
      * @return bool
      */
@@ -444,48 +435,56 @@ class User implements UserInterface, \Serializable
     {
         $this->confirmReg = $confirmReg;
     }
-
-    /**
-     * @return string
-     */
-    public function getToken()
+    public function isAccountNonExpired()
     {
-        return $this->token;
+        return true;
     }
-
-    /**
-     * @param string $token
-     */
-    public function setToken($token)
+    public function isAccountNonLocked()
     {
-        $this->token = $token;
+        return true;
     }
-
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+     /** @see \Serializable::serialize() */
     public function serialize()
     {
-        // TODO: Implement serialize() method.
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            //$this->salt,
+        ));
     }
-
+    /** @see \Serializable::unserialize() */
     public function unserialize($serialized)
     {
-        // TODO: Implement unserialize() method.
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+           // $this->salt
+            ) = unserialize($serialized);
     }
-
     public function getRoles()
     {
-        // TODO: Implement getRoles() method.
+       return $this->roles;
     }
 
-    public function getSalt()
+       public function eraseCredentials()
     {
-        // TODO: Implement getSalt() method.
+        $this->plainPassword=null;
     }
 
-    public function eraseCredentials()
+        public function getSalt()
     {
-        // TODO: Implement eraseCredentials() method.
+        return null;
     }
 
-
+        public function isEnabled()
+    {
+        return $this->enable;
+    }
 }
 

@@ -1,8 +1,344 @@
 
 
+<?php
+namespace AppBundle\Controller;
+
+use AppBundle\Entity\Member;
+use AppBundle\Entity\Provider;
+use AppBundle\Entity\User;
+use AppBundle\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
+
+class RegistrationController extends Controller
+{
+
+    public function tokenCheckAction($id, $token)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+$user = $em->getRepository('AppBundle:User')->verifToken($id, $token);
+
+return $user;
+}
+
+
+/**
+* @Route("/register_confirm", name="register_confirm")
+*/
+public function registerConfirmAction(Request $request)
+{
+$id = $request->query->get('id');
+$token = $request->query->get('token');
+
+$user = $this -> tokenCheckAction($id, $token);
+
+return $this->redirectToRoute('login', array('user' => $user));
+}
+
+
+/**
+* @Route("/confirmation_request", name="demande_confirmation")
+*/
+public function demandeConfirmationAction()
+{
+return $this->render('register/demande-confirmation.html.twig', array());
+}
+
+
+public function genToken($length)
+{
+$alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+return substr(str_shuffle(str_repeat($alphabet, $length)),0, $length);
+}
 
 
 
+/**
+* @param Request $request
+* @Route("/register", name="register")
+* @return \Symfony\Component\HttpFoundation\Response
+* @throws \LogicException
+*/
+public function registerAction(Request $request, UserInterface $passwordEncoder)
+{
+
+$user = new User();
+
+$form = $this->createUserForm($user);
+
+return $this->render(
+'register/register.html.twig',
+array('form' => $form->createView())
+);
+}
+
+
+/**
+* @param Request $request
+* @Route("/handleFormRegister", name="handleFormRegister")
+* @return \Symfony\Component\HttpFoundation\Response | \Symfony\Component\HttpFoundation\RedirectResponse
+* @Method("POST")
+* @throws \LogicException
+* @throws \InvalidArgumentException
+*/
+public function handleFormRegisterAction(Request $request)
+{
+//  handle the submit (will only happen on POST)
+$user = new User();
+
+$form = $this->createUserForm($user);
+
+$form->handleRequest($request);
+
+if (! $form->isSubmitted() || ! $form->isValid()) {
+
+return $this->render(
+'register/register.html.twig',
+array('form' => $form->createView())
+);
+}
+
+$role = $form["role"]->getData();
+if($role == 'ROLE_PROVIDER'){
+$userReg = new Provider();
+}elseif ($role == 'ROLE_MEMBER'){
+$userReg = new Member();
+}
+
+$userReg->setRole($role);
+
+$username = $form["username"]->getData();
+$userReg->setUsername($username);
+
+$usermail = $form["email"]->getData();
+$userReg->setEmail($usermail);
+
+//$password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+
+// 3) Encode the password (you could also do this via Doctrine listener):
+$password = $this
+->get('security.password_encoder')
+->encodePassword(
+$user,
+$user->getPlainPassword()
+);
+$userReg->setPassword($password);
+
+$token = $this->genToken(60);
+
+$userReg->setToken($token);
+
+// 4) save the User!
+$em = $this->getDoctrine()->getManager();
+$em->persist($userReg);
+$em->flush();
+
+$id = $userReg->getId();
+
+
+$message = $this->get('AppBundle\Services\SendMail')->sendConfirmation($usermail, $username, $token, $id);
+//dump($message); die();
+
+// ... do any other work - like sending them an email, etc
+// maybe set a "flash" success message for the user
+//$this->addFlash('success', 'You are now successfuly registered!');
+
+
+return $this->redirectToRoute('demande_confirmation');
+
+
+}
+
+/**
+* @param $user
+* @return \Symfony\Component\Form\FormInterface
+*/
+private function createUserForm($user)
+{
+return $this->createForm('AppBundle\Form\UserType', $user, [
+'action' => $this->generateUrl('handleFormRegister')
+]);
+}
+}<?php
+namespace AppBundle\Controller;
+
+use AppBundle\Entity\Member;
+use AppBundle\Entity\Provider;
+use AppBundle\Entity\User;
+use AppBundle\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
+
+class RegistrationController extends Controller
+{
+
+    public function tokenCheckAction($id, $token)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+$user = $em->getRepository('AppBundle:User')->verifToken($id, $token);
+
+return $user;
+}
+
+
+/**
+* @Route("/register_confirm", name="register_confirm")
+*/
+public function registerConfirmAction(Request $request)
+{
+$id = $request->query->get('id');
+$token = $request->query->get('token');
+
+$user = $this -> tokenCheckAction($id, $token);
+
+return $this->redirectToRoute('login', array('user' => $user));
+}
+
+
+/**
+* @Route("/confirmation_request", name="demande_confirmation")
+*/
+public function demandeConfirmationAction()
+{
+return $this->render('register/demande-confirmation.html.twig', array());
+}
+
+
+public function genToken($length)
+{
+$alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+return substr(str_shuffle(str_repeat($alphabet, $length)),0, $length);
+}
+
+
+
+/**
+* @param Request $request
+* @Route("/register", name="register")
+* @return \Symfony\Component\HttpFoundation\Response
+* @throws \LogicException
+*/
+public function registerAction(Request $request, UserInterface $passwordEncoder)
+{
+
+$user = new User();
+
+$form = $this->createUserForm($user);
+
+return $this->render(
+'register/register.html.twig',
+array('form' => $form->createView())
+);
+}
+
+
+/**
+* @param Request $request
+* @Route("/handleFormRegister", name="handleFormRegister")
+* @return \Symfony\Component\HttpFoundation\Response | \Symfony\Component\HttpFoundation\RedirectResponse
+* @Method("POST")
+* @throws \LogicException
+* @throws \InvalidArgumentException
+*/
+public function handleFormRegisterAction(Request $request)
+{
+//  handle the submit (will only happen on POST)
+$user = new User();
+
+$form = $this->createUserForm($user);
+
+$form->handleRequest($request);
+
+if (! $form->isSubmitted() || ! $form->isValid()) {
+
+return $this->render(
+'register/register.html.twig',
+array('form' => $form->createView())
+);
+}
+
+$role = $form["role"]->getData();
+if($role == 'ROLE_PROVIDER'){
+$userReg = new Provider();
+}elseif ($role == 'ROLE_MEMBER'){
+$userReg = new Member();
+}
+
+$userReg->setRole($role);
+
+$username = $form["username"]->getData();
+$userReg->setUsername($username);
+
+$usermail = $form["email"]->getData();
+$userReg->setEmail($usermail);
+
+//$password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+
+// 3) Encode the password (you could also do this via Doctrine listener):
+$password = $this
+->get('security.password_encoder')
+->encodePassword(
+$user,
+$user->getPlainPassword()
+);
+$userReg->setPassword($password);
+
+$token = $this->genToken(60);
+
+$userReg->setToken($token);
+
+// 4) save the User!
+$em = $this->getDoctrine()->getManager();
+$em->persist($userReg);
+$em->flush();
+
+$id = $userReg->getId();
+
+
+$message = $this->get('AppBundle\Services\SendMail')->sendConfirmation($usermail, $username, $token, $id);
+//dump($message); die();
+
+// ... do any other work - like sending them an email, etc
+// maybe set a "flash" success message for the user
+//$this->addFlash('success', 'You are now successfuly registered!');
+
+
+return $this->redirectToRoute('demande_confirmation');
+
+
+}
+
+/**
+* @param $user
+* @return \Symfony\Component\Form\FormInterface
+*/
+private function createUserForm($user)
+{
+return $this->createForm('AppBundle\Form\UserType', $user, [
+'action' => $this->generateUrl('handleFormRegister')
+]);
+}
+}
+________________________________________________________________
+
+// $_GET parameters
+$request->query->get('name');
+
+// $_POST parameters
+$request->request->get('name');
+_______________________________________
 
 query = $em->createQuery('SELECT u FROM Users u WHERE u.id IN (:id)');
 $query->setParameter('id', array(1, 9));
@@ -13,16 +349,16 @@ __________________________________________________
 <div class="card-row">
     <div class="card-row-inner">
         <div class="card-row-image" data-background-image="/img/tmp/product-1.jpg">
-            <!--<div class="card-row-label"><a href="listing-detail.html">Vacation</a></div> /.card-row-label -->
+            {#<div class="card-row-label"><a href="listing-detail.html">Vacation</a></div> /.card-row-label #}
 
-            <!-- <div class="card-row-price">$100 / night</div> -->
+            {# <div class="card-row-price">$100 / night</div> #}
 
-        </div><!-- /.card-row-image -->
+        </div>{# /.card-row-image #}
 
         <div class="card-row-body">
             <h2 class="card-row-title"><a href="listing-detail.html">{{ provider.p.company }}</a></h2>
-            <div class="card-row-content"><p>{{ provider.p.presentation }}</p></div><!-- /.card-row-content -->
-        </div><!-- /.card-row-body -->
+            <div class="card-row-content"><p>{{ provider.p.presentation }}</p></div>{# /.card-row-content #}
+        </div>{# /.card-row-body #}
 
         <div class="card-row-properties">
             <dl>
@@ -42,15 +378,15 @@ __________________________________________________
                 <dt>
                     <div class="card-row-rating">
                         <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                    </div><!-- /.card-row-rating -->
+                    </div>{# /.card-row-rating #}
                 </dt>
             </dl>
 
-        </div><!-- /.card-row-properties -->
+        </div>{# /.card-row-properties #}
 
 
-    </div><!-- /.card-row-inner -->
-</div><!-- /.card-row -->
+    </div>{# /.card-row-inner #}
+</div>{# /.card-row #}
 
 _________________________________________________________
 <ul>
@@ -113,8 +449,8 @@ _________________________________________________________________________
             <div class="row">
                 <div class="col-sm-6 mb30">
                     {% include "Partials/event.html.twig" %}
-                </div><!-- /.col-* -->
-            </div><!-- /.row -->
+                </div>{# /.col-* #}
+            </div>{# /.row #}
 
         {% else %}
             {% for course in courses | slice (0,4) %}
@@ -124,20 +460,20 @@ _________________________________________________________________________
 
                 <div class="col-sm-6 mb30">
                     {% include "Partials/event.html.twig" %}
-                </div><!-- /.col-* -->
+                </div>{# /.col-* #}
 
                 {% if loop.index is even or loop.last %}
-                    </div><!-- /.row -->
+                    </div>{# /.row #}
                 {% endif %}
 
             {% endfor %}
 
         {% endif %}
 
-    </div><!-- /.events -->
+    </div>{# /.events #}
 
 
-</div><!-- /.col-* -->
+</div>{# /.col-* #}
 
 
 
@@ -157,8 +493,8 @@ _______________________________________________________________________
         <div class="row">
             <div class="col-sm-6">
                 {% include "Comment/testimonial.html.twig" %}
-            </div><!-- /.col-* -->
-        </div><!-- /.row -->
+            </div>{# /.col-* #}
+        </div>{# /.row #}
 
     {% else %}
         {% for comment in comments | slice (0,6) %}
@@ -167,10 +503,10 @@ _______________________________________________________________________
             {% endif %}
 
             <div class="col-sm-6 ">
-            </div><!-- /.col-* -->
+            </div>{# /.col-* #}
 
             {% if loop.index is even or loop.last %}
-                </div><!-- /.row -->
+                </div>{# /.row #}
             {% endif %}
 
         {% endfor %}
@@ -183,28 +519,28 @@ ________________________________________________________________________________
 {% elseif loop.last %}
     <div class="col-sm-4">
         {% include "Partials/card-tall.html.twig" %}
-    </div><!-- /.col-* -->
+    </div>{# /.col-* #}
 {% endif %}
 
 {% if providers[i] == length %}
 
-{% for p in providers if (providers.key < length)| slice (0,4) %} <!---->
+{% for p in providers if (providers.key < length)| slice (0,4) %} {##}
 
     {% if loop.first %}
         <div class="col-sm-8">
         <div class="row">
             <div class="col-sm-12">
                 {% include "Partials/card.html.twig" %}
-            </div><!-- /.col-* -->
-        </div><!-- /.row -->
+            </div>{# /.col-* #}
+        </div>{# /.row #}
 
     {% else %}
         <div class="col-sm-6">
             {% include "Partials/card.html.twig" %}
-        </div><!-- /.col-* -->
+        </div>{# /.col-* #}
     {% endif %}
 
-    </div><!-- /.row -->
+    </div>{# /.row #}
 
 
 {% endfor %}

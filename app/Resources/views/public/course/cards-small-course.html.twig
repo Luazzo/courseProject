@@ -2,14 +2,14 @@
 <div class="cards-small">
     <div class="card-small">
         <div class="card-small-image">
-            <a href="listing-detail.html">
+            <a href="{{ path('course_show', {'slug': course.slug  }) }}">
                 <img src="/img/tmp/product-2.jpg" alt="{{ course.name }}">
             </a>
         </div>{# /.card-small-image #}
 
         <div class="card-small-content">
-            <h3><a href="listing-detail.html">{{ course.name }}</a></h3>
-            <h4><a href="listing-detail.html">{{ course.description }}</a></h4>
+            <h3><a href="{{ path('course_show', {'slug': course.slug  }) }}">{{ course.name }}</a></h3>
+            <h4>{{ course.description }}</h4>
 
             <div class="card-small-price">
                 <div class="row">

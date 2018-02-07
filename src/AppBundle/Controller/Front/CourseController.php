@@ -62,11 +62,14 @@ class CourseController extends Controller
     /**
      * Finds and displays a course entity.
      *
-     * @Route("/{id}", name="course_show")
+     * @Route("/{slug}", name="course_show")
      * @Method("GET")
      */
-    public function showAction(Course $course)
+    public function showAction($slug)
     {
+
+        $em = $this->getDoctrine()->getManager();
+        $course = $em-> getRepository("AppBundle:Course")->findOneBy(array('slug'=>$slug));
         $deleteForm = $this->createDeleteForm($course);
 
         return $this->render('public/course/show.html.twig', array(
@@ -78,11 +81,14 @@ class CourseController extends Controller
     /**
      * Displays a form to edit an existing course entity.
      *
-     * @Route("/{id}/edit", name="course_edit")
+     * @Route("/{slug}/edit", name="course_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Course $course)
+    public function editAction(Request $request, $slug)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $course = $em->getRepository('AppBundle:Course')->findOneBySlug($slug);
         $deleteForm = $this->createDeleteForm($course);
         $editForm = $this->createForm('AppBundle\Form\Front\CourseType', $course);
         $editForm->handleRequest($request);
@@ -103,11 +109,14 @@ class CourseController extends Controller
     /**
      * Deletes a course entity.
      *
-     * @Route("/{id}", name="course_delete")
+     * @Route("/{slug}", name="course_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Course $course)
+    public function deleteAction(Request $request, $slug)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $course = $em->getRepository('AppBundle:Course')->findOneBySlug($slug);
         $form = $this->createDeleteForm($course);
         $form->handleRequest($request);
 
@@ -130,7 +139,7 @@ class CourseController extends Controller
     private function createDeleteForm(Course $course)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('course_delete', array('id' => $course->getId())))
+            ->setAction($this->generateUrl('course_delete', array('slug' => $course->getSlug())))
             ->setMethod('DELETE')
             ->getForm()
         ;

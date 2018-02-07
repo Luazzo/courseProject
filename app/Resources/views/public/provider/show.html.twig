@@ -14,10 +14,6 @@
                     <div class="detail-banner" style="background-image: url(/img/tmp/detail-banner-1.jpg);">
                         <div class="container">
                             <div class="detail-banner-left">
-                                {# <div class="detail-banner-info">
-                                    <div class="detail-label">Restaurant</div>
-                                    <div class="detail-verified">Verified</div>
-                                </div>/.detail-banner-info #}
 
                                 <h2 class="detail-title">
                                     {{ provider.company }}
@@ -34,10 +30,6 @@
                                     <i class="fa fa-star-half-o"></i>
                                 </div>{# /.detail-banner-rating #}
 
-                                {# <div class="detail-banner-btn bookmark">
-                                    <i class="fa fa-bookmark-o"></i> <span data-toggle="Bookmarked">Bookmark</span>
-                                </div>/.detail-claim #}
-
                                 <div class="detail-banner-btn heart">
                                     <i class="fa fa-heart-o"></i> <span data-toggle="I Love It">Give Heart</span>
                                 </div>{# /.detail-claim #}
@@ -45,9 +37,6 @@
                             </div>{# /.detail-banner-left #}
                         </div>{# /.container #}
                     </div>{# /.detail-banner #}
-
-
-
                 </div>
 
                 <div class="container">
@@ -111,7 +100,7 @@
                                         {% if (provider.categories | length) > 0 %}
                                             <ul>
                                                 {% for cat in provider.categories %}
-                                                    <li class="tag"><a href="{{ path('category_show', {'id': cat.id  }) }}">{{ cat.name }}</a></li>
+                                                    <li class="tag"><a href="{{ path('category_show', {'slug': cat.slug  }) }}">{{ cat.name }}</a></li>
                                                 {% endfor %}
                                             </ul>
                                         {% else %}
@@ -121,56 +110,6 @@
                             </div>{# /.post #}
 
 
-                            <h2>We Are Here</h2>
-                            <div class="background-white p20">
-
-                                {# Nav tabs #}
-                                <ul id="listing-detail-location" class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active">
-                                        <a href="#simple-map-panel" aria-controls="simple-map-panel" role="tab" data-toggle="tab">
-                                            <i class="fa fa-map"></i>Map
-                                        </a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a href="#street-view-panel" aria-controls="street-view-panel" role="tab" data-toggle="tab">
-                                            <i class="fa fa-street-view"></i>Street View
-                                        </a>
-                                    </li>
-                                </ul>
-
-                                {# Tab panes #}
-                                <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane fade in active" id="simple-map-panel">
-                                        <div class="detail-map">
-                                            <div class="map-position">
-                                                <div id="listing-detail-map"
-                                                     data-transparent-marker-image="/img/transparent-marker-image.png"
-                                                     data-styles='[{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.government","elementType":"labels.text.fill","stylers":[{"color":"#b43b3b"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"hue":"#ff0000"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"lightness":"8"},{"color":"#bcbec0"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#5b5b5b"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#7cb3c9"},{"visibility":"on"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#abb9c0"}]},{"featureType":"water","elementType":"labels.text","stylers":[{"color":"#fff1f1"},{"visibility":"off"}]}]'
-                                                     data-zoom="15"
-                                                     data-latitude="40.779995"
-                                                     data-longitude="-73.969133"
-                                                     data-icon="fa fa-coffee">
-                                                </div>{# /#map-property #}
-                                            </div>{# /.map-property #}
-                                        </div>{# /.detail-map #}
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="street-view-panel">
-                                        <div id="listing-detail-street-view"
-                                             data-latitude="40.758896"
-                                             data-longitude="-73.985135"
-                                             data-heading="225"
-                                             data-pitch="0"
-                                             data-zoom="1">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {# <h2>Video</h2>
-                            <div class="detail-video">
-                                <iframe src="https://player.vimeo.com/video/36911719?color=009f8b&byline=0&portrait=0" width="653" height="366" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                            </div>/.detail-video #}
-
                             <h2 id="reviews">All Reviews</h2>
 
                             <div class="reviews">
@@ -178,7 +117,7 @@
                                 {% if provider.comments|length == 1 %}
 
                                     <div class="col-sm-12">
-                                        {{ include("Comment/testimonial.html.twig", {comment:provider.comments.first})   }}
+                                        {{ include("public/comment/testimonial.html.twig", {comment:provider.comments.first})   }}
 
                                     </div>{# /.col-* #}
 
@@ -187,7 +126,7 @@
                                     <div class="col-sm-12">
                                         {% for comment in provider.comments %}
                                             {% if loop.index is odd %}
-                                                {{ include ("Comment/testimonial.html.twig", {comment:comment})  }}
+                                                {{ include ("public/comment/testimonial.html.twig", {comment:comment})  }}
                                             {% endif %}
                                         {% endfor %}
                                     </div>{# /.col-* #}
@@ -294,7 +233,7 @@
                                     </div>{# /.cards-small #}
                                 {% else %}
                                     {% for promotion in provider.promotions %}
-                                        {% include "promotion/cards-small.html.twig" %}
+                                        {% include "public/promotion/cards-small.html.twig" %}
                                     {% endfor %}
                                 {% endif %}
                             </div>{# /.widget #}
@@ -307,69 +246,13 @@
                                     </div>{# /.cards-small #}
                                 {% else %}
                                     {% for course in provider.courses %}
-                                        {% include "course/cards-small-course.html.twig" %}
+                                        {% include "public/course/cards-small-course.html.twig" %}
                                     {% endfor %}
                                 {% endif %}
                             </div>{# /.widget #}
 
 
 
-
-
-                            {# <div class="widget">
-                                <h2 class="widgettitle">Working Hours</h2>
-
-                                <div class="p20 background-white">
-                                    <div class="working-hours">
-                                        <div class="day clearfix">
-                                            <span class="name">Mon</span><span class="hours">07:00 AM - 07:00 PM</span>
-                                        </div><div class="day clearfix">
-                                <span class="name">Tue</span><span class="hours">07:00 AM - 07:00 PM</span>
-                            </div>
-
-                            <div class="day clearfix">
-                                <span class="name">Wed</span><span class="hours">07:00 AM - 07:00 PM</span>
-                            </div>
-
-                            <div class="day clearfix">
-                                <span class="name">Thu</span><span class="hours">07:00 AM - 07:00 PM</span>
-                            </div>
-
-                            <div class="day clearfix">
-                                <span class="name">Fri</span><span class="hours">07:00 AM - 07:00 PM</span>
-                            </div>
-
-                            <div class="day clearfix">
-                                <span class="name">Sat</span><span class="hours">07:00 AM - 02:00 PM</span>
-                            </div>
-
-                            <div class="day clearfix">
-                                <span class="name">Sun</span><span class="hours">Closed</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>/.widget #}{# WORKING HOURS/.day #}
-
-
-
-
-                            {# <h2>Amenities</h2>
-
-                            <div class="background-white p20">
-                                <ul class="detail-amenities">
-                                    <li class="yes">WiFi</li>
-                                    <li class="yes">Parking</li>
-                                    <li class="no">Vine</li>
-                                    <li class="yes">Terrace</li>
-                                    <li class="no">Bar</li>
-                                    <li class="yes">Take Away Coffee</li>
-                                    <li class="no">Catering</li>
-                                    <li class="yes">Raw Food</li>
-                                    <li class="no">Delivery</li>
-                                    <li class="yes">No-smoking room</li>
-                                    <li class="no">Reservations</li>
-                                </ul>
-                            </div>/.detail-amenities #}{# AMENITIES/.day #}
 
                             <h2>Enquire Form</h2>
 
@@ -397,36 +280,6 @@
                             </div>{# /.detail-enquire-form #}
 
 
-                            {# <h2>3 Reasons Why Choose Us</h2>
-                            <div class="background-white p20 reasons">
-                                <div class="reason">
-                                    <div class="reason-icon">
-                                        <i class="fa fa-trophy"></i>
-                                    </div>
-                                    <div class="reason-content">
-                                        <h4>Coffee House of the Year 2015</h4>
-                                        <p>Fusce at venenatis lorem. Quisque volutpat aliquam leo, a pellentesque orci varius sit amet.</p>
-                                    </div>
-                                </div>
-                                <div class="reason">
-                                    <div class="reason-icon">
-                                        <i class="fa fa-coffee"></i>
-                                    </div>
-                                    <div class="reason-content">
-                                        <h4>High Quality Coffee Beans</h4>
-                                        <p>Fusce at venenatis lorem. Quisque volutpat aliquam leo, a pellentesque orci varius sit amet.</p>
-                                    </div>
-                                </div>
-                                <div class="reason">
-                                    <div class="reason-icon">
-                                        <i class="fa fa-cutlery"></i>
-                                    </div>
-                                    <div class="reason-content">
-                                        <h4>Snacks & Deserts</h4>
-                                        <p>Fusce at venenatis lorem. Quisque volutpat aliquam leo, a pellentesque orci varius sit amet.</p>
-                                    </div>
-                                </div>
-                            </div>#}{# /.REASONS TO CHOOSE #}
 
 
 

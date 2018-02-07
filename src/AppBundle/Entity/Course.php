@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Course
  *
@@ -29,6 +30,13 @@ class Course
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
     /**
      * @var string
@@ -85,7 +93,7 @@ class Course
     private  $provider;
 
     /**
-     * @ORM\ManyToOne(targetEntity="category", inversedBy="courses")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="courses")
      */
     private  $category;
 
@@ -118,6 +126,20 @@ class Course
     {
         return $this->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public  function getSlug(){
+        return $this->slug;
+    }/**
+     * @param mixed $slug
+     */
+    public  function setSlug($slug){
+        $this->slug = $slug;
+    }
+
+
 
     /**
      * @return mixed

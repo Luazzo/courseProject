@@ -5,34 +5,40 @@
                 <div class="header-logo">
                     <a href="{{ path("homepage") }}">
                         <img src="/img/logo.png" alt="Logo">
-                        <span>Superlist</span>
+                        <span>Bien-Etre</span>
                     </a>
-                </div><!-- /.header-logo -->
+                </div>{# /.header-logo #}
 
                 <div class="header-content">
                     <div class="header-top">
                         <div class="header-search">
                             <input type="text" class="form-control" placeholder="Search for...">
-                        </div><!-- /.header-search -->
+                        </div>{# /.header-search #}
 
                         <ul class="header-nav-social social-links nav nav-pills">
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                        </ul><!-- /.header-nav-social -->
+                        </ul>{# /.header-nav-social#}
 
                         <ul class="header-nav-secondary nav nav-pills">
-                            <li><a href="{{ path("login") }}">Login</a></li>
-                            <li><a href="{{ path("register") }}">Register</a></li>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <li><strong>Salut {{app.token.user.username}}</strong></li>
+                                <li><a href="{{logout_path()}}">Deconnection</a></li>
+                                <li><a href="{% if is_granted('ROLE_MEMBER') %}{{ path('update_profile') }}{% elseif is_granted('ROLE_PROVIDER') %}{{ path('update_profile') }}{% endif %}">Votre page</a></li>
+                            {% else %}
+                                <li><a href="{{path('login') }}">Connecter</a></li>
+                                <li><a href="{{path('register')}}">Registration</a></li>
+                            {% endif %}
                         </ul>
-                    </div><!-- /.header-top -->
+                    </div>{# /.header-top #}
 
                     <div class="header-bottom">
                         <div class="header-action">
                             <a href="listing-submit.html" class="header-action-inner" title="Add Listing" data-toggle="tooltip" data-placement="bottom">
                                 <i class="fa fa-plus"></i>
-                            </a><!-- /.header-action-inner -->
-                        </div><!-- /.header-action -->
+                            </a>{# /.header-action-inner #}
+                        </div>{#/.header-action #}
 
                         <ul class="header-nav-primary nav nav-pills collapse navbar-collapse">
                             <li >
@@ -104,7 +110,7 @@
                                     <li class="hidden-xs">
                                         <div class="special">
                                             <a href="register.html">Sign Up Now</a>
-                                        </div><!-- /.special-->
+                                        </div>{# /.special#}
                                     </li>
                                 </ul>
                             </li>
@@ -152,9 +158,9 @@
                             <span class="icon-bar"></span>
                         </button>
 
-                    </div><!-- /.header-bottom -->
-                </div><!-- /.header-content -->
-            </div><!-- /.header-inner -->
-        </div><!-- /.container -->
-    </div><!-- /.header-wrapper -->
-</header><!-- /.header -->
+                    </div>{# /.header-bottom #}
+                </div>{#/.header-content #}
+            </div>{#/.header-inner #}
+        </div>{# /.container #}
+    </div>{# /.header-wrapper #}
+</header>{# /.header #}

@@ -35,8 +35,9 @@ services:
         arguments: ['@doctrine.orm.entity_manager']
 
     AppBundle\DataFixtures\Faker\Provider\MyProvider:
-            tags: [ { name: nelmio_alice.faker.provider } ]
+        tags: [ { name: nelmio_alice.faker.provider } ]
 
-    AppBundle\Controller\RegistrationController:
+    AppBundle\Controller\Front\SecurityController:
         autowire: true # or define your controller constructor and configure its arguments explicitly
         tags: ['controller.service_arguments']
+

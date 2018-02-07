@@ -39,7 +39,7 @@ class ProfileController extends Controller
 
             $form = $this->createForm($type, $user);
             $form->handleRequest($request);
-            if($form->isValid() && $form->isSubmitted()){
+            if($form->isSubmitted() && $form->isValid()){
                 $em=$this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
@@ -56,10 +56,5 @@ class ProfileController extends Controller
     }
 
 
-    /**
-     * @Route("/", name="profile_index")
-     * @Method({"POST","GET"})
-     */
-    public function
 
 }

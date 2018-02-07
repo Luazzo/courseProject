@@ -3,12 +3,12 @@
     <div class="event-date">
         <span class="day">{{ course.start|date("d") }}</span>
         <span class="month">{{ course.start|date("F","Europe/Paris")| slice(0,3)| upper }}</span>
-    </div><!-- /.event-date -->
+    </div>{# /.event-date #}
 
     <div class="event-content">
-        <div class="post-label-float-none">Course</div><!-- /.post-label -->
+        <div class="post-label-float-none">Course</div>{# /.post-label #}
         <h2>{{ course.name }}r</h2>
         <p>{{ course.description }}</p>
-        <div class="event-time"><i class="fa fa-clock-o"></i> 8:00PM - 11:00PM</div><!-- /.event-time -->
-    </div><!-- /.event-content -->
-</div><!-- /.event -->
+        <div class="event-time"><i class="fa fa-clock-o"></i> 8:00PM - 11:00PM</div>{# /.event-time #}
+    </div>{# /.event-content #}
+</div>{# /.event #}

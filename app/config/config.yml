@@ -56,17 +56,26 @@ doctrine:
         #path: '%database_path%'
 
     orm:
-        auto_generate_proxy_classes: '%kernel.debug%'
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+      auto_generate_proxy_classes: '%kernel.debug%'
+      naming_strategy: doctrine.orm.naming_strategy.underscore
+      auto_mapping: true
+      mappings:
+          gedmo_loggable:
+              type: annotation
+              prefix: Gedmo\Loggable\Entity
+              dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
+              alias: GedmoLoggable # (optional) it will default to the name set for the mapping
+              is_bundle: false
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: '%mailer_transport%'
-    host: '%mailer_host%'
-    username: '%mailer_user%'
-    password: '%mailer_password%'
-    spool: { type: memory }
+  spool:     { type: memory }
+  transport: smtp
+  host:      smtp.mailtrap.io
+  username:  7eed439e4116b2
+  password:  7b3fc5f083db35
+  auth_mode: cram-md5
+  port: 2525
 
 fidry_alice_data_fixtures:
     db_drivers:
@@ -82,6 +91,13 @@ knp_paginator:
         filter_field_name: filterField  # filter field query parameter name
         filter_value_name: filterValue  # filter value query paameter name
     template:
-        pagination: 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig'
+        pagination: 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v4_pagination.html.twig'
         sortable: '@KnpPaginator/Pagination/sortable_link.html.twig' # sort link template
         filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template
+
+stof_doctrine_extensions :
+    orm :
+        default :
+            sluggable : true
+            timestampable:  true
+            translatable:   true

@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * Promotion
@@ -30,6 +32,12 @@ class Promotion
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
     /**
      * @var string
@@ -119,6 +127,20 @@ class Promotion
     {
         return $this->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public  function getSlug(){
+        return $this->slug;
+    }/**
+     * @param mixed $slug
+     */
+    public  function setSlug($slug):void {
+        $this->slug = $slug;
+    }
+
+
 
     /**
      * @return mixed

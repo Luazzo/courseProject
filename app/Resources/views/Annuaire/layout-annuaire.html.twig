@@ -2,21 +2,23 @@
 
 
 {% block header %}
-    <div class="page-wrapper">
 
         {% block header_bottom %}
-
-
-
-
-
-        {% endblock %} <!-- block header_bottom -->
-
+        {% endblock %}
 
 {% endblock %}
 
 
+{% block main %}
+    <div class="main">
+        <div class="main-inner">
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>{# /.content #}
+        </div>{# /.main-inner #}
+    </div>{# /.main #}
 
+{% endblock %}
 
 
 
@@ -24,3 +26,4 @@
 {% block footer %}
    {% include 'Annuaire/footer.html.twig' %}
 {% endblock %}
+

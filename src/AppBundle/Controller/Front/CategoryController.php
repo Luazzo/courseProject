@@ -76,12 +76,14 @@ class CategoryController extends Controller
     /**
      * Finds and displays a category entity.
      *
-     * @Route("/{id}", name="category_show")
+     * @Route("/{slug}", name="category_show")
      * @Method("GET")
      */
-    public function showAction( Request $request, Category $category)
+    public function showAction( Request $request, $slug)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $category = $em->getRepository('AppBundle:Category')->findOneBySlug($slug);
 
         $promotions = $em->getRepository('AppBundle:Promotion')->findLastPromos($category, 5);
 
@@ -113,11 +115,14 @@ class CategoryController extends Controller
     /**
      * Displays a form to edit an existing category entity.
      *
-     * @Route("/{id}/edit", name="category_edit")
+     * @Route("/{slug}/edit", name="category_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Category $category)
+    public function editAction(Request $request, $slug)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $category = $em->getRepository('AppBundle:Category')->findOneBySlug($slug);
         $deleteForm = $this->createDeleteForm($category);
         $editForm = $this->createForm('AppBundle\Form\Front\CategoryType', $category);
         $editForm->handleRequest($request);
@@ -138,11 +143,14 @@ class CategoryController extends Controller
     /**
      * Deletes a category entity.
      *
-     * @Route("/{id}", name="category_delete")
+     * @Route("/{slug}", name="category_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Category $category)
+    public function deleteAction(Request $request, $slug)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $category = $em->getRepository('AppBundle:Category')->findOneBySlug($slug);
         $form = $this->createDeleteForm($category);
         $form->handleRequest($request);
 
@@ -165,7 +173,7 @@ class CategoryController extends Controller
     private function createDeleteForm(Category $category)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('category_delete', array('id' => $category->getId())))
+            ->setAction($this->generateUrl('category_delete', array('slug' => $category->getSlug())))
             ->setMethod('DELETE')
             ->getForm()
         ;

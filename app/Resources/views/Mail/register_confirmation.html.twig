@@ -1,0 +1,28 @@
+<div class="main-inner">
+    <div class="container">
+        <div class="content">
+
+
+
+            <div class="page-title center">
+                <h1>
+                    Welcome
+                    {{ contact }}!
+                </h1>
+            </div>{# /.page-header #}
+
+
+            <p>
+                Thank you for signing up for Wellbeing!
+            </p>
+
+            <p>
+                Please confirme Your Email Address by clicking the button below.
+            </p>
+
+            <a href="{{ url_site }}"><button type="submit" class="btn btn-primary pull-right">Confirm my account</button></a>
+                  {# url_site == "http://127.0.0.1:8000/register_confirm/".$token;  #}
+
+        </div>{# /.content #}
+    </div>{# /.container #}
+</div>

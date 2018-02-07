@@ -133,7 +133,7 @@ public function login(Request $request, AuthenticationUtils $authUtils)
         }
 
         return $this->render(
-            'register/register.html.twig',
+            'public/security/register.html.twig',
             array('form' => $form->createView())
         );
     }

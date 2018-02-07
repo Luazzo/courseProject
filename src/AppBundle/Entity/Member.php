@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\User;
 
+
 /**
  * Member
  *
@@ -69,6 +70,7 @@ class Member extends User
         $this->ratings=new ArrayCollection();
         $this->favorites=new ArrayCollection();
         $this->ordreblocks=new ArrayCollection();
+        $this->addRole(User::ROLE_MEMBER);
     }
 
     /**
@@ -97,21 +99,7 @@ class Member extends User
         $this->ordreblocks = $ordreblocks;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUserType()
-    {
-        return $this->user_type;
-    }
 
-    /**
-     * @param mixed $user_type
-     */
-    public function setUserType($user_type)
-    {
-        $this->user_type = $user_type;
-    }
 
     /**
      * @return Image

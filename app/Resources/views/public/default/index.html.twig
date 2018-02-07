@@ -26,7 +26,7 @@
                                 <div class="row">
                                     <div class="col-sm-4 col-sm-offset-8 col-lg-4 col-lg-offset-7">
 
-                        {{ render(controller("AppBundle:Default:searchForm")) }}
+                        {{ render(controller("AppBundle:Front/Default:searchForm")) }}
 
                                     </div>{# /.col-* #}
                                 </div>{# /.row #}
@@ -52,7 +52,7 @@
                     <div class="row">
                         {% for category in categories | slice (0,8) %}
                             <div class="col-sm-6 col-md-3">
-                                {% include "category/card-simple.html.twig" %}
+                                {% include "public/category/card-simple.html.twig" %}
                             </div>{# /.col-* #}
                         {% endfor %}
 
@@ -72,7 +72,7 @@
                         <div class="col-sm-6">
                             <div class="posts">
                                 {% for promotion in promotions | slice (0,4) %}
-                                    {% include "promotion/post.html.twig" %}
+                                    {% include "public/promotion/post.html.twig" %}
                                 {% endfor %}
                             </div>{# /.posts #}
 
@@ -81,7 +81,7 @@
                         <div class="col-sm-6">
                             <div class="posts">
                                 {% for promotion in promotions | slice (4,4) %}
-                                    {% include "promotion/post.html.twig" %}
+                                    {% include "public/promotion/post.html.twig" %}
                                 {% endfor %}
                             </div>{# /.posts#}
 
@@ -145,7 +145,10 @@
                         <p>Check out the best places &amp; events in the city. Each one is worth<br> of visiting. Experience which you never forget.</p>
                     </div>{# /.page-header #}
 
-
+                    {{ render(controller(
+                       'AppBundle:Front/Provider:getBestProviders',
+                       { 'max': 4 }
+                       )) }}
 
 
                 </div>
@@ -163,7 +166,7 @@
                             {% if comments|length == 1 %}
 
                                 <div class="col-sm-6">
-                                        {% include "Comment/testimonial.html.twig" %}
+                                        {% include "public/comment/testimonial.html.twig" %}
                                 </div>{# /.col-* #}
 
                             {% else %}
@@ -171,7 +174,7 @@
                                 <div class="col-sm-6">
                                     {% for comment in comments | slice (0,6) %}
                                         {% if loop.index is odd %}
-                                            {% include "Comment/testimonial.html.twig" %}
+                                            {% include "public/comment/testimonial.html.twig" %}
                                         {% endif %}
                                     {% endfor %}
                                 </div>{# /.col-* #}
@@ -179,7 +182,7 @@
                                 <div class="col-sm-6">
                                     {% for comment in comments | slice (0,6) %}
                                         {% if loop.index is even %}
-                                            {% include "Comment/testimonial.html.twig" %}
+                                            {% include "public/comment/testimonial.html.twig" %}
                                         {% endif %}
                                     {% endfor %}
                                 </div>{# /.col-* #}
@@ -204,7 +207,7 @@
                                 {% for course in courses | slice (0,3) %}
 
                                     <div class="col-sm-4">
-                                        {% include "course/pircing.html.twig" %}
+                                        {% include "public/course/pircing.html.twig" %}
                                     </div>{# /.col-* #}
 
                                 {% endfor %}
