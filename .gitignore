@@ -15,4 +15,4 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/*
-/app/Resources/views/Partials/1.html.twig
+/app/Resources/views/partials/1.html.twig

@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
         {% block stylesheet %}
-            {% include "Partials/stylesheets.html.twig" %}
+            {% include ":partials:stylesheets.html.twig" %}
         {% endblock %}
 
         {% block javaScript_head %}{% endblock %}
@@ -24,7 +24,7 @@
             {% block footer %}{% endblock %}
 
             {% block javascript %}
-                {% include "Partials/scripts.html.twig" %}
+                {% include ":partials:scripts.html.twig" %}
             {% endblock %}
         </div>
     </body>

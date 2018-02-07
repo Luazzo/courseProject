@@ -1,8 +1,8 @@
-{% extends 'Annuaire/layout-annuaire.html.twig' %}
+{% extends 'partials/layout-annuaire.html.twig' %}
 {% block title %}Form Provider{% endblock %}
 
 {% block header_bottom %}
-{% include "Annuaire/header.html.twig" %}
+{% include "partials/header.html.twig" %}
 {% endblock %}
 
 {% block main %}
@@ -16,7 +16,7 @@
                             <h1>Register</h1>
                         </div>{# /.page-title #}
 
-                        {% include ':Partials:flash-messages.html.twig' %}
+                        {% include ':partials:flash-messages.html.twig' %}
 
                         {{ form_start(form) }}
                         <fieldset>

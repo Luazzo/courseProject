@@ -13,7 +13,7 @@ class DefaultController extends Controller
      */
     public function testAction(Request $request)
     {
-        return $this->render('AppBundle:Partials:test.html.twig');
+        return $this->render('AppBundle:partials:test.html.twig');
     }
 
     /**
