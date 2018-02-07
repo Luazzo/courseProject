@@ -32,7 +32,7 @@ class SearchController extends Controller
 
         //dump($paginate); die();
 
-        return $this->render('public/provider/index.html.twig', array(
+        return $this->render('front/provider/index.html.twig', array(
             'providers' => $providers
         ));
 

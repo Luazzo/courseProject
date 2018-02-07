@@ -63,14 +63,14 @@
                                     </div>{# /.cards-small #}
                                 {% else %}
                                     {% for promotion in promotions | slice (0,5) %}
-                                        {% include "public/promotion/cards-small.html.twig" %}
+                                        {% include "front/promotion/cards-small.html.twig" %}
                                     {% endfor %}
                                 {% endif %}
 
                             </div>{# /.widget #}
 
 
-                            {% include "public/search/filter.html.twig" %}
+                            {% include "front/search/filter.html.twig" %}
 
 
                             <div class="widget">
@@ -83,7 +83,7 @@
                                     </div>{# /.cards-small #}
                                 {% else %}
                                     {% for course in courses | slice (0,5) %}
-                                        {% include "public/course/cards-small-course.html.twig" %}
+                                        {% include "front/course/cards-small-course.html.twig" %}
                                     {% endfor %}
                                 {% endif %}
                             </div>{# /.widget #}

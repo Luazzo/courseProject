@@ -117,7 +117,7 @@
                                 {% if provider.comments|length == 1 %}
 
                                     <div class="col-sm-12">
-                                        {{ include("public/comment/testimonial.html.twig", {comment:provider.comments.first})   }}
+                                        {{ include("front/comment/testimonial.html.twig", {comment:provider.comments.first})   }}
 
                                     </div>{# /.col-* #}
 
@@ -126,7 +126,7 @@
                                     <div class="col-sm-12">
                                         {% for comment in provider.comments %}
                                             {% if loop.index is odd %}
-                                                {{ include ("public/comment/testimonial.html.twig", {comment:comment})  }}
+                                                {{ include ("front/comment/testimonial.html.twig", {comment:comment})  }}
                                             {% endif %}
                                         {% endfor %}
                                     </div>{# /.col-* #}
@@ -233,7 +233,7 @@
                                     </div>{# /.cards-small #}
                                 {% else %}
                                     {% for promotion in provider.promotions %}
-                                        {% include "public/promotion/cards-small.html.twig" %}
+                                        {% include "front/promotion/cards-small.html.twig" %}
                                     {% endfor %}
                                 {% endif %}
                             </div>{# /.widget #}
@@ -246,7 +246,7 @@
                                     </div>{# /.cards-small #}
                                 {% else %}
                                     {% for course in provider.courses %}
-                                        {% include "public/course/cards-small-course.html.twig" %}
+                                        {% include "front/course/cards-small-course.html.twig" %}
                                     {% endfor %}
                                 {% endif %}
                             </div>{# /.widget #}

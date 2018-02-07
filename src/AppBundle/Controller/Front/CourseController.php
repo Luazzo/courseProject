@@ -28,7 +28,7 @@ class CourseController extends Controller
 
         $courses = $em->getRepository('AppBundle:Course')->findAll();
 
-        return $this->render('public/course/index.html.twig', array(
+        return $this->render('front/course/index.html.twig', array(
             'courses' => $courses,
         ));
     }
@@ -53,7 +53,7 @@ class CourseController extends Controller
             return $this->redirectToRoute('course_show', array('id' => $course->getId()));
         }
 
-        return $this->render('public/course/new.html.twig', array(
+        return $this->render('front/course/new.html.twig', array(
             'course' => $course,
             'form' => $form->createView(),
         ));
@@ -72,7 +72,7 @@ class CourseController extends Controller
         $course = $em-> getRepository("AppBundle:Course")->findOneBy(array('slug'=>$slug));
         $deleteForm = $this->createDeleteForm($course);
 
-        return $this->render('public/course/show.html.twig', array(
+        return $this->render('front/course/show.html.twig', array(
             'course' => $course,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -99,7 +99,7 @@ class CourseController extends Controller
             return $this->redirectToRoute('course_edit', array('id' => $course->getId()));
         }
 
-        return $this->render('public/course/edit.html.twig', array(
+        return $this->render('front/course/edit.html.twig', array(
             'course' => $course,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

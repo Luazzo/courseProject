@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class PromotionControllerTest extends WebTestCase
 {
     /*
-    public function testCompleteScenario()
+    front function testCompleteScenario()
     {
         // Create a new client to browse the application
         $client = static::createClient();

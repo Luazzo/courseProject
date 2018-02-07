@@ -112,7 +112,7 @@
                                     </div>{# /.cards-small #}
                                 {% else %}
                                     {% for promotion in promotions  %}
-                                        {% include "public/promotion/cards-small.html.twig" %}
+                                        {% include "front/promotion/cards-small.html.twig" %}
                                     {% endfor %}
                                 {% endif %}
                             </div>{# /.widget #}
@@ -129,16 +129,16 @@
                                     </div>{# /.cards-small #}
                                 {% else %}
                                     {% for course in courses  %}
-                                        {% include "public/course/cards-small-course.html.twig" %}
+                                        {% include "front/course/cards-small-course.html.twig" %}
                                     {% endfor %}
                                 {% endif %}
                             </div>{# /.widget #}
 
 
 
-                            {% include "public/search/filter.html.twig" %}
+                            {% include "front/search/filter.html.twig" %}
 
-                            {% include "public/category/categories-menu.html.twig"%}
+                            {% include "front/category/categories-menu.html.twig"%}
 
 
 

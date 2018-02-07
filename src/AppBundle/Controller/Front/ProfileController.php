@@ -30,11 +30,11 @@ class ProfileController extends Controller
         if($user != null){
             if($user instanceof Provider){
                 $type='AppBundle\Form\Front\ProviderType';
-                $view=':public/profile:provider.html.twig';
+                $view=':front/profile:provider.html.twig';
 
             }elseif($user instanceof Member){
                 $type='AppBundle\Form\Front\MemberType';
-                $view=':public/profile:member.html.twig';
+                $view=':front/profile:member.html.twig';
             }
 
             $form = $this->createForm($type, $user);

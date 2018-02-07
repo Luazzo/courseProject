@@ -40,7 +40,7 @@ class CategoryController extends Controller
         );
         unset($_GET);
 
-        return $this->render('/public/category/index.html.twig', array(
+        return $this->render('/front/category/index.html.twig', array(
             'courses' => $courses,
             'promotions' => $promotions,
             'categories' => $categories,
@@ -67,7 +67,7 @@ class CategoryController extends Controller
             return $this->redirectToRoute('category_show', array('id' => $category->getId()));
         }
 
-        return $this->render('public/category/new.html.twig', array(
+        return $this->render('front/category/new.html.twig', array(
             'category' => $category,
             'form' => $form->createView(),
         ));
@@ -102,7 +102,7 @@ class CategoryController extends Controller
 
         $deleteForm = $this->createDeleteForm($category);
 
-        return $this->render('public/category/show.html.twig', array(
+        return $this->render('front/category/show.html.twig', array(
             'providers' => $providers,
             'courses' => $courses,
             'categories' => $allCategories,
@@ -133,7 +133,7 @@ class CategoryController extends Controller
             return $this->redirectToRoute('category_edit', array('id' => $category->getId()));
         }
 
-        return $this->render('public/category/edit.html.twig', array(
+        return $this->render('front/category/edit.html.twig', array(
             'category' => $category,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

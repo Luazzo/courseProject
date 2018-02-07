@@ -29,7 +29,7 @@ class ProviderController extends Controller
 
         $providers = $em->getRepository('AppBundle:Provider')->bestProviders(5);
 
-        return $this->render('public/provider/index.html.twig', array(
+        return $this->render('front/provider/index.html.twig', array(
             'providers' => $providers,
         ));
     }
@@ -54,7 +54,7 @@ class ProviderController extends Controller
             return $this->redirectToRoute('provider_show', array('id' => $provider->getId()));
         }
 
-        return $this->render('public/provider/new.html.twig', array(
+        return $this->render('front/provider/new.html.twig', array(
             'provider' => $provider,
             'form' => $form->createView(),
         ));
@@ -78,7 +78,7 @@ class ProviderController extends Controller
 
         $deleteForm = $this->createDeleteForm($provider);
 
-        return $this->render('public/provider/show.html.twig', array(
+        return $this->render('front/provider/show.html.twig', array(
             'rating' => $rating,
             'hearts' => $hearts,
             'provider' => $provider,
@@ -104,7 +104,7 @@ class ProviderController extends Controller
             return $this->redirectToRoute('provider_edit', array('id' => $provider->getId()));
         }
 
-        return $this->render('public/provider/edit.html.twig', array(
+        return $this->render('front/provider/edit.html.twig', array(
             'provider' => $provider,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -162,7 +162,7 @@ class ProviderController extends Controller
         $bestProviders = $repository->bestProviders($max);
 
 
-        return $this->render("public/provider/card-wrapper.html.twig",array("providers"=>$bestProviders ));
+        return $this->render("front/provider/card-wrapper.html.twig",array("providers"=>$bestProviders ));
 
     }
 }

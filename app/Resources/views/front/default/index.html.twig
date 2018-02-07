@@ -52,7 +52,7 @@
                     <div class="row">
                         {% for category in categories | slice (0,8) %}
                             <div class="col-sm-6 col-md-3">
-                                {% include "public/category/card-simple.html.twig" %}
+                                {% include "front/category/card-simple.html.twig" %}
                             </div>{# /.col-* #}
                         {% endfor %}
 
@@ -72,7 +72,7 @@
                         <div class="col-sm-6">
                             <div class="posts">
                                 {% for promotion in promotions | slice (0,4) %}
-                                    {% include "public/promotion/post.html.twig" %}
+                                    {% include "front/promotion/post.html.twig" %}
                                 {% endfor %}
                             </div>{# /.posts #}
 
@@ -81,7 +81,7 @@
                         <div class="col-sm-6">
                             <div class="posts">
                                 {% for promotion in promotions | slice (4,4) %}
-                                    {% include "public/promotion/post.html.twig" %}
+                                    {% include "front/promotion/post.html.twig" %}
                                 {% endfor %}
                             </div>{# /.posts#}
 
@@ -166,7 +166,7 @@
                             {% if comments|length == 1 %}
 
                                 <div class="col-sm-6">
-                                        {% include "public/comment/testimonial.html.twig" %}
+                                        {% include "front/comment/testimonial.html.twig" %}
                                 </div>{# /.col-* #}
 
                             {% else %}
@@ -174,7 +174,7 @@
                                 <div class="col-sm-6">
                                     {% for comment in comments | slice (0,6) %}
                                         {% if loop.index is odd %}
-                                            {% include "public/comment/testimonial.html.twig" %}
+                                            {% include "front/comment/testimonial.html.twig" %}
                                         {% endif %}
                                     {% endfor %}
                                 </div>{# /.col-* #}
@@ -182,7 +182,7 @@
                                 <div class="col-sm-6">
                                     {% for comment in comments | slice (0,6) %}
                                         {% if loop.index is even %}
-                                            {% include "public/comment/testimonial.html.twig" %}
+                                            {% include "front/comment/testimonial.html.twig" %}
                                         {% endif %}
                                     {% endfor %}
                                 </div>{# /.col-* #}
@@ -207,7 +207,7 @@
                                 {% for course in courses | slice (0,3) %}
 
                                     <div class="col-sm-4">
-                                        {% include "public/course/pircing.html.twig" %}
+                                        {% include "front/course/pircing.html.twig" %}
                                     </div>{# /.col-* #}
 
                                 {% endfor %}

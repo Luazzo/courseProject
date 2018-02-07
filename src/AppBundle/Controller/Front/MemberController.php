@@ -26,7 +26,7 @@ class MemberController extends Controller
 
         $members = $em->getRepository('AppBundle:Member')->findAll();
 
-        return $this->render('public/member/index.html.twig', array(
+        return $this->render('front/member/index.html.twig', array(
             'members' => $members,
         ));
     }
@@ -51,7 +51,7 @@ class MemberController extends Controller
             return $this->redirectToRoute('member_show', array('id' => $member->getId()));
         }
 
-        return $this->render('public/member/new.html.twig', array(
+        return $this->render('front/member/new.html.twig', array(
             'member' => $member,
             'form' => $form->createView(),
         ));
@@ -67,7 +67,7 @@ class MemberController extends Controller
     {
         $deleteForm = $this->createDeleteForm($member);
 
-        return $this->render('public/member/show.html.twig', array(
+        return $this->render('front/member/show.html.twig', array(
             'member' => $member,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -91,7 +91,7 @@ class MemberController extends Controller
             return $this->redirectToRoute('member_edit', array('id' => $member->getId()));
         }
 
-        return $this->render('public/member/edit.html.twig', array(
+        return $this->render('front/member/edit.html.twig', array(
             'member' => $member,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

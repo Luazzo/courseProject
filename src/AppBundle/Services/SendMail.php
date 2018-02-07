@@ -31,7 +31,7 @@ class SendMail{
 
     public function sendConfirmation($email, $username, $token)
     {
-        $template = 'Mail/register_confirmation.html.twig';
+        $template = 'front/security/register_confirmation.html.twig';
 
         $from = 'admin@wellbeing.com';
 

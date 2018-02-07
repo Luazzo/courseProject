@@ -27,7 +27,7 @@ class PromotionController extends Controller
 
         $promotions = $em->getRepository('AppBundle:Promotion')->findAll();
 
-        return $this->render('public/promotion/index.html.twig', array(
+        return $this->render('front/promotion/index.html.twig', array(
             'promotions' => $promotions,
         ));
     }
@@ -52,7 +52,7 @@ class PromotionController extends Controller
             return $this->redirectToRoute('promotion_show', array('id' => $promotion->getId()));
         }
 
-        return $this->render('promotion/new.html.twig', array(
+        return $this->render('front/promotion/new.html.twig', array(
             'promotion' => $promotion,
             'form' => $form->createView(),
         ));
@@ -69,7 +69,7 @@ class PromotionController extends Controller
 
         $deleteForm = $this->createDeleteForm($promotion);
 
-        return $this->render('public/promotion/show.html.twig', array(
+        return $this->render('front/promotion/show.html.twig', array(
             'promotion' => $promotion,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -93,7 +93,7 @@ class PromotionController extends Controller
             return $this->redirectToRoute('promotion_edit', array('id' => $promotion->getId()));
         }
 
-        return $this->render('public/promotion/edit.html.twig', array(
+        return $this->render('front/promotion/edit.html.twig', array(
             'promotion' => $promotion,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

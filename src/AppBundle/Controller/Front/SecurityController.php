@@ -36,7 +36,7 @@ public function login(Request $request, AuthenticationUtils $authUtils)
     // last username entered by the user
     $lastUsername = $authUtils->getLastUsername();
 
-    return $this->render('public/security/login.html.twig', array(
+    return $this->render('front/security/login.html.twig', array(
         'last_username' => $lastUsername,
         'error'         => $error,
     ));
@@ -109,7 +109,7 @@ public function login(Request $request, AuthenticationUtils $authUtils)
      */
     public function demandeConfirmationAction()
     {
-        return $this->render('public/security/demande-confirmation.html.twig', array());
+        return $this->render('front/security/demande-confirmation.html.twig', array());
     }
 
 
@@ -133,7 +133,7 @@ public function login(Request $request, AuthenticationUtils $authUtils)
         }
 
         return $this->render(
-            'public/security/register.html.twig',
+            'front/security/register.html.twig',
             array('form' => $form->createView())
         );
     }

@@ -26,7 +26,7 @@ class TownController extends Controller
 
         $towns = $em->getRepository('AppBundle:Town')->findAll();
 
-        return $this->render('public/town/index.html.twig', array(
+        return $this->render('front/town/index.html.twig', array(
             'towns' => $towns,
         ));
     }
@@ -51,7 +51,7 @@ class TownController extends Controller
             return $this->redirectToRoute('town_show', array('id' => $town->getId()));
         }
 
-        return $this->render('public/town/new.html.twig', array(
+        return $this->render('front/town/new.html.twig', array(
             'town' => $town,
             'form' => $form->createView(),
         ));
@@ -67,7 +67,7 @@ class TownController extends Controller
     {
         $deleteForm = $this->createDeleteForm($town);
 
-        return $this->render('public/town/show.html.twig', array(
+        return $this->render('front/town/show.html.twig', array(
             'town' => $town,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -91,7 +91,7 @@ class TownController extends Controller
             return $this->redirectToRoute('town_edit', array('id' => $town->getId()));
         }
 
-        return $this->render('public/town/edit.html.twig', array(
+        return $this->render('front/town/edit.html.twig', array(
             'town' => $town,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
