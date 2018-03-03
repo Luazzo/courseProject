@@ -1,0 +1,120 @@
+{% extends 'front/Profile/provider.html.twig' %}
+
+{% block profile_pages %}
+                    <div class="col-sm-4 col-lg-3">
+                        <div class="sidebar">
+                            <div class="widget">
+                                <div class="user-photo">
+
+                                    {{ form_start(form) }}
+                                        <img src="{% if user.avatar %}
+                                                        {{asset(user.avatar.webPath)}}
+                                                  {% else %}
+                                                        {{ asset ('img/tmp/agent-2.jpg') | imagine_filter('my_thumb') }}
+                                                  {% endif %}" alt="User Photo">
+                                    {{ form_widget(form.avatar, { 'attr': {'class': ''} }) }}
+                                    {{ form_errors(form.avatar) }}
+
+                                </div>{# /.user-photo #}
+                            </div>{# /.widget #}
+
+                            {% include "front/Profile/menu_profile.html.twig" %}
+
+                       </div>{# /.sidebar #}
+                    </div>{# /.col-* #}
+
+                    <div class="col-sm-8 col-lg-9">
+                        <div class="page-title">
+                            <h1>Modifier votre Profile</h1>
+                        </div>{# /.page-title #}
+
+                        {% include ':partials:flash-messages.html.twig' %}
+
+                        <fieldset>
+                            <legende><h4>Données personnelle d'administrateur</h4></legende>
+                            <div class="form-group">
+                                {{ form_label(form.name ) }}
+                                {{ form_widget(form.name,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.name ) }}
+                            </div>{# /.form-group #}
+                            <div class="form-group">
+                                {{ form_label(form.firstName) }}
+                                {{ form_widget(form.firstName,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.firstName) }}
+                            </div>{# /.form-group #}
+                            <div class="form-group">
+                                {{ form_label(form.email ) }}
+                                {{ form_widget(form.email,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.email) }}
+                            </div>{# /.form-group #}
+                        </fieldset>
+
+                        <fieldset>
+                            <legende><h4>Données de société</h4></legende>
+                            <div class="form-group">
+                                {{ form_label(form.company) }}
+                                {{ form_widget(form.company,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.company) }}
+                            </div>{# /.form-group #}
+                            <div class="form-group">
+                                {{ form_label(form.site) }}
+                                {{ form_widget(form.site,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.site) }}
+                            </div>{# /.form-group #}
+                            <div class="form-group">
+                                {{ form_label(form.emailCompany ) }}
+                                {{ form_widget(form.emailCompany ,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.emailCompany ) }}
+                            </div>{# /.form-group #}
+                            <div class="form-group">
+                                {{ form_label(form.telCompany ) }}
+                                {{ form_widget(form.telCompany,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.telCompany ) }}
+                            </div>{# /.form-group #}
+                            <div class="form-group">
+                                {{ form_label(form.tva) }}
+                                {{ form_widget(form.tva,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.tva ) }}
+                            </div>{# /.form-group #}
+                            <div class="form-group">
+                                {{ form_label(form.addressStreet ) }}
+                                {{ form_widget(form.addressStreet,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.addressStreet) }}
+                            </div>{# /.form-group #}
+                            <div class="form-group">
+                                {{ form_label(form.addressNumber) }}
+                                {{ form_widget(form.addressNumber,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.addressNumber) }}
+                            </div>{# /.form-group #}
+                            <div class="form-group">
+                                {{ form_label(form.town ) }}
+                                {{ form_widget(form.town ,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.town ) }}
+                            </div>{# /.form-group #}
+                            <div class="form-group">
+                                {{ form_label(form.locality ) }}
+                                {{ form_widget(form.locality ,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.locality ) }}
+                            </div>{# /.form-group #}
+                            <div class="form-group">
+                                {{ form_label(form.zip ) }}
+                                {{ form_widget(form.zip ,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.zip ) }}
+                            </div>{# /.form-group #}
+                            <div class="form-group">
+                                {{ form_label(form.presentation ) }}
+                                {{ form_widget(form.presentation ,{ 'attr':{"class":"form-control" } }) }}
+                                {{ form_errors(form.presentation ) }}
+                            </div>{# /.form-group #}
+                        </fieldset>
+
+
+
+                        <button type="submit">Modiifier!</button>
+
+                        {{ form_end(form) }}
+
+
+                        </div>{# /.col-sm-4 #}
+
+{% endblock %}

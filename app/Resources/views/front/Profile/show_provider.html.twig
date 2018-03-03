@@ -1,0 +1,268 @@
+{% extends 'front/layout-annuaire.html.twig' %}
+
+{% block title %}Provider{% endblock %}
+
+{% block header_bottom %}
+    {% include "partials/header.html.twig" %}
+{% endblock %}
+
+{% block main %}
+    <div class="main">
+        <div class="main-inner">
+            <div class="content">
+                <div class="mt-80 mb80">
+                    <div class="detail-banner" style="background-image: url(/img/tmp/detail-banner-1.jpg);">
+                        <div class="container">
+                            <div class="detail-banner-left">
+
+                                <h2 class="detail-title">
+                                    {{ provider.company }}
+                                </h2>
+                                <div class="detail-banner-address">
+                                    <i class="fa fa-map-o"></i> {{ provider.addressStreet }} {{ provider.addressNumber }}, {{ provider.town.town }}, {{ provider.zip.zip }}
+                                </div>{# /.detail-banner-address #}
+
+                                <div class="detail-banner-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-o"></i>
+                                </div>{# /.detail-banner-rating #}
+
+                                <div class="detail-banner-btn heart">
+                                    <i class="fa fa-heart-o"></i> <span data-toggle="I Love It">Give Heart</span>
+                                </div>{# /.detail-claim #}
+
+                            </div>{# /.detail-banner-left #}
+                        </div>{# /.container #}
+                    </div>{# /.detail-banner #}
+                </div>
+
+                <div class="container">
+                    <div class="row detail-content">
+                        <div class="col-sm-7">
+                            <div class="detail-gallery">
+                                <div class="detail-gallery-preview">
+                                    <a href="/img/tmp/gallery-1.jpg">
+                                        <img src="/img/tmp/gallery-1.jpg">
+                                    </a>
+                                </div>
+
+                                <ul class="detail-gallery-index">
+                                    <li class="detail-gallery-list-item active">
+                                        <a data-target="/img/tmp/gallery-1.jpg">
+                                            <img src="/img/tmp/gallery-1.jpg" alt="...">
+                                        </a>
+                                    </li>
+                                    <li class="detail-gallery-list-item active">
+                                        <a data-target="/img/tmp/gallery-2.jpg">
+                                            <img src="/img/tmp/gallery-2.jpg" alt="...">
+                                        </a>
+                                    </li>
+                                    <li class="detail-gallery-list-item active">
+                                        <a data-target="/img/tmp/gallery-3.jpg">
+                                            <img src="/img/tmp/gallery-3.jpg" alt="...">
+                                        </a>
+                                    </li>
+                                    <li class="detail-gallery-list-item active">
+                                        <a data-target="/img/tmp/gallery-4.jpg">
+                                            <img src="/img/tmp/gallery-4.jpg" alt="...">
+                                        </a>
+                                    </li>
+                                    <li class="detail-gallery-list-item active">
+                                        <a data-target="/img/tmp/gallery-5.jpg">
+                                            <img src="/img/tmp/gallery-5.jpg" alt="...">
+                                        </a>
+                                    </li>
+                                    <li class="detail-gallery-list-item active">
+                                        <a data-target="/img/tmp/gallery-6.jpg">
+                                            <img src="/img/tmp/gallery-6.jpg" alt="...">
+                                        </a>
+                                    </li>
+                                    <li class="detail-gallery-list-item active">
+                                        <a data-target="/img/tmp/gallery-7.jpg">
+                                            <img src="/img/tmp/gallery-7.jpg" alt="...">
+                                        </a>
+                                    </li>
+                                    <li class="detail-gallery-list-item active">
+                                        <a data-target="/img/tmp/gallery-8.jpg">
+                                            <img src="/img/tmp/gallery-8.jpg" alt="...">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>{# /.detail-gallery #}
+
+
+                            <div class="posts post-detail">
+                                <div class="post-meta-tags clearfix">
+                                    Provider's Categories:
+                                        {% if (provider.categories | length) > 0 %}
+                                            <ul>
+                                                {% for cat in provider.categories %}
+                                                    <li class="tag"><a href="{{ path('category_show', {'slug': cat.slug  }) }}">{{ cat.name }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            No categories
+                                        {% endif %}
+                                </div>{# /.post-meta #}
+                            </div>{# /.post #}
+
+
+                            <h2 id="reviews">All Reviews</h2>
+
+                            <div class="reviews">
+                                <div class="row">
+                                {% if provider.comments|length == 1 %}
+
+                                    <div class="col-sm-12">
+                                        {{ include("front/comment/testimonial.html.twig", {comment:provider.comments.first})   }}
+
+                                    </div>{# /.col-* #}
+
+                                {% else %}
+
+                                    <div class="col-sm-12">
+                                        {% for comment in provider.comments %}
+                                            {% if loop.index is odd %}
+                                                {{ include ("front/comment/testimonial.html.twig", {comment:comment})  }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>{# /.col-* #}
+
+                                {% endif %}
+                                </div>
+
+
+                            </div>{# /.reviews #}
+
+                        </div>{# /.col-sm-7 #}
+
+                        <div class="col-sm-5">
+
+                            <div class="background-white p20">
+                                <div class="detail-overview-hearts">
+                                    <i class="fa fa-heart"></i> <strong>{{ hearts|length }} </strong>people love it
+                                </div>
+                                <div class="detail-overview-rating">
+                                    <i class="fa fa-star"></i>
+                                    <strong>
+                                        {% if rating.0.note_avg == null %}
+                                            0/5
+                                        {% else %}
+                                            {{ rating.0.note_avg|round(1, 'floor') }} / 5
+                                        {% endif %}
+                                    </strong>from <a href="#reviews">{{ rating.0.nmb_note }} votes</a>
+                                </div>
+
+                                <div class="detail-actions row">
+                                    <div class="col-sm-4">
+                                        <div class="btn btn-primary btn-book"><i class="fa fa-shopping-cart"></i> Book Now</div>
+                                    </div>{# /.col-sm-4 #}
+                                    <div class="col-sm-4">
+                                        <div class="btn btn-secondary btn-share"><i class="fa fa-share-square-o"></i> Share
+                                            <div class="share-wrapper">
+                                                <ul class="share">
+                                                    <li><i class="fa fa-facebook"></i> Facebook</li>
+                                                    <li><i class="fa fa-twitter"></i> Twitter</li>
+                                                    <li><i class="fa fa-google-plus"></i> Google+</li>
+                                                    <li><i class="fa fa-pinterest"></i> Pinterest</li>
+                                                    <li><i class="fa fa-chain"></i> Link</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>{# /.col-sm-4 #}
+                                    <div class="col-sm-4">
+                                        <div class="btn btn-secondary btn-claim"><i class="fa fa-hand-peace-o"></i> Claim</div>
+                                    </div>{# /.col-sm-4 #}
+                                </div>{# /.detail-actions #}
+                            </div>
+
+                            <h2>About <span class="text-secondary">{{ provider.company }}</span></h2>
+                            <div class="background-white p20">
+                                <div class="detail-vcard">
+                                    <div class="detail-logo">
+                                        <img src="/img/tmp/pragmaticmates-logo.png">
+                                    </div>{# /.detail-logo #}
+
+                                    <div class="detail-contact">
+                                        <div class="detail-contact-email">
+                                            <i class="fa fa-envelope-o"></i> <a href="mailto:#">{{ provider.emailCompany }}</a>
+                                        </div>
+                                        <div class="detail-contact-phone">
+                                            <i class="fa fa-mobile-phone"></i> <a href="tel:#">{{ provider.telCompany }}</a>
+                                        </div>
+                                        <div class="detail-contact-website">
+                                            <i class="fa fa-globe"></i> <a href="#">{{ provider.site }}</a>
+                                        </div>
+                                        <div class="detail-contact-address">
+                                            <i class="fa fa-map-o"></i>
+                                            {{ provider.addressStreet }} {{ provider.addressNumber }}<br>
+                                            {{ provider.town.town }} {{ provider.zip.zip }}
+                                        </div>
+                                    </div>{# /.detail-contact #}
+                                </div>{# /.detail-vcard #}
+
+                                <div class="detail-description">
+                                    <p>{{ provider.presentation }}</p>
+
+                                </div>
+
+                                <div class="detail-follow">
+                                    <h5>Follow Us:</h5>
+                                    <div class="follow-wrapper">
+                                        <a class="follow-btn facebook" href="#"><i class="fa fa-facebook"></i></a>
+                                        <a class="follow-btn youtube" href="#"><i class="fa fa-youtube"></i></a>
+                                        <a class="follow-btn twitter" href="#"><i class="fa fa-twitter"></i></a>
+                                        <a class="follow-btn tripadvisor" href="#"><i class="fa fa-tripadvisor"></i></a>
+                                        <a class="follow-btn google-plus" href="#"><i class="fa fa-google-plus"></i></a>
+                                    </div>{# /.follow-wrapper #}
+                                </div>{# /.detail-follow #}
+                            </div>
+
+
+
+                            <div class="widget">
+                                <h2 class="widgettitle">Promotions of Provider</h2>
+
+                                {#{% if promotions is iterable  %} -  NE MARCHE PAS #}
+                                {% if provider.promotions|length == 0 %}
+                                    <div class="cards-small">
+                                        <h3>No Promotions in this moment</h3>
+                                    </div>{# /.cards-small #}
+                                {% else %}
+                                    {% for promotion in provider.promotions %}
+                                        {% include "front/promotion/cards-small.html.twig" %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>{# /.widget #}
+
+                            <div class="widget">
+                                <h2 class="widgettitle">Courses of Provider</h2>
+                                {% if provider.courses|length == 0 %}
+                                    <div class="cards-small">
+                                        <h3>No Courses in this moment</h3>
+                                    </div>{# /.cards-small #}
+                                {% else %}
+                                    {% for course in provider.courses %}
+                                        {% include "front/course/cards-small-course.html.twig" %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>{# /.widget #}
+
+
+
+
+                        </div>{# /.col-sm-5 #}
+
+
+                    </div>{# /.row #}
+
+                </div>{# /.container #}
+
+            </div>{# /.content #}
+        </div>{# /.main-inner #}
+    </div>{# /.main #}
+{% endblock %}
+

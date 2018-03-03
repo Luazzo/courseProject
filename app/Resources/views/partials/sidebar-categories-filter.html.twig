@@ -1,0 +1,38 @@
+                        <div class="sidebar">
+                            <div class="widget">
+                                <h2 class="widgettitle-30lineheight">Recent Promotions</h2>
+
+                                {#{% if promotions is iterable  %} -  NE MARCHE PAS #}
+                                {% if promotions|length == 0 %}
+                                    <div class="cards-small">
+                                        <h3>No Promotions</h3>
+                                    </div>{# /.cards-small #}
+                                {% else %}
+                                    {% for promotion in promotions | slice (0,5) %}
+                                        {% include "front/promotion/cards-small.html.twig" %}
+                                    {% endfor %}
+                                {% endif %}
+
+                            </div>{# /.widget #}
+
+
+                            {% include "front/search/filter.html.twig" %}
+
+
+                            <div class="widget">
+                                <h2 class="widgettitle-30lineheight">Recent Courses</h2>
+
+                                {#{% if promotions is iterable  %} -  NE MARCHE PAS #}
+                                {% if courses|length == 0 %}
+                                    <div class="cards-small">
+                                        <h3>No Courses in this category</h3>
+                                    </div>{# /.cards-small #}
+                                {% else %}
+                                    {% for course in courses | slice (0,5) %}
+                                        {% include "front/course/cards-small-course.html.twig" %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>{# /.widget #}
+
+
+                        </div>{# /.sidebar #}
